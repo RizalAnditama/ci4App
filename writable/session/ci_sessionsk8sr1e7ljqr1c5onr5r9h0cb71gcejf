@@ -1,0 +1,8 @@
+__ci_last_regenerate|i:1649231825;_ci_previous_url|s:41:"http://localhost:8080/index.php/mahasiswa";notlogin|s:487:" <div class="alert alert-primary d-flex align-items-center" role="alert">
+                                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
+                                    <use xlink:href="#info-fill" />
+                                </svg>
+                                <div>
+                                    <p>Silahkan login terlebih dahulu</p>
+                                </div>
+                            </div>";username|s:10:"rizalandit";name|s:14:"RIzal Anditama";phone_no|s:12:"083807787971";email|s:27:"rizalanditama2105@gmail.com";isLoggedIn|b:1;role|s:5:"admin";nama|s:3:"Man";nim|s:1:"2";id|s:1:"2";fail_edit|a:2:{s:4:"head";s:28:"Input tidak sesuai ketentuan";s:4:"body";s:19:"Gagal mengedit data";}__ci_vars|a:3:{s:9:"fail_edit";s:3:"old";s:13:"_ci_old_input";s:3:"old";s:21:"_ci_validation_errors";s:3:"old";}_ci_old_input|a:2:{s:3:"get";a:0:{}s:4:"post";a:9:{s:14:"csrf_test_name";s:32:"9d67a3411c2ba34521559afc9947aacc";s:2:"id";s:1:"2";s:8:"nim_edit";s:1:"2";s:9:"nama_edit";s:3:"Man";s:13:"TmpLahir_edit";s:3:"Pls";s:13:"TglLahir_edit";s:10:"2002-03-21";s:11:"alamat_edit";s:8:"Get Good";s:12:"telepon_edit";s:9:"082198319";s:12:"jurusan_edit";s:6:"For Me";}}_ci_validation_errors|s:140:"a:2:{s:8:"nim_edit";s:42:"The nim field must contain a unique value.";s:12:"telepon_edit";s:41:"Nomor HP sudah terdaftar, mohon coba lagi";}";

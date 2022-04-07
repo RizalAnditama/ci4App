@@ -1,0 +1,58 @@
+CRITICAL - 2022-04-06 01:28:23 --> Call to undefined method App\Models\ModelMahasiswa::simpan
+#0 C:\xampp\htdocs\ci4App\app\Controllers\Mahasiswa.php(132): CodeIgniter\Model->__call('simpan', Array)
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->SimpanData()
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#3 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#6 {main}
+CRITICAL - 2022-04-06 01:50:38 --> syntax error, unexpected token "return"
+#0 C:\xampp\htdocs\ci4App\system\Autoloader\Autoloader.php(241): CodeIgniter\Autoloader\Autoloader->includeFile('C:\\xampp\\htdocs...')
+#1 C:\xampp\htdocs\ci4App\system\Autoloader\Autoloader.php(219): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Filters\\Aut...')
+#2 C:\xampp\htdocs\ci4App\system\Filters\Filters.php(166): CodeIgniter\Autoloader\Autoloader->loadClass('App\\Filters\\Aut...')
+#3 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(393): CodeIgniter\Filters\Filters->run('member', 'before')
+#4 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#5 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#6 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#7 {main}
+CRITICAL - 2022-04-06 02:10:21 --> Undefined variable $title
+#0 C:\xampp\htdocs\ci4App\app\Views\layouts\app.php(5): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 5)
+#1 C:\xampp\htdocs\ci4App\system\View\View.php(210): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\ci4App\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\ci4App\system\View\View.php(226): CodeIgniter\View\View->render('layouts/app', Array, true)
+#4 C:\xampp\htdocs\ci4App\system\Common.php(1089): CodeIgniter\View\View->render('errors/http/404...', Array, true)
+#5 C:\xampp\htdocs\ci4App\app\Config\Routes.php(24): view('errors/http/404...')
+#6 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(849): CodeIgniter\Router\RouteCollection->Config\{closure}('Controller or i...')
+#7 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(340): CodeIgniter\CodeIgniter->display404errors(Object(CodeIgniter\Exceptions\PageNotFoundException))
+#8 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+CRITICAL - 2022-04-06 02:20:01 --> Uncaught Error: Call to undefined method CodeIgniter\Debug\Exceptions::extend() in C:\xampp\htdocs\ci4App\app\Views\errors\html\error_404.php:1
+Stack trace:
+#0 C:\xampp\htdocs\ci4App\system\Debug\Exceptions.php(234): include()
+#1 C:\xampp\htdocs\ci4App\system\Debug\Exceptions.php(237): CodeIgniter\Debug\Exceptions->CodeIgniter\Debug\{closure}()
+#2 C:\xampp\htdocs\ci4App\system\Debug\Exceptions.php(121): CodeIgniter\Debug\Exceptions->render(Object(CodeIgniter\Exceptions\PageNotFoundException), 404)
+#3 [internal function]: CodeIgniter\Debug\Exceptions->exceptionHandler(Object(CodeIgniter\Exceptions\PageNotFoundException))
+#4 {main}
+  thrown
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2022-04-06 02:52:34 --> Call to undefined method CodeIgniter\HTTP\IncomingRequest::geVar()
+#0 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->UpdateData()
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2022-04-06 02:55:21 --> Undefined property: CodeIgniter\View\View::$request
+#0 C:\xampp\htdocs\ci4App\app\Views\pages\ViewDataMahasiswa.php(15): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined prope...', 'C:\\xampp\\htdocs...', 15)
+#1 C:\xampp\htdocs\ci4App\system\View\View.php(210): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\ci4App\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\ci4App\system\Common.php(1089): CodeIgniter\View\View->render('pages/viewdatam...', Array, true)
+#4 C:\xampp\htdocs\ci4App\app\Controllers\Mahasiswa.php(36): view('pages/viewdatam...', Array)
+#5 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#6 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#7 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#10 {main}

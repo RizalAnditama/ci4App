@@ -1,0 +1,26 @@
+ERROR - 2022-03-03 21:59:55 --> Table 'mahasiswadb.mahasiswa' doesn't exist
+CRITICAL - 2022-03-03 21:59:55 --> Table 'mahasiswadb.mahasiswa' doesn't exist
+#0 C:\xampp\htdocs\CI4-CRUD\system\Database\MySQLi\Connection.php(292): mysqli->query('SELECT *\nFROM `...', 0)
+#1 C:\xampp\htdocs\CI4-CRUD\system\Database\BaseConnection.php(670): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 C:\xampp\htdocs\CI4-CRUD\system\Database\BaseConnection.php(598): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 C:\xampp\htdocs\CI4-CRUD\system\Database\BaseBuilder.php(1455): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 C:\xampp\htdocs\CI4-CRUD\app\Models\ModelMahasiswa.php(16): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\CI4-CRUD\app\Controllers\Mahasiswa.php(15): App\Models\ModelMahasiswa->TampilData()
+#6 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#7 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#8 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#11 {main}
+CRITICAL - 2022-03-03 22:17:58 --> Undefined variable $TampilData
+#0 C:\xampp\htdocs\CI4-CRUD\app\Views\ViewDataMahasiswa.php(33): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 33)
+#1 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(210): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\CI4-CRUD\system\Common.php(1089): CodeIgniter\View\View->render('ViewDataMahasis...', Array, true)
+#4 C:\xampp\htdocs\CI4-CRUD\app\Controllers\Mahasiswa.php(18): view('ViewDataMahasis...', Array)
+#5 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#6 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#7 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#10 {main}

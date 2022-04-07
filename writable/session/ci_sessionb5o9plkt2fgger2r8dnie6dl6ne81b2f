@@ -1,0 +1,8 @@
+__ci_last_regenerate|i:1649229106;_ci_previous_url|s:37:"http://localhost:8080/index.php/admin";notlogin|s:487:" <div class="alert alert-primary d-flex align-items-center" role="alert">
+                                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
+                                    <use xlink:href="#info-fill" />
+                                </svg>
+                                <div>
+                                    <p>Silahkan login terlebih dahulu</p>
+                                </div>
+                            </div>";id|s:1:"1";username|s:10:"rizalandit";name|s:14:"RIzal Anditama";phone_no|s:12:"083807787971";email|s:27:"rizalanditama2105@gmail.com";isLoggedIn|b:1;role|s:5:"admin";

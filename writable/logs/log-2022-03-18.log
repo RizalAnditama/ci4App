@@ -1,0 +1,195 @@
+CRITICAL - 2022-03-18 02:52:45 --> Undefined variable $getResultArray
+#0 C:\xampp\htdocs\CI4-CRUD\app\Views\ViewDataMahasiswa.php(42): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 42)
+#1 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(210): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\CI4-CRUD\system\Common.php(1089): CodeIgniter\View\View->render('ViewDataMahasis...', Array, true)
+#4 C:\xampp\htdocs\CI4-CRUD\app\Controllers\Mahasiswa.php(22): view('ViewDataMahasis...', Array)
+#5 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#6 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#7 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+CRITICAL - 2022-03-18 02:53:03 --> Undefined variable $key
+#0 C:\xampp\htdocs\CI4-CRUD\app\Views\ViewDataMahasiswa.php(42): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 42)
+#1 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(210): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\CI4-CRUD\system\Common.php(1089): CodeIgniter\View\View->render('ViewDataMahasis...', Array, true)
+#4 C:\xampp\htdocs\CI4-CRUD\app\Controllers\Mahasiswa.php(22): view('ViewDataMahasis...', Array)
+#5 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#6 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#7 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+CRITICAL - 2022-03-18 02:53:21 --> Undefined variable $getResultArray
+#0 C:\xampp\htdocs\CI4-CRUD\app\Views\ViewDataMahasiswa.php(42): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 42)
+#1 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(210): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\CI4-CRUD\system\Common.php(1089): CodeIgniter\View\View->render('ViewDataMahasis...', Array, true)
+#4 C:\xampp\htdocs\CI4-CRUD\app\Controllers\Mahasiswa.php(22): view('ViewDataMahasis...', Array)
+#5 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#6 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#7 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+CRITICAL - 2022-03-18 02:53:28 --> Undefined variable $getResultArray
+#0 C:\xampp\htdocs\CI4-CRUD\app\Views\ViewDataMahasiswa.php(42): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 42)
+#1 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(210): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\CI4-CRUD\system\Common.php(1089): CodeIgniter\View\View->render('ViewDataMahasis...', Array, true)
+#4 C:\xampp\htdocs\CI4-CRUD\app\Controllers\Mahasiswa.php(22): view('ViewDataMahasis...', Array)
+#5 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#6 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#7 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+CRITICAL - 2022-03-18 03:05:25 --> You must set the database table to be used with your query.
+#0 C:\xampp\htdocs\CI4-CRUD\system\Model.php(545): CodeIgniter\Database\BaseConnection->table(NULL)
+#1 C:\xampp\htdocs\CI4-CRUD\system\Model.php(176): CodeIgniter\Model->builder()
+#2 C:\xampp\htdocs\CI4-CRUD\system\BaseModel.php(584): CodeIgniter\Model->doFindAll(0, 0)
+#3 C:\xampp\htdocs\CI4-CRUD\app\Controllers\Mahasiswa.php(20): CodeIgniter\BaseModel->findAll()
+#4 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#5 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#6 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#9 {main}
+CRITICAL - 2022-03-18 03:18:54 --> syntax error, unexpected identifier "z", expecting "function" or "const"
+#0 C:\xampp\htdocs\CI4-CRUD\system\Router\Router.php(175): CodeIgniter\Router\Router->autoRoute('Mahasiswa')
+#1 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(726): CodeIgniter\Router\Router->handle('Mahasiswa')
+#2 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(368): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+#3 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#6 {main}
+CRITICAL - 2022-03-18 03:19:47 --> syntax error, unexpected identifier "z", expecting "function" or "const"
+#0 C:\xampp\htdocs\CI4-CRUD\system\Router\Router.php(175): CodeIgniter\Router\Router->autoRoute('Mahasiswa')
+#1 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(726): CodeIgniter\Router\Router->handle('Mahasiswa')
+#2 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(368): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+#3 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#6 {main}
+CRITICAL - 2022-03-18 03:20:41 --> Undefined variable $result
+#0 C:\xampp\htdocs\CI4-CRUD\app\Views\ViewDataMahasiswa.php(42): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 42)
+#1 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(210): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\CI4-CRUD\system\Common.php(1089): CodeIgniter\View\View->render('ViewDataMahasis...', Array, true)
+#4 C:\xampp\htdocs\CI4-CRUD\app\Controllers\Mahasiswa.php(22): view('ViewDataMahasis...', Array)
+#5 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#6 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#7 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+CRITICAL - 2022-03-18 03:20:44 --> Undefined variable $result
+#0 C:\xampp\htdocs\CI4-CRUD\app\Views\ViewDataMahasiswa.php(42): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 42)
+#1 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(210): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\CI4-CRUD\system\Common.php(1089): CodeIgniter\View\View->render('ViewDataMahasis...', Array, true)
+#4 C:\xampp\htdocs\CI4-CRUD\app\Controllers\Mahasiswa.php(22): view('ViewDataMahasis...', Array)
+#5 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#6 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#7 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+CRITICAL - 2022-03-18 03:20:59 --> mysqli_fetch_array(): Argument #1 ($result) must be of type mysqli_result, array given
+#0 C:\xampp\htdocs\CI4-CRUD\app\Views\ViewDataMahasiswa.php(42): mysqli_fetch_array(Array)
+#1 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(210): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\CI4-CRUD\system\Common.php(1089): CodeIgniter\View\View->render('ViewDataMahasis...', Array, true)
+#4 C:\xampp\htdocs\CI4-CRUD\app\Controllers\Mahasiswa.php(22): view('ViewDataMahasis...', Array)
+#5 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#6 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#7 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+CRITICAL - 2022-03-18 03:22:32 --> Undefined variable $con
+#0 C:\xampp\htdocs\CI4-CRUD\app\Views\ViewDataMahasiswa.php(42): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 42)
+#1 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(210): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\CI4-CRUD\system\Common.php(1089): CodeIgniter\View\View->render('ViewDataMahasis...', Array, true)
+#4 C:\xampp\htdocs\CI4-CRUD\app\Controllers\Mahasiswa.php(22): view('ViewDataMahasis...', Array)
+#5 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#6 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#7 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+CRITICAL - 2022-03-18 03:24:29 --> Trying to access array offset on value of type null
+#0 C:\xampp\htdocs\CI4-CRUD\app\Views\ViewDataMahasiswa.php(144): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Trying to acces...', 'C:\\xampp\\htdocs...', 144)
+#1 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(210): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\CI4-CRUD\system\Common.php(1089): CodeIgniter\View\View->render('ViewDataMahasis...', Array, true)
+#4 C:\xampp\htdocs\CI4-CRUD\app\Controllers\Mahasiswa.php(22): view('ViewDataMahasis...', Array)
+#5 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#6 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#7 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+CRITICAL - 2022-03-18 04:06:15 --> Cannot use object of type stdClass as array
+#0 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(210): include()
+#1 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#2 C:\xampp\htdocs\CI4-CRUD\system\Common.php(1089): CodeIgniter\View\View->render('ViewDataMahasis...', Array, true)
+#3 C:\xampp\htdocs\CI4-CRUD\app\Controllers\Mahasiswa.php(22): view('ViewDataMahasis...', Array)
+#4 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#5 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#6 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#9 {main}
+CRITICAL - 2022-03-18 05:00:01 --> Cannot use object of type stdClass as array
+#0 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(210): include()
+#1 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#2 C:\xampp\htdocs\CI4-CRUD\system\Common.php(1089): CodeIgniter\View\View->render('ViewDataMahasis...', Array, true)
+#3 C:\xampp\htdocs\CI4-CRUD\app\Controllers\Mahasiswa.php(22): view('ViewDataMahasis...', Array)
+#4 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#5 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#6 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#9 {main}
+CRITICAL - 2022-03-18 05:11:20 --> Attempt to read property "id_mhs" on array
+#0 C:\xampp\htdocs\CI4-CRUD\app\Views\ViewDataMahasiswa.php(57): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read...', 'C:\\xampp\\htdocs...', 57)
+#1 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(210): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\CI4-CRUD\system\Common.php(1089): CodeIgniter\View\View->render('ViewDataMahasis...', Array, true)
+#4 C:\xampp\htdocs\CI4-CRUD\app\Controllers\Mahasiswa.php(22): view('ViewDataMahasis...', Array)
+#5 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#6 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#7 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+ERROR - 2022-03-18 23:24:56 --> Error connecting to the database: No connection could be made because the target machine actively refused it
+CRITICAL - 2022-03-18 23:24:57 --> Unable to connect to the database.
+Main connection [MySQLi]: No connection could be made because the target machine actively refused it
+#0 C:\xampp\htdocs\CI4-CRUD\system\Database\BaseConnection.php(577): CodeIgniter\Database\BaseConnection->initialize()
+#1 C:\xampp\htdocs\CI4-CRUD\system\Database\BaseBuilder.php(1455): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#2 C:\xampp\htdocs\CI4-CRUD\app\Models\ModelMahasiswa.php(16): CodeIgniter\Database\BaseBuilder->get()
+#3 C:\xampp\htdocs\CI4-CRUD\app\Controllers\Mahasiswa.php(18): App\Models\ModelMahasiswa->TampilData()
+#4 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#5 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#6 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#9 {main}
+ERROR - 2022-03-18 23:25:02 --> Error connecting to the database: No connection could be made because the target machine actively refused it
+CRITICAL - 2022-03-18 23:25:02 --> Unable to connect to the database.
+Main connection [MySQLi]: No connection could be made because the target machine actively refused it
+#0 C:\xampp\htdocs\CI4-CRUD\system\Database\BaseConnection.php(577): CodeIgniter\Database\BaseConnection->initialize()
+#1 C:\xampp\htdocs\CI4-CRUD\system\Database\BaseBuilder.php(1455): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#2 C:\xampp\htdocs\CI4-CRUD\app\Models\ModelMahasiswa.php(16): CodeIgniter\Database\BaseBuilder->get()
+#3 C:\xampp\htdocs\CI4-CRUD\app\Controllers\Mahasiswa.php(18): App\Models\ModelMahasiswa->TampilData()
+#4 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#5 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#6 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#9 {main}

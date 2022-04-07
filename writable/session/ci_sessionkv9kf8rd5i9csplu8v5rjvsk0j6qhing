@@ -1,0 +1,8 @@
+__ci_last_regenerate|i:1649234265;_ci_previous_url|s:41:"http://localhost:8080/index.php/Mahasiswa";notlogin|s:487:" <div class="alert alert-primary d-flex align-items-center" role="alert">
+                                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
+                                    <use xlink:href="#info-fill" />
+                                </svg>
+                                <div>
+                                    <p>Silahkan login terlebih dahulu</p>
+                                </div>
+                            </div>";username|s:10:"rizalandit";name|s:14:"RIzal Anditama";phone_no|s:12:"083807787971";email|s:27:"rizalanditama2105@gmail.com";isLoggedIn|b:1;role|s:5:"admin";nama|s:3:"Tes";nim|s:1:"1";id|s:1:"1";success_edit|s:20:"Data Berhasil Diedit";__ci_vars|a:2:{s:12:"success_edit";s:3:"old";s:2:"id";i:1649232137;}

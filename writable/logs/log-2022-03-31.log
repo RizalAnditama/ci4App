@@ -1,0 +1,238 @@
+ERROR - 2022-03-31 02:09:08 --> Error connecting to the database: No connection could be made because the target machine actively refused it
+CRITICAL - 2022-03-31 02:09:08 --> Unable to connect to the database.
+Main connection [MySQLi]: No connection could be made because the target machine actively refused it
+#0 C:\xampp\htdocs\ci4App\system\Database\BaseConnection.php(577): CodeIgniter\Database\BaseConnection->initialize()
+#1 C:\xampp\htdocs\ci4App\system\Database\BaseBuilder.php(1455): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#2 C:\xampp\htdocs\ci4App\system\Model.php(210): CodeIgniter\Database\BaseBuilder->get()
+#3 C:\xampp\htdocs\ci4App\system\BaseModel.php(622): CodeIgniter\Model->doFirst()
+#4 C:\xampp\htdocs\ci4App\app\Validation\Userrules.php(13): CodeIgniter\BaseModel->first()
+#5 C:\xampp\htdocs\ci4App\system\Validation\Validation.php(292): App\Validation\Userrules->validateUser('12345678', 'email,password', Array, NULL)
+#6 C:\xampp\htdocs\ci4App\system\Validation\Validation.php(157): CodeIgniter\Validation\Validation->processRules('password', 'password', '12345678', Array, Array)
+#7 C:\xampp\htdocs\ci4App\system\Controller.php(160): CodeIgniter\Validation\Validation->run()
+#8 C:\xampp\htdocs\ci4App\app\Controllers\UserController.php(42): CodeIgniter\Controller->validate(Array, Array)
+#9 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\UserController->login()
+#10 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\UserController))
+#11 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#13 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#14 {main}
+CRITICAL - 2022-03-31 04:27:45 --> Undefined variable $nama_mhs
+#0 C:\xampp\htdocs\ci4App\app\Views\pages\ViewDataMahasiswa.php(209): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 209)
+#1 C:\xampp\htdocs\ci4App\system\View\View.php(210): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\ci4App\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\ci4App\system\Common.php(1089): CodeIgniter\View\View->render('pages/viewdatam...', Array, true)
+#4 C:\xampp\htdocs\ci4App\app\Controllers\Mahasiswa.php(35): view('pages/viewdatam...', Array)
+#5 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#6 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#7 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+CRITICAL - 2022-03-31 04:38:26 --> syntax error, unexpected single-quoted string "id_mhs", expecting variable
+#0 C:\xampp\htdocs\ci4App\system\Router\Router.php(175): CodeIgniter\Router\Router->autoRoute('mahasiswa')
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(726): CodeIgniter\Router\Router->handle('mahasiswa')
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(368): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+#3 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#6 {main}
+CRITICAL - 2022-03-31 04:38:58 --> Too few arguments to function App\Controllers\Mahasiswa::UpdateData(), 0 passed in C:\xampp\htdocs\ci4App\system\CodeIgniter.php on line 832 and exactly 1 expected
+#0 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->UpdateData()
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2022-03-31 04:39:19 --> Too few arguments to function App\Controllers\Mahasiswa::UpdateData(), 0 passed in C:\xampp\htdocs\ci4App\system\CodeIgniter.php on line 832 and exactly 1 expected
+#0 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->UpdateData()
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2022-03-31 04:40:21 --> Too few arguments to function App\Controllers\Mahasiswa::UpdateData(), 0 passed in C:\xampp\htdocs\ci4App\system\CodeIgniter.php on line 832 and exactly 1 expected
+#0 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->UpdateData()
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2022-03-31 04:40:42 --> Too few arguments to function App\Controllers\Mahasiswa::UpdateData(), 0 passed in C:\xampp\htdocs\ci4App\system\CodeIgniter.php on line 832 and exactly 1 expected
+#0 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->UpdateData()
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2022-03-31 04:41:10 --> Too few arguments to function App\Controllers\Mahasiswa::UpdateData(), 0 passed in C:\xampp\htdocs\ci4App\system\CodeIgniter.php on line 832 and exactly 1 expected
+#0 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->UpdateData()
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2022-03-31 04:43:23 --> syntax error, unexpected single-quoted string "id_mhs", expecting variable
+#0 C:\xampp\htdocs\ci4App\system\Router\Router.php(175): CodeIgniter\Router\Router->autoRoute('mahasiswa/Updat...')
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(726): CodeIgniter\Router\Router->handle('mahasiswa/Updat...')
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(368): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+#3 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#6 {main}
+CRITICAL - 2022-03-31 04:43:36 --> syntax error, unexpected single-quoted string "$id_mhs", expecting variable
+#0 C:\xampp\htdocs\ci4App\system\Router\Router.php(175): CodeIgniter\Router\Router->autoRoute('mahasiswa/Updat...')
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(726): CodeIgniter\Router\Router->handle('mahasiswa/Updat...')
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(368): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+#3 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#6 {main}
+CRITICAL - 2022-03-31 04:43:56 --> Too few arguments to function App\Controllers\Mahasiswa::UpdateData(), 0 passed in C:\xampp\htdocs\ci4App\system\CodeIgniter.php on line 832 and exactly 1 expected
+#0 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->UpdateData()
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2022-03-31 04:46:41 --> Too few arguments to function App\Controllers\Mahasiswa::UpdateData(), 0 passed in C:\xampp\htdocs\ci4App\system\CodeIgniter.php on line 832 and exactly 1 expected
+#0 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->UpdateData()
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2022-03-31 04:47:45 --> Too few arguments to function App\Controllers\Mahasiswa::UpdateData(), 0 passed in C:\xampp\htdocs\ci4App\system\CodeIgniter.php on line 832 and exactly 1 expected
+#0 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->UpdateData()
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2022-03-31 04:49:06 --> Too few arguments to function App\Controllers\Mahasiswa::UpdateData(), 0 passed in C:\xampp\htdocs\ci4App\system\CodeIgniter.php on line 832 and exactly 1 expected
+#0 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->UpdateData()
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2022-03-31 04:49:12 --> syntax error, unexpected token ";", expecting ")"
+#0 C:\xampp\htdocs\ci4App\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#1 C:\xampp\htdocs\ci4App\system\Common.php(1089): CodeIgniter\View\View->render('pages/viewdatam...', Array, true)
+#2 C:\xampp\htdocs\ci4App\app\Controllers\Mahasiswa.php(35): view('pages/viewdatam...', Array)
+#3 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#4 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#5 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#7 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#8 {main}
+CRITICAL - 2022-03-31 04:49:13 --> syntax error, unexpected token ";", expecting ")"
+#0 C:\xampp\htdocs\ci4App\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#1 C:\xampp\htdocs\ci4App\system\Common.php(1089): CodeIgniter\View\View->render('pages/viewdatam...', Array, true)
+#2 C:\xampp\htdocs\ci4App\app\Controllers\Mahasiswa.php(35): view('pages/viewdatam...', Array)
+#3 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#4 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#5 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#7 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#8 {main}
+CRITICAL - 2022-03-31 04:49:14 --> syntax error, unexpected token ";", expecting ")"
+#0 C:\xampp\htdocs\ci4App\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#1 C:\xampp\htdocs\ci4App\system\Common.php(1089): CodeIgniter\View\View->render('pages/viewdatam...', Array, true)
+#2 C:\xampp\htdocs\ci4App\app\Controllers\Mahasiswa.php(35): view('pages/viewdatam...', Array)
+#3 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#4 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#5 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#7 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#8 {main}
+CRITICAL - 2022-03-31 04:51:51 --> Too few arguments to function App\Controllers\Mahasiswa::UpdateData(), 0 passed in C:\xampp\htdocs\ci4App\system\CodeIgniter.php on line 832 and exactly 1 expected
+#0 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->UpdateData()
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2022-03-31 04:52:18 --> Too few arguments to function App\Controllers\Mahasiswa::UpdateData(), 0 passed in C:\xampp\htdocs\ci4App\system\CodeIgniter.php on line 832 and exactly 1 expected
+#0 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->UpdateData()
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2022-03-31 04:52:52 --> Too few arguments to function App\Controllers\Mahasiswa::UpdateData(), 0 passed in C:\xampp\htdocs\ci4App\system\CodeIgniter.php on line 832 and exactly 1 expected
+#0 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->UpdateData()
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2022-03-31 04:53:28 --> Too few arguments to function App\Controllers\Mahasiswa::UpdateData(), 0 passed in C:\xampp\htdocs\ci4App\system\CodeIgniter.php on line 832 and exactly 1 expected
+#0 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->UpdateData()
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2022-03-31 04:55:43 --> Too few arguments to function App\Controllers\Mahasiswa::UpdateData(), 0 passed in C:\xampp\htdocs\ci4App\system\CodeIgniter.php on line 832 and exactly 1 expected
+#0 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->UpdateData()
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2022-03-31 19:58:49 --> Too few arguments to function App\Controllers\Mahasiswa::UpdateData(), 0 passed in C:\xampp\htdocs\ci4App\system\CodeIgniter.php on line 832 and exactly 1 expected
+#0 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->UpdateData()
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2022-03-31 20:49:51 --> Too few arguments to function App\Controllers\Mahasiswa::UpdateData(), 0 passed in C:\xampp\htdocs\ci4App\system\CodeIgniter.php on line 832 and exactly 1 expected
+#0 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->UpdateData()
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2022-03-31 20:58:35 --> Too few arguments to function App\Controllers\Mahasiswa::UpdateData(), 0 passed in C:\xampp\htdocs\ci4App\system\CodeIgniter.php on line 832 and exactly 1 expected
+#0 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->UpdateData()
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2022-03-31 22:44:32 --> Cannot access offset of type string on string
+#0 C:\xampp\htdocs\ci4App\system\View\View.php(210): include()
+#1 C:\xampp\htdocs\ci4App\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#2 C:\xampp\htdocs\ci4App\system\Common.php(1089): CodeIgniter\View\View->render('pages/viewdatam...', Array, true)
+#3 C:\xampp\htdocs\ci4App\app\Controllers\Mahasiswa.php(35): view('pages/viewdatam...', Array)
+#4 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#5 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#6 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#9 {main}
+CRITICAL - 2022-03-31 22:59:52 --> Cannot access offset of type string on string
+#0 C:\xampp\htdocs\ci4App\system\View\View.php(210): include()
+#1 C:\xampp\htdocs\ci4App\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#2 C:\xampp\htdocs\ci4App\system\Common.php(1089): CodeIgniter\View\View->render('pages/viewdatam...', Array, true)
+#3 C:\xampp\htdocs\ci4App\app\Controllers\Mahasiswa.php(35): view('pages/viewdatam...', Array)
+#4 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#5 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#6 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#9 {main}
+CRITICAL - 2022-03-31 23:12:24 --> session_destroy(): Trying to destroy uninitialized session
+#0 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'session_destroy...', 'C:\\xampp\\htdocs...', 56)
+#1 C:\xampp\htdocs\ci4App\app\Views\pages\ViewDataMahasiswa.php(56): session_destroy()
+#2 C:\xampp\htdocs\ci4App\system\View\View.php(210): include('C:\\xampp\\htdocs...')
+#3 C:\xampp\htdocs\ci4App\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#4 C:\xampp\htdocs\ci4App\system\Common.php(1089): CodeIgniter\View\View->render('pages/viewdatam...', Array, true)
+#5 C:\xampp\htdocs\ci4App\app\Controllers\Mahasiswa.php(35): view('pages/viewdatam...', Array)
+#6 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#7 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#8 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#11 {main}

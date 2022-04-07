@@ -1,0 +1,8 @@
+CRITICAL - 2022-03-21 21:52:43 --> syntax error, unexpected token ";"
+#0 C:\xampp\htdocs\CI4-CRUD\system\Router\Router.php(175): CodeIgniter\Router\Router->autoRoute('mahasiswa/index')
+#1 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(726): CodeIgniter\Router\Router->handle('mahasiswa/index')
+#2 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(368): CodeIgniter\CodeIgniter->tryToRouteIt(Object(CodeIgniter\Router\RouteCollection))
+#3 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#6 {main}

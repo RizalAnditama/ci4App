@@ -1,0 +1,49 @@
+CRITICAL - 2022-04-01 02:50:43 --> Undefined variable $row
+#0 C:\xampp\htdocs\ci4App\app\Views\pages\ViewDataMahasiswa.php(54): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 54)
+#1 C:\xampp\htdocs\ci4App\system\View\View.php(210): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\ci4App\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\ci4App\system\Common.php(1089): CodeIgniter\View\View->render('pages/viewdatam...', Array, true)
+#4 C:\xampp\htdocs\ci4App\app\Controllers\Mahasiswa.php(35): view('pages/viewdatam...', Array)
+#5 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#6 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#7 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+CRITICAL - 2022-04-01 02:55:25 --> syntax error, unexpected token ";"
+#0 C:\xampp\htdocs\ci4App\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#1 C:\xampp\htdocs\ci4App\system\Common.php(1089): CodeIgniter\View\View->render('pages/viewdatam...', Array, true)
+#2 C:\xampp\htdocs\ci4App\app\Controllers\Mahasiswa.php(35): view('pages/viewdatam...', Array)
+#3 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#4 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#5 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#6 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#7 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#8 {main}
+CRITICAL - 2022-04-01 03:31:03 --> Undefined variable $row
+#0 C:\xampp\htdocs\ci4App\app\Views\pages\ViewDataMahasiswa.php(54): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 54)
+#1 C:\xampp\htdocs\ci4App\system\View\View.php(210): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\ci4App\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\ci4App\system\Common.php(1089): CodeIgniter\View\View->render('pages/viewdatam...', Array, true)
+#4 C:\xampp\htdocs\ci4App\app\Controllers\Mahasiswa.php(35): view('pages/viewdatam...', Array)
+#5 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#6 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#7 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+CRITICAL - 2022-04-01 21:26:20 --> Undefined variable $old
+#0 C:\xampp\htdocs\ci4App\app\Views\pages\ViewDataMahasiswa.php(221): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 221)
+#1 C:\xampp\htdocs\ci4App\system\View\View.php(210): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\ci4App\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\ci4App\system\Common.php(1089): CodeIgniter\View\View->render('pages/viewdatam...', Array, true)
+#4 C:\xampp\htdocs\ci4App\app\Controllers\Mahasiswa.php(35): view('pages/viewdatam...', Array)
+#5 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#6 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#7 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+CRITICAL - 2022-04-01 23:16:47 --> Unparenthesized `a ? b : c ? d : e` is not supported. Use either `(a ? b : c) ? d : e` or `a ? b : (c ? d : e)`
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}

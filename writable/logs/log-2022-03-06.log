@@ -1,0 +1,61 @@
+CRITICAL - 2022-03-06 06:27:37 --> Maximum execution time of 60 seconds exceeded
+#0 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+#1 {main}
+CRITICAL - 2022-03-06 06:35:02 --> Undefined variable $TampilData
+#0 C:\xampp\htdocs\CI4-CRUD\app\Views\ViewDataMahasiswa.php(35): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 35)
+#1 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(210): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\CI4-CRUD\system\Common.php(1089): CodeIgniter\View\View->render('ViewDataMahasis...', Array, true)
+#4 C:\xampp\htdocs\CI4-CRUD\app\Controllers\Mahasiswa.php(18): view('ViewDataMahasis...', Array)
+#5 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#6 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#7 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#10 {main}
+CRITICAL - 2022-03-06 07:48:00 --> Call to undefined function form_open()
+#0 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(210): include()
+#1 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#2 C:\xampp\htdocs\CI4-CRUD\system\Common.php(1089): CodeIgniter\View\View->render('ViewDataMahasis...', Array, true)
+#3 C:\xampp\htdocs\CI4-CRUD\app\Controllers\Mahasiswa.php(18): view('ViewDataMahasis...', Array)
+#4 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#5 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#6 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#9 {main}
+CRITICAL - 2022-03-06 07:49:17 --> Call to undefined function form_open()
+#0 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(210): include()
+#1 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#2 C:\xampp\htdocs\CI4-CRUD\system\Common.php(1089): CodeIgniter\View\View->render('ViewDataMahasis...', Array, true)
+#3 C:\xampp\htdocs\CI4-CRUD\app\Controllers\Mahasiswa.php(18): view('ViewDataMahasis...', Array)
+#4 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#5 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#6 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#9 {main}
+CRITICAL - 2022-03-06 07:51:39 --> Call to undefined function form_open()
+#0 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(210): include()
+#1 C:\xampp\htdocs\CI4-CRUD\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#2 C:\xampp\htdocs\CI4-CRUD\system\Common.php(1089): CodeIgniter\View\View->render('ViewDataMahasis...', Array, true)
+#3 C:\xampp\htdocs\CI4-CRUD\app\Controllers\Mahasiswa.php(18): view('ViewDataMahasis...', Array)
+#4 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#5 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#6 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#9 {main}
+ERROR - 2022-03-06 19:26:34 --> Error connecting to the database: No connection could be made because the target machine actively refused it
+CRITICAL - 2022-03-06 19:26:34 --> Unable to connect to the database.
+Main connection [MySQLi]: No connection could be made because the target machine actively refused it
+#0 C:\xampp\htdocs\CI4-CRUD\system\Database\BaseConnection.php(577): CodeIgniter\Database\BaseConnection->initialize()
+#1 C:\xampp\htdocs\CI4-CRUD\system\Database\BaseBuilder.php(1455): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#2 C:\xampp\htdocs\CI4-CRUD\app\Models\ModelMahasiswa.php(16): CodeIgniter\Database\BaseBuilder->get()
+#3 C:\xampp\htdocs\CI4-CRUD\app\Controllers\Mahasiswa.php(17): App\Models\ModelMahasiswa->TampilData()
+#4 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#5 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#6 C:\xampp\htdocs\CI4-CRUD\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 C:\xampp\htdocs\CI4-CRUD\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#8 C:\xampp\htdocs\CI4-CRUD\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#9 {main}
