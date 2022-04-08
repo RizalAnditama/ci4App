@@ -23,15 +23,15 @@ class Mahasiswa extends Controller
         session();
         helper('form');
 
-        $mhs = new ModelMahasiswa();
+        $this->mhs = new ModelMahasiswa();
         $data = [
             'title'     => 'Dashboard | Admin',
             'tampil'    => 'viewdatamahasiswa',
             'validation' => \Config\Services::validation(),
-            'TampilData' => $mhs->TampilData()->getResultArray(),
+            'mahasiswa' => json_decode(json_encode($this->mhs->paginate(5)), FALSE),
         ];
-        // 'TampilData' => $this->$mhs->paginate(5),
-        // 'pager'     => $this->$mhs->pager
+        // 'TampilData' => $this->mhs->paginate(5),
+        // 'pager'     => $this->mhs->pager,
 
         echo view('pages/viewdatamahasiswa', $data);
     }
@@ -39,7 +39,7 @@ class Mahasiswa extends Controller
     public function SimpanData()
     {
         helper('form');
-        $mhs = new ModelMahasiswa();
+        $this->mhs = new ModelMahasiswa();
         if (!$this->validate([
             'nim' => [
                 'label' => 'nim',
@@ -118,7 +118,7 @@ class Mahasiswa extends Controller
             return redirect()->back()->withInput();
             // return redirect()->to('mahasiswa')->withInput()->with('validation', $validation);
         } else {
-            $mhs = new ModelMahasiswa();
+            $this->mhs = new ModelMahasiswa();
             $data = [
                 'nim_mhs' => $this->request->getPost('nim'),
                 'nama_mhs' => $this->request->getPost('nama'),
@@ -129,7 +129,7 @@ class Mahasiswa extends Controller
                 'jurusan_mhs' => $this->request->getPost('jurusan'),
             ];
 
-            $id = $mhs->insert($data);
+            $id = $this->mhs->insert($data);
             session()->set('nama', $this->request->getPost('nama'));
             session()->set('nim', $this->request->getPost('nim'));
             session()->setFlashdata('success_add', 'Data Berhasil Diinput');
@@ -234,9 +234,9 @@ class Mahasiswa extends Controller
                 'jurusan_mhs' => $this->request->getPost('jurusan_edit'),
             ];
 
-            $mhs = new ModelMahasiswa();
+            $this->mhs = new ModelMahasiswa();
 
-            $edit = $mhs->EditData($data, $id);
+            $edit = $this->mhs->EditData($data, $id);
 
             if ($edit) {
                 session()->set('id', $this->request->getPost('id'));
@@ -252,16 +252,16 @@ class Mahasiswa extends Controller
     {
         $uri = service('uri');
         $id = $uri->getSegment('3');
-        $mhs = new ModelMahasiswa();
+        $this->mhs = new ModelMahasiswa();
 
-        $mhs->HapusData($id);
+        $this->mhs->HapusData($id);
         session()->setFlashdata('deleted', 'Data berhasil dihapus');
         return redirect()->back()->withInput();
     }
 
     // public function edit()
     // {
-    //     $mhs = new ModelMahasiswa();
+    //     $this->mhs = new ModelMahasiswa();
     //     $nim = $this->request->getPost('nim_mhs');
     //     $data = [
     //         'nama_mhs' => $this->request->getPost('nama'),
@@ -271,7 +271,7 @@ class Mahasiswa extends Controller
     //         'hp_mhs' => $this->request->getPost('telepon'),
     //         'jurusan_mhs' => $this->request->getPost('jurusan'),
     //     ];
-    //     $mhs->EditData($data, $mhs);
+    //     $this->mhs->EditData($data, $this->mhs);
     //     return redirect()->to('/mahasiswa');
     // }
 

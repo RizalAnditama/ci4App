@@ -19,16 +19,6 @@ class AdminController extends BaseController
     }
     public function index()
     {
-        helper('form');
-
-        $mhs = new ModelMahasiswa();
-        $data = [
-            'title'     => 'Dashboard | Admin',
-            'tampil'    => 'viewdatamahasiswa',
-            'validation' => \Config\Services::validation(),
-            'TampilData' => $mhs->TampilData()->getResultArray(),
-        ];
-
-        return view('pages/viewdatamahasiswa', $data);
+        return redirect()->to(base_url('Mahasiswa'));
     }
 }

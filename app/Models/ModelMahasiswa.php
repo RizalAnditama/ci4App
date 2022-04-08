@@ -7,9 +7,9 @@ use CodeIgniter\Model;
 class ModelMahasiswa extends Model
 {
     protected $table = 'mahasiswa';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_mhs';
     protected $useAutoIncrement = true;
-    protected $returnType     = 'array';
+    protected $returnType     = 'object';
     protected $allowedFields = [
         'nim_mhs',
         'nama_mhs',
@@ -20,14 +20,10 @@ class ModelMahasiswa extends Model
         'jurusan_mhs',
     ];
 
-    function __construct()
-    {
-        $this->db = db_connect();
-    }
-
     function TampilData()
     {
         return $this->db->table('mahasiswa')->get();
+        // return (object) $this->paginate(5);
     }
 
     public function HapusData($id)
