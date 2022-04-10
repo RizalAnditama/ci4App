@@ -14,7 +14,7 @@
                         } elseif (session()->get('role') == "member") {
                             echo "Selamat Datang" . ' ' . session()->get('username');
                         } else {
-                            echo 'Hai, Silahkan login';
+                            echo 'Selamat datang tamu, silahkan login';
                         } ?>
                     </h1>
                     <h3><a href="<?= site_url('login') ?>">Login</a></h3>

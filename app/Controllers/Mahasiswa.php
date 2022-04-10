@@ -23,6 +23,7 @@ class Mahasiswa extends Controller
     {
         session();
         helper('form');
+
         $this->mhs = new ModelMahasiswa();
 
         $page = $this->request->getVar('page_mahasiswa') ? $this->request->getVar('page_mahasiswa') : 1;
@@ -33,7 +34,7 @@ class Mahasiswa extends Controller
         } else {
             session()->setFlashdata('fail_search', 'Gagal mencari data mahasiswa');
             $mhs = $this->mhs;
-        }   
+        }
 
         $data = [
             'title'     => 'Dashboard | Admin',
@@ -125,25 +126,25 @@ class Mahasiswa extends Controller
 
             $validation = \Config\Services::validation();
 
-            session()->set('id', $this->request->getPost('id'));
+            session()->set('id', $this->request->getVar('id'));
             session()->setFlashdata('fail_add', $flash);
             return redirect()->back()->withInput();
             // return redirect()->to('mahasiswa')->withInput()->with('validation', $validation);
         } else {
             $this->mhs = new ModelMahasiswa();
             $data = [
-                'nim_mhs' => $this->request->getPost('nim'),
-                'nama_mhs' => $this->request->getPost('nama'),
-                'TmpLahir_mhs' => $this->request->getPost('TmpLahir'),
-                'TglLahir_mhs' => $this->request->getPost('TglLahir'),
-                'alamat_mhs' => $this->request->getPost('alamat'),
-                'hp_mhs' => $this->request->getPost('telepon'),
-                'jurusan_mhs' => $this->request->getPost('jurusan'),
+                'nim_mhs' => $this->request->getVar('nim'),
+                'nama_mhs' => $this->request->getVar('nama'),
+                'TmpLahir_mhs' => $this->request->getVar('TmpLahir'),
+                'TglLahir_mhs' => $this->request->getVar('TglLahir'),
+                'alamat_mhs' => $this->request->getVar('alamat'),
+                'hp_mhs' => $this->request->getVar('telepon'),
+                'jurusan_mhs' => $this->request->getVar('jurusan'),
             ];
 
             $id = $this->mhs->insert($data);
-            session()->set('nama', $this->request->getPost('nama'));
-            session()->set('nim', $this->request->getPost('nim'));
+            session()->set('nama', $this->request->getVar('nama'));
+            session()->set('nim', $this->request->getVar('nim'));
             session()->setFlashdata('success_add', 'Data Berhasil Diinput');
             return redirect()->to('/mahasiswa')->with('id', $id);
         }
@@ -152,7 +153,7 @@ class Mahasiswa extends Controller
     public function UpdateData()
     {
         $nim = session()->set('nim');
-        if ($nim == $this->request->getPost('nim_edit')) {
+        if ($nim == $this->request->getVar('nim_edit')) {
             $nim_unik = 'required|numeric|is_unique[mahasiswa.nim_mhs]';
             $hp_unik = 'required|numeric|is_unique[mahasiswa.hp_mhs]|min_length[7]|max_length[15]';
         } else {
@@ -232,18 +233,18 @@ class Mahasiswa extends Controller
 
             $validation = \Config\Services::validation();
 
-            session()->set('id', $this->request->getPost('id'));
+            session()->set('id', $this->request->getVar('id'));
             session()->setFlashdata('fail_edit', $flash);
             return redirect()->back()->withInput();
         } else {
-            $id = $this->request->getPost('id');
+            $id = $this->request->getVar('id');
             $data = [
-                'nama_mhs' => $this->request->getPost('nama_edit'),
-                'TmpLahir_mhs' => $this->request->getPost('TmpLahir_edit'),
-                'TglLahir_mhs' => $this->request->getPost('TglLahir_edit'),
-                'alamat_mhs' => $this->request->getPost('alamat_edit'),
-                'hp_mhs' => $this->request->getPost('telepon_edit'),
-                'jurusan_mhs' => $this->request->getPost('jurusan_edit'),
+                'nama_mhs' => $this->request->getVar('nama_edit'),
+                'TmpLahir_mhs' => $this->request->getVar('TmpLahir_edit'),
+                'TglLahir_mhs' => $this->request->getVar('TglLahir_edit'),
+                'alamat_mhs' => $this->request->getVar('alamat_edit'),
+                'hp_mhs' => $this->request->getVar('telepon_edit'),
+                'jurusan_mhs' => $this->request->getVar('jurusan_edit'),
             ];
 
             $this->mhs = new ModelMahasiswa();
@@ -251,9 +252,9 @@ class Mahasiswa extends Controller
             $edit = $this->mhs->EditData($data, $id);
 
             if ($edit) {
-                session()->set('id', $this->request->getPost('id'));
-                session()->set('nim', $this->request->getPost('nim_edit'));
-                session()->set('nama', $this->request->getPost('nama_edit'));
+                session()->set('id', $this->request->getVar('id'));
+                session()->set('nim', $this->request->getVar('nim_edit'));
+                session()->set('nama', $this->request->getVar('nama_edit'));
                 session()->setFlashdata('success_edit', 'Data Berhasil Diedit');
                 return redirect()->to('Mahasiswa');
             }
@@ -265,20 +266,20 @@ class Mahasiswa extends Controller
         $mhs = new ModelMahasiswa();
         $mhs->delete($id);
         session()->setFlashdata('deleted', 'Data berhasil dihapus');
-        return redirect()->back()->withInput();
+        return redirect()->to('mahasiswa')->withInput();
     }
 
     // public function edit()
     // {
     //     $this->mhs = new ModelMahasiswa();
-    //     $nim = $this->request->getPost('nim_mhs');
+    //     $nim = $this->request->getVar('nim_mhs');
     //     $data = [
-    //         'nama_mhs' => $this->request->getPost('nama'),
-    //         'TmpLahir_mhs' => $this->request->getPost('TmpLahir'),
-    //         'TglLahir_mhs' => $this->request->getPost('TglLahir'),
-    //         'alamat_mhs' => $this->request->getPost('alamat'),
-    //         'hp_mhs' => $this->request->getPost('telepon'),
-    //         'jurusan_mhs' => $this->request->getPost('jurusan'),
+    //         'nama_mhs' => $this->request->getVar('nama'),
+    //         'TmpLahir_mhs' => $this->request->getVar('TmpLahir'),
+    //         'TglLahir_mhs' => $this->request->getVar('TglLahir'),
+    //         'alamat_mhs' => $this->request->getVar('alamat'),
+    //         'hp_mhs' => $this->request->getVar('telepon'),
+    //         'jurusan_mhs' => $this->request->getVar('jurusan'),
     //     ];
     //     $this->mhs->EditData($data, $this->mhs);
     //     return redirect()->to('/mahasiswa');

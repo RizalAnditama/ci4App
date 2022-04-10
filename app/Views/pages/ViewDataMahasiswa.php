@@ -36,7 +36,7 @@ $session = \Config\Services::session();
 <div class="container my-2">
     <?php $validation->listErrors() ?>
     <div class="d-flex justify-content-between my-3">
-        <a class="btn btn-danger" href="<?= site_url('logout') ?>">Logout</a>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</button>
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewDataModal">Tambah Data</button>
     </div>
     <div class="success">
@@ -127,7 +127,7 @@ $session = \Config\Services::session();
         <tbody>
             <?php
 
-            $no = 1 + (6 * ($page - 1));
+            $no = 1 + (5 * ($page - 1));
             // $no = count($mahasiswa) * $page - (count($mahasiswa) - 1);
 
             foreach ($mahasiswa as  $row) :
@@ -226,7 +226,11 @@ $session = \Config\Services::session();
                         <?php } ?>
                     </div>
                     <div class="form-floating mb-0">
-                        <input type="text" name="jurusan" size="100" placeholder="Jurusan" id="inputJurusan" class="form-control <?= ($validation->hasError('jurusan')) ? 'is-invalid' : ''; ?>" value="<?= old('jurusan'); ?>" required>
+                        <select class="form-control <?= ($validation->hasError('jurusan')) ? 'is-invalid' : ''; ?>" name="jurusan" id="jurusan" required>
+                            <option value="sejarah" <?= (old('jurusan') == 'sejarah') ? 'selected' : ''; ?>>Sejarah</option>
+                            <option value="mipa" <?= (old('jurusan') == 'mipa') ? 'selected' : '' ?>>Matematika & IPA</option>
+                            <option value="sastra" <?= (old('jurusan') == 'sastra') ? 'selected' : ''; ?>>Sastra</option>
+                        </select>
                         <label for="inputJurusan">Jurusan</label>
                         <?php if ($validation->getError('jurusan')) { ?>
                             <div class='invalid-feedback'>
@@ -335,9 +339,18 @@ foreach ($mahasiswa as  $row) :
                                     } ?>
                         </div>
                         <div class="form-floating mb-0">
-                            <input type="text" name="jurusan_edit" size="100" placeholder="Jurusan" id="inputJurusan" class="form-control <?php if (old('id') == $row->id_mhs) : ?><?= ($validation->hasError('jurusan_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" value="<?php echo old('id') == $row->id_mhs ? old('jurusan_edit') : $row->jurusan_mhs ?>" required>
+                            <select class="form-control <?php if (old('id') == $row->id_mhs) : ?><?= ($validation->hasError('jurusan_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" name="jurusan_edit" id="jurusan_edit" required>
+                                <?php if ($validation->hasError('jurusan_edit')) { ?>
+                                    <option value="sejarah" <?= (old('jurusan') == 'sejarah') ? 'selected' : ''; ?>>Sejarah</option>
+                                    <option value="mipa" <?= (old('jurusan') == 'mipa') ? 'selected' : '' ?>>Matematika & IPA</option>
+                                    <option value="sastra" <?= (old('jurusan') == 'sastra') ? 'selected' : ''; ?>>Sastra</option>
+                                <?php } else { ?>
+                                    <option value="sejarah" <?= ($row->jurusan_mhs == 'Sejarah') ? 'selected' : ''; ?>>Sejarah</option>
+                                    <option value="mipa" <?= ($row->jurusan_mhs == 'MIPA') ? 'selected' : '' ?>>Matematika & IPA</option>
+                                    <option value="sastra" <?= ($row->jurusan_mhs == 'Sastra') ? 'selected' : ''; ?>>Sastra</option>
+                                <?php } ?>
+                            </select>
                             <label for="inputJurusan">Jurusan</label>
-
                             <?php if (old('id') == $row->id_mhs) {
                                 if ($validation->getError('jurusan_edit')) { ?>
                                     <div class='invalid-feedback'>
@@ -399,17 +412,17 @@ foreach ($mahasiswa as  $row) :
                             <label for="inputTelepon">No. HP</label>
                         </div>
                         <div class="form-floating mb-0">
-                            <input type="text" name="jurusan" placeholder="Jurusan" id="inputJurusan" class="form-control" value="<?= $row->jurusan_mhs; ?>" disabled>
+                            <input type="text" name="jurusan" placeholder="Jurusan" id="inputJurusan" class="form-control" value="<?= $jurusan = ($row->jurusan_mhs == 'Sejarah') ? 'Sejarah' : (($row->jurusan_mhs == 'MIPA') ? 'Matematika & IPA' : (($row->jurusan_mhs == 'Sastra') ? 'Sastra' : '')); ?>" disabled>
                             <label for="inputJurusan">Jurusan</label>
                         </div>
                 </div>
                 <div class="modal-footer">
                     <h5>Yakin hapus data <?php echo $row->nama_mhs . ' ' . '(' . $row->nim_mhs . ')' ?> ?</h5>
                     <div class="row">
-                        <form action="<?php echo base_url('mahasiswa/hapus/' . $row->id_mhs) ?>" method="post" class="d-inline">
+                        <form action="" method="post" class="d-inline">
                             <?= csrf_field(); ?>
                             <input type="hidden" name="_method" value="DELETE">
-                            <a type="submit" class="btn btn-danger">Hapus</a>
+                            <a href="<?php echo base_url('mahasiswa/hapus/' . $row->id_mhs) ?>" type="submit" class="btn btn-danger">Hapus</a>
                         </form>
                         <button class="btn btn-secondary" type="button" name="tutup" data-bs-dismiss="modal">Batal</button>
                     </div>
@@ -419,6 +432,22 @@ foreach ($mahasiswa as  $row) :
         </div>
     </div>
 <?php endforeach; ?>
+
+<!-- Modal logout -->
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="logoutModalLabel">Yakin ingin Logout?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-danger col-6 " href="<?= site_url('logout') ?>">Logout</a>
+                <button class="btn btn-secondary col-6" type="button" data-bs-dismiss="modal">Batal</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     function resetColor() {

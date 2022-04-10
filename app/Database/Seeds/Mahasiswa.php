@@ -19,8 +19,7 @@ class Mahasiswa extends Seeder
                 'alamat_mhs'  => $faker->address,
                 'hp_mhs'
                 => $faker->numerify('###########'),
-                'jurusan_mhs'  =>
-                $faker->word,
+                'jurusan_mhs'  => $faker->randomElements(['Sejarah', 'MIPA', 'Sastra']),
                 // 'created_at' => Time::createFromTimestamp($faker->unixTime()),
                 // 'updated_at' => Time::now(),
             ];

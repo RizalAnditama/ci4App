@@ -1,8 +1,0 @@
-__ci_last_regenerate|i:1649227834;_ci_previous_url|s:37:"http://localhost:8080/index.php/login";login|s:487:" <div class="alert alert-primary d-flex align-items-center" role="alert">
-                                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
-                                    <use xlink:href="#info-fill" />
-                                </svg>
-                                <div>
-                                    <p>Silahkan login terlebih dahulu</p>
-                                </div>
-                            </div>";__ci_vars|a:1:{s:5:"login";s:3:"old";}

@@ -1,0 +1,36 @@
+CRITICAL - 2022-04-10 04:31:10 --> Undefined variable $row
+#0 C:\xampp\htdocs\ci4App\app\Controllers\Mahasiswa.php(27): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined varia...', 'C:\\xampp\\htdocs...', 27)
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#3 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#6 {main}
+CRITICAL - 2022-04-10 05:44:37 --> Too few arguments to function App\Controllers\Mahasiswa::hapus(), 0 passed in C:\xampp\htdocs\ci4App\system\CodeIgniter.php on line 832 and exactly 1 expected
+#0 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->hapus()
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2022-04-10 05:45:07 --> Too few arguments to function App\Controllers\Mahasiswa::hapus(), 0 passed in C:\xampp\htdocs\ci4App\system\CodeIgniter.php on line 832 and exactly 1 expected
+#0 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->hapus()
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2022-04-10 05:45:19 --> Too few arguments to function App\Controllers\Mahasiswa::hapus(), 0 passed in C:\xampp\htdocs\ci4App\system\CodeIgniter.php on line 832 and exactly 1 expected
+#0 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->hapus()
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+CRITICAL - 2022-04-10 05:52:41 --> Too few arguments to function App\Controllers\Mahasiswa::hapus(), 0 passed in C:\xampp\htdocs\ci4App\system\CodeIgniter.php on line 832 and exactly 1 expected
+#0 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->hapus()
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#3 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#4 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#5 {main}
