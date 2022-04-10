@@ -9,6 +9,7 @@ class Mahasiswa extends Controller
 {
     public function __construct()
     {
+        $this->mhs = new ModelMahasiswa();
         if (session()->get('role') != "admin") {
             $data = [
                 'title' => 'Error 403 | Access Forbiden'
@@ -22,16 +23,27 @@ class Mahasiswa extends Controller
     {
         session();
         helper('form');
-
         $this->mhs = new ModelMahasiswa();
+
+        $page = $this->request->getVar('page_mahasiswa') ? $this->request->getVar('page_mahasiswa') : 1;
+        $keyword = $this->request->getVar('keyword');
+
+        if ($keyword) {
+            $mhs = $this->mhs->search($keyword);
+        } else {
+            session()->setFlashdata('fail_search', 'Gagal mencari data mahasiswa');
+            $mhs = $this->mhs;
+        }   
+
         $data = [
             'title'     => 'Dashboard | Admin',
             'tampil'    => 'viewdatamahasiswa',
             'validation' => \Config\Services::validation(),
-            'mahasiswa' => json_decode(json_encode($this->mhs->paginate(5)), FALSE),
+            'mahasiswa' => json_decode(json_encode($mhs->paginate(5, 'mahasiswa')), FALSE), //Ngubah data dari modelmahasiswa(array) ke object
+            'pager'     => $mhs->pager,
+            'page' => $page,
+            'keyword' => $keyword,
         ];
-        // 'TampilData' => $this->mhs->paginate(5),
-        // 'pager'     => $this->mhs->pager,
 
         echo view('pages/viewdatamahasiswa', $data);
     }
@@ -56,7 +68,7 @@ class Mahasiswa extends Controller
                 'rules' => 'required|alpha_space|max_length[255]',
                 'errors' => [
                     'required' => 'Field Nama harus diisi',
-                    'alpha_space' => 'Field Nama hanya boleh berisi Huruf dan spasi',
+                    'alpha_space' => 'Field Nama hanya boleh berisi huruf dan spasi',
                     'max_length' => 'maksimum karakter untuk field Field Nama adalah 255 karakter'
                 ]
             ],
@@ -65,7 +77,7 @@ class Mahasiswa extends Controller
                 'rules' => 'required|alpha_space|max_length[255]',
                 'errors' => [
                     'required' => 'Field tempat lahir harus diisi',
-                    'alpha_space' => 'Field tempat lahir hanya boleh berisi Huruf dan spasi',
+                    'alpha_space' => 'Field tempat lahir hanya boleh berisi huruf dan spasi',
                     'max_length' => 'maksimum karakter untuk field Field tempat lahir adalah 255 karakter'
                 ]
             ],
@@ -101,7 +113,7 @@ class Mahasiswa extends Controller
                 'rules' => 'required|alpha_space|max_length[255]',
                 'errors' => [
                     'required' => 'Jurusan harus diisi',
-                    'alpha_space' => 'Jurusan hanya boleh berisi Huruf dan spasi',
+                    'alpha_space' => 'Jurusan hanya boleh berisi huruf dan spasi',
                     'max_length' => 'maksimum karakter untuk field Jurusan adalah 255 karakter'
                 ]
             ],
@@ -174,7 +186,7 @@ class Mahasiswa extends Controller
                 'rules' => 'required|alpha_space|max_length[255]',
                 'errors' => [
                     'required' => 'Field Nama harus diisi',
-                    'alpha_space' => 'Field Nama hanya boleh berisi Huruf dan spasi',
+                    'alpha_space' => 'Field Nama hanya boleh berisi huruf dan spasi',
                     'max_length' => 'maksimum karakter untuk field Field Nama adalah 255 karakter'
                 ]
             ],
@@ -183,7 +195,7 @@ class Mahasiswa extends Controller
                 'rules' => 'required|alpha_space|max_length[255]',
                 'errors' => [
                     'required' => 'Field tempat lahir harus diisi',
-                    'alpha_space' => 'Field tempat lahir hanya boleh berisi Huruf dan spasi',
+                    'alpha_space' => 'Field tempat lahir hanya boleh berisi huruf dan spasi',
                     'max_length' => 'maksimum karakter untuk field Field tempat lahir adalah 255 karakter'
                 ]
             ],
@@ -208,7 +220,7 @@ class Mahasiswa extends Controller
                 'rules' => 'required|alpha_space|max_length[255]',
                 'errors' => [
                     'required' => 'Jurusan harus diisi',
-                    'alpha_space' => 'Jurusan hanya boleh berisi Huruf dan spasi',
+                    'alpha_space' => 'Jurusan hanya boleh berisi huruf dan spasi',
                     'max_length' => 'maksimum karakter untuk field Jurusan adalah 255 karakter'
                 ]
             ],
@@ -248,13 +260,10 @@ class Mahasiswa extends Controller
         }
     }
 
-    public function hapus()
+    public function hapus($id)
     {
-        $uri = service('uri');
-        $id = $uri->getSegment('3');
-        $this->mhs = new ModelMahasiswa();
-
-        $this->mhs->HapusData($id);
+        $mhs = new ModelMahasiswa();
+        $mhs->delete($id);
         session()->setFlashdata('deleted', 'Data berhasil dihapus');
         return redirect()->back()->withInput();
     }

@@ -54,7 +54,7 @@ $routes->post('/mahasiswa/SimpanData', 'Mahasiswa::SimpanData');
 //Edit Data Mahasiswa
 $routes->add('/mahasiswa/edit/(:any)', 'Mahasiswa::edit/$1');
 // Hapus Data Mahasiswa
-$routes->delete('/mahasiswa/(:num)', 'Mahasiswa::hapus/$1');
+$routes->get('/mahasiswa/hapus/(:segment)', 'Mahasiswa::hapus/$1');
 
 
 /*

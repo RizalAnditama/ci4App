@@ -20,15 +20,11 @@ class ModelMahasiswa extends Model
         'jurusan_mhs',
     ];
 
-    function TampilData()
+    public function search($keyword)
     {
-        return $this->db->table('mahasiswa')->get();
-        // return (object) $this->paginate(5);
-    }
-
-    public function HapusData($id)
-    {
-        return $this->db->table('mahasiswa')->delete(['id_mhs' => $id]);
+        return $this->table('mahasiswa')->like('nama_mhs', $keyword)
+            ->orLike('nim_mhs', $keyword)
+            ->orLike('jurusan_mhs', $keyword);
     }
 
     public function EditData($data, $id)

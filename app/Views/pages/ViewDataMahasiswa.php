@@ -18,8 +18,22 @@ $session = \Config\Services::session();
 // dd($_SESSION->jurusan)
 ?>
 
-<div class="container my-5">
-    <h1>Halo, <?= $session->get('username') ?></h1>
+
+<div class="container my-3">
+    <div class="row">
+        <div class="col-6">
+            <h1>Halo, <?= $session->get('username') ?></h1>
+            <form action="" method="post">
+                <div class="input-group mb-3">
+                    <input name="keyword" type="text" class="form-control" placeholder="Masukan Nama/NIM/Jurusan..." value="<?php echo $keyword ?>">
+                    <button class="btn btn-outline-primary" type="submit" name="submit">Cari</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container my-2">
     <?php $validation->listErrors() ?>
     <div class="d-flex justify-content-between my-3">
         <a class="btn btn-danger" href="<?= site_url('logout') ?>">Logout</a>
@@ -82,6 +96,20 @@ $session = \Config\Services::session();
                 <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php endif; ?>
+        <!-- <? //php if ($session->getFlashdata('fail_search')) : 
+                ?>
+            <div class="alert alert-warning d-flex align-items-center" role="alert">
+                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
+                    <use xlink:href="#info-fill" />
+                </svg>
+                <div class="text ms-3">
+                    <strong><? //= $session->getFlashdata('fail_search'); 
+                            ?></strong>
+                </div>
+                <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <? //php endif; 
+        ?> -->
     </div>
 
     <table class="table my-3">
@@ -99,14 +127,14 @@ $session = \Config\Services::session();
         <tbody>
             <?php
 
-            $id_mhs = 0;
+            $no = 1 + (6 * ($page - 1));
+            // $no = count($mahasiswa) * $page - (count($mahasiswa) - 1);
 
             foreach ($mahasiswa as  $row) :
-                $id_mhs++;
             ?>
 
                 <tr>
-                    <th><?= $id_mhs; ?></th>
+                    <th><?= $no++; ?></th>
                     <td><?= $row->nim_mhs ?></td>
                     <td><?= $row->nama_mhs ?></td>
                     <td><?= $row->TmpLahir_mhs . '<br>' . $row->TglLahir_mhs ?></td>
@@ -125,6 +153,7 @@ $session = \Config\Services::session();
             <?php endforeach; ?>
         </tbody>
     </table>
+    <?= $pager->links('mahasiswa', 'mahasiswa_pagination') ?>
 </div>
 
 
@@ -362,7 +391,7 @@ foreach ($mahasiswa as  $row) :
                             <label for="inputTanggalLahir">Tanggal Lahir</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" name="alamat" placeholder="Alamat" id="inputAlamat" class="form-control" value="<?= $row->alamat_mhs; ?>" disabled>
+                            <textarea type="text" name="alamat" placeholder="Alamat" id="inputAlamat" class="form-control" disabled><?= $row->alamat_mhs; ?></textarea>
                             <label for="inputAlamat">Alamat</label>
                         </div>
                         <div class="form-floating mb-3">
@@ -377,10 +406,10 @@ foreach ($mahasiswa as  $row) :
                 <div class="modal-footer">
                     <h5>Yakin hapus data <?php echo $row->nama_mhs . ' ' . '(' . $row->nim_mhs . ')' ?> ?</h5>
                     <div class="row">
-                        <form action="/mahasiswa/<?php echo $row->id_mhs ?>" method="post" class="d-inline">
+                        <form action="<?php echo base_url('mahasiswa/hapus/' . $row->id_mhs) ?>" method="post" class="d-inline">
                             <?= csrf_field(); ?>
                             <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit" class="btn btn-danger">Hapus</button>
+                            <a type="submit" class="btn btn-danger">Hapus</a>
                         </form>
                         <button class="btn btn-secondary" type="button" name="tutup" data-bs-dismiss="modal">Batal</button>
                     </div>
