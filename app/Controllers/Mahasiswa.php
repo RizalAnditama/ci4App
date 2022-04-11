@@ -146,21 +146,21 @@ class Mahasiswa extends Controller
     {
         $nim = session()->set('nim');
         if ($nim == $this->request->getVar('nim_edit')) {
-            $nim_unik = 'required|is_unique[mahasiswa.nim_mhs]';
+            // $nim_unik = 'required|is_unique[mahasiswa.nim_mhs]';
             $hp_unik = 'required|numeric|is_unique[mahasiswa.hp_mhs]|min_length[7]|max_length[15]';
         } else {
-            $nim_unik = 'required';
+            // $nim_unik = 'required';
             $hp_unik = 'required|numeric|min_length[7]|max_length[15]';
         }
         if (!$this->validate([
-            'nim_edit' => [
-                'label' => 'nim',
-                'rules' => $nim_unik,
-                'errors' => [
-                    'required' => 'NIM harus diisi',
-                    'max_length' => 'maksimum karakter untuk field NIM adalah 7 karakter',
-                ]
-            ],
+            // 'nim_edit' => [
+            //     'label' => 'nim',
+            //     'rules' => $nim_unik,
+            //     'errors' => [
+            //         'required' => 'NIM harus diisi',
+            //         'max_length' => 'maksimum karakter untuk field NIM adalah 7 karakter',
+            //     ]
+            // ],
             'telepon_edit' => [
                 'label' => 'HP',
                 'rules' => $hp_unik,
@@ -239,6 +239,11 @@ class Mahasiswa extends Controller
 
             $this->mhs = new ModelMahasiswa();
 
+            if ($nim == $this->request->getVar('nim_edit')) {
+                $data += ['nim_mhs' => $this->request->getVar('nim_edit')];
+            } else {
+                $this->mhs->update($id, ['nim_mhs' => $this->mhs->autonumber_edit($this->request->getVar('jurusan_edit'))]);
+            }
             $edit = $this->mhs->EditData($data, $id);
 
             if ($edit) {
