@@ -54,16 +54,6 @@ class Mahasiswa extends Controller
         helper('form');
         $this->mhs = new ModelMahasiswa();
         if (!$this->validate([
-            'nim' => [
-                'label' => 'nim',
-                'rules' => 'required|numeric|max_length[7]|is_unique[mahasiswa.nim_mhs]',
-                'errors' => [
-                    'required' => 'NIM harus diisi',
-                    'numeric' => 'NIM harus berupa angka',
-                    'max_length' => 'maksimum karakter untuk field NIM adalah 7 karakter',
-                    'is_unique' => 'NIM sudah terdaftar',
-                ]
-            ],
             'nama' => [
                 'label' => 'nama',
                 'rules' => 'required|alpha_space|max_length[255]',
@@ -124,8 +114,6 @@ class Mahasiswa extends Controller
                 'body' => 'Gagal menambah data',
             ];
 
-            $validation = \Config\Services::validation();
-
             session()->set('id', $this->request->getVar('id'));
             session()->setFlashdata('fail_add', $flash);
             return redirect()->back()->withInput();
@@ -133,7 +121,7 @@ class Mahasiswa extends Controller
         } else {
             $this->mhs = new ModelMahasiswa();
             $data = [
-                'nim_mhs' => $this->request->getVar('nim'),
+                'nim_mhs' => $this->mhs->autonumber($this->request->getVar('jurusan')), // Pake autonumber dari model buat ngenomorinnya
                 'nama_mhs' => $this->request->getVar('nama'),
                 'TmpLahir_mhs' => $this->request->getVar('TmpLahir'),
                 'TglLahir_mhs' => $this->request->getVar('TglLahir'),
@@ -142,11 +130,15 @@ class Mahasiswa extends Controller
                 'jurusan_mhs' => $this->request->getVar('jurusan'),
             ];
 
+            // Ngambil data terakhir dari database (untuk nim dan id)
+            $nim = $this->mhs->autonumber($this->request->getVar('jurusan'));
             $id = $this->mhs->insert($data);
+
             session()->set('nama', $this->request->getVar('nama'));
             session()->set('nim', $this->request->getVar('nim'));
             session()->setFlashdata('success_add', 'Data Berhasil Diinput');
-            return redirect()->to('/mahasiswa')->with('id', $id);
+
+            return redirect()->to('/mahasiswa')->with('id', $id)->with('nim', $nim);
         }
     }
 
@@ -154,10 +146,10 @@ class Mahasiswa extends Controller
     {
         $nim = session()->set('nim');
         if ($nim == $this->request->getVar('nim_edit')) {
-            $nim_unik = 'required|numeric|is_unique[mahasiswa.nim_mhs]';
+            $nim_unik = 'required|is_unique[mahasiswa.nim_mhs]';
             $hp_unik = 'required|numeric|is_unique[mahasiswa.hp_mhs]|min_length[7]|max_length[15]';
         } else {
-            $nim_unik = 'required|numeric';
+            $nim_unik = 'required';
             $hp_unik = 'required|numeric|min_length[7]|max_length[15]';
         }
         if (!$this->validate([
@@ -166,9 +158,7 @@ class Mahasiswa extends Controller
                 'rules' => $nim_unik,
                 'errors' => [
                     'required' => 'NIM harus diisi',
-                    'numeric' => 'NIM harus berupa angka',
                     'max_length' => 'maksimum karakter untuk field NIM adalah 7 karakter',
-
                 ]
             ],
             'telepon_edit' => [

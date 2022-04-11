@@ -12,10 +12,7 @@ $session = \Config\Services::session();
 
 //? Tempat testing dan debug
 // dd($this->db->insert_id());
-// dd($validation->getErrors());
-// d(session()->get('nama'));
-// dd(session()->get());
-// dd($_SESSION->jurusan)
+// dd($session->getFlashdata('id'));
 ?>
 
 
@@ -47,7 +44,7 @@ $session = \Config\Services::session();
                 </svg>
                 <div class="text ms-3">
                     <strong><?= $session->getFlashdata('success_add'); ?></strong>
-                    <a class="mb-0 alert-link" data-bs-toggle="modal" data-bs-target="<?php echo $session->getFlashdata('success_add') ? '#editDataModal' . $session->getFlashdata('id') : ' ';  ?>" style="cursor: pointer;"><?= session()->get('nama') . ' ' . '(' . session()->get('nim') . ')'; ?></a>
+                    <a class="mb-0 alert-link" data-bs-toggle="modal" data-bs-target="<?php echo ($session->getFlashdata('success_add')) ? '#editDataModal' . session()->getFlashdata('id') : '';  ?>" style="cursor: pointer;"><?= session()->get('nama') . ' ' . '(' . $session->getFlashdata('nim') . ')'; ?></a>
                 </div>
                 <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -60,7 +57,7 @@ $session = \Config\Services::session();
                 <div class="text ms-3">
                     <strong><?= $session->getFlashdata('success_edit'); ?></strong>
                     <br>
-                    <a class="mb-0 alert-link" data-bs-toggle="modal" data-bs-target="<?php echo $session->getFlashdata('success_add') ? '#addNewDataModal' : ($session->getFlashdata('success_edit') ? '#editDataModal' . $session->get('id') : ' ');  ?>" style="cursor: pointer; text-decoration: underline;"><?= session()->get('nama') . ' ' . '(' . session()->get('nim') . ')'; ?></a>
+                    <a class="mb-0 alert-link" data-bs-toggle="modal" data-bs-target="<?php echo ($session->getFlashdata('success_edit') ? '#editDataModal' . $session->get('id') : '');  ?>" style="cursor: pointer; text-decoration: underline;"><?= session()->get('nama') . ' ' . '(' . session()->get('nim') . ')'; ?></a>
                 </div>
                 <button onclick="resetColor()" type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -171,15 +168,20 @@ $session = \Config\Services::session();
                 echo csrf_field(); ?>
 
                 <form method="POST" id="formAddNewData" enctype="multipart/form-data">
-                    <div class="form-floating mb-3">
-                        <input type="number" name="nim" maxlength="7" placeholder="nim" id="inputNim" class="form-control <?= ($validation->hasError('nim')) ? 'is-invalid' : ''; ?>" value="<?= old('nim'); ?>" autofocus required>
+                    <!-- <div class="form-floating mb-3">
+                        <input type="number" name="nim" maxlength="7" placeholder="nim" id="inputNim" class="form-control <? //= ($validation->hasError('nim')) ? 'is-invalid' : ''; 
+                                                                                                                            ?>" value="<? //= old('nim'); 
+                                                                                                                                        ?>" autofocus required>
                         <label for="inputNim">NIM</label>
-                        <?php if ($validation->getError('nim')) { ?>
+                        <? //php if ($validation->getError('nim')) { 
+                        ?>
                             <div class='invalid-feedback'>
-                                <?= $error = $validation->getError('nim'); ?>
+                                <? //= $error = $validation->getError('nim'); 
+                                ?>
                             </div>
-                        <?php } ?>
-                    </div>
+                        <? //php } 
+                        ?>
+                    </div> -->
                     <div class="form-floating mb-3">
                         <input type="text" name="nama" size="255" placeholder="Nama" id="inputNama" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" value="<?= old('nama'); ?>" required>
                         <label for="inputNama">Nama</label>
@@ -275,7 +277,7 @@ foreach ($mahasiswa as  $row) :
                         <div class="form-floating mb-0">
                             <input type="number" hidden name="id" placeholder="id" id="inputId" class="form-control" value="<?php echo $row->id_mhs ?>">
 
-                            <input type="number" hidden name="nim_edit" maxlength="7" placeholder="nim" id="inputNim" class="form-control" value="<?php echo $row->nim_mhs; ?>" autofocus>
+                            <input type="text" name="nim_edit" maxlength="7" placeholder="nim" id="inputNim" class="form-control" value="<?php echo $row->nim_mhs; ?>" hidden>
                             <label for="inputNim">NIM</label>
                         </div>
                         <div class="form-floating mb-3">
@@ -388,7 +390,7 @@ foreach ($mahasiswa as  $row) :
                             <input type="number" name="id" placeholder="id" class="form-control" value="<?= $row->id_mhs; ?>" hidden>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="number" name="nim" placeholder="nim" id="inputNim" class="form-control" value="<?= $row->nim_mhs; ?>" disabled>
+                            <input type="text" name="nim" placeholder="nim" id="inputNim" class="form-control" value="<?= $row->nim_mhs; ?>" disabled>
                             <label for="inputNim">NIM</label>
                         </div>
                         <div class="form-floating mb-3">

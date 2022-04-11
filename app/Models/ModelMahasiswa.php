@@ -31,4 +31,29 @@ class ModelMahasiswa extends Model
     {
         return $this->db->table('mahasiswa')->update($data, ['id_mhs' => $id]);
     }
+
+    // autonumber buat nambah string berdasar kode jurusan dan angka auto increment
+    public function autonumber($jurusan)
+    {
+        $query = $this->db->query("SELECT MAX(RIGHT(nim_mhs,4)) AS kode FROM mahasiswa");
+        $kode = "";
+        if ($query->getRowArray()) {
+            foreach ($query->getResult() as $k) {
+                $tmp = ((int) $k->kode) + 1;
+                $kode = sprintf("%04s", $tmp);
+            }
+        } else {
+            $kode = "0001";
+        }
+
+        if ($jurusan == 'sejarah') {
+            return "MHS" . "SEJ" . $kode;
+        } else if ($jurusan == 'mipa') {
+            return "MHS" . "MIPA" . $kode;
+        } else if ($jurusan == 'sastra') {
+            return "MHS" . "SAS" . $kode;
+        } else {
+            return "MHS" . $kode;
+        }
+    }
 }
