@@ -146,21 +146,11 @@ class Mahasiswa extends Controller
     {
         $nim = session()->set('nim');
         if ($nim == $this->request->getVar('nim_edit')) {
-            // $nim_unik = 'required|is_unique[mahasiswa.nim_mhs]';
             $hp_unik = 'required|numeric|is_unique[mahasiswa.hp_mhs]|min_length[7]|max_length[15]';
         } else {
-            // $nim_unik = 'required';
             $hp_unik = 'required|numeric|min_length[7]|max_length[15]';
         }
         if (!$this->validate([
-            // 'nim_edit' => [
-            //     'label' => 'nim',
-            //     'rules' => $nim_unik,
-            //     'errors' => [
-            //         'required' => 'NIM harus diisi',
-            //         'max_length' => 'maksimum karakter untuk field NIM adalah 7 karakter',
-            //     ]
-            // ],
             'telepon_edit' => [
                 'label' => 'HP',
                 'rules' => $hp_unik,
@@ -236,19 +226,21 @@ class Mahasiswa extends Controller
                 'hp_mhs' => $this->request->getVar('telepon_edit'),
                 'jurusan_mhs' => $this->request->getVar('jurusan_edit'),
             ];
+            // get the original value of jurusan_mhs and store it in $jurusan
+            $jurusan_edit = $this->request->getVar('jurusan_edit');
+            $jurusan = $this->mhs->getJurusan($id);
 
             $this->mhs = new ModelMahasiswa();
 
-            if ($nim == $this->request->getVar('nim_edit')) {
-                $data += ['nim_mhs' => $this->request->getVar('nim_edit')];
-            } else {
-                $this->mhs->update($id, ['nim_mhs' => $this->mhs->autonumber_edit($this->request->getVar('jurusan_edit'))]);
+            if ($jurusan != $jurusan_edit) {
+                $nim = $this->mhs->changeFormat($this->request->getVar('nim_edit'), $jurusan_edit);
+                $data['nim_mhs'] = $nim;
             }
-            $edit = $this->mhs->EditData($data, $id);
+            $edit = $this->mhs->update($id, $data);
 
             if ($edit) {
                 session()->set('id', $this->request->getVar('id'));
-                session()->set('nim', $this->request->getVar('nim_edit'));
+                session()->set('nim', (string) $data['nim_mhs']);
                 session()->set('nama', $this->request->getVar('nama_edit'));
                 session()->setFlashdata('success_edit', 'Data Berhasil Diedit');
                 return redirect()->to('Mahasiswa');

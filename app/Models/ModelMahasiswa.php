@@ -27,11 +27,6 @@ class ModelMahasiswa extends Model
             ->orLike('jurusan_mhs', $keyword);
     }
 
-    public function EditData($data, $id)
-    {
-        return $this->db->table('mahasiswa')->update($data, ['id_mhs' => $id]);
-    }
-
     // autonumber buat nambah string berdasar kode jurusan dan angka auto increment
     public function autonumber($jurusan)
     {
@@ -49,35 +44,33 @@ class ModelMahasiswa extends Model
         if ($jurusan == 'sejarah') {
             return "MHS" . "SEJ" . $kode;
         } else if ($jurusan == 'mipa') {
-            return "MHS" . "MIPA" . $kode;
+            return "MHS" . "MIP" . $kode;
         } else if ($jurusan == 'sastra') {
             return "MHS" . "SAS" . $kode;
         } else {
-            return "MHS" . $kode;
+            return "MHS" . "ERR" . $kode;
         }
     }
 
-    public function autonumber_edit($jurusan)
+    // Ngambil nama jurusan
+    public function getJurusan($id)
     {
-        $query = $this->db->query("SELECT MAX(RIGHT(nim_mhs,4)) AS kode FROM mahasiswa");
-        $kode = "";
-        if ($query->getRowArray()) {
-            foreach ($query->getResult() as $k) {
-                $tmp = ((int) $k->kode);
-                $kode = sprintf("%04s", $tmp);
-            }
-        } else {
-            $kode = "0001";
+        $query = $this->db->query("SELECT jurusan_mhs FROM mahasiswa WHERE id_mhs = '$id'");
+        return $query->getRowArray();
+    }
+
+    // Ganti format kode nim berdasar jurusan
+    public function changeFormat($nim, $jurusan)
+    {
+        $kode = substr($nim, 6, 4);
+        if ($jurusan == 'sejarah') {
+            $nim = substr_replace($nim, "SEJ", 3) . $kode;
+        } elseif ($jurusan == 'mipa') {
+            $nim = substr_replace($nim, "MIP", 3) . $kode;
+        } elseif ($jurusan == 'sastra') {
+            $nim = substr_replace($nim, "SAS", 3) . $kode;
         }
 
-        if ($jurusan == 'sejarah') {
-            return "MHS" . "SEJ" . $kode;
-        } else if ($jurusan == 'mipa') {
-            return "MHS" . "MIPA" . $kode;
-        } else if ($jurusan == 'sastra') {
-            return "MHS" . "SAS" . $kode;
-        } else {
-            return "MHS" . $kode;
-        }
+        return $nim;
     }
 }
