@@ -33,8 +33,11 @@ class Mahasiswa extends Controller
             $mhs = $this->mhs->search($keyword);
             $paginate = $this->mhs->search($keyword)->paginate(5, 'mahasiswa');
             $keyword = session()->set('keyword', $keyword);
+            session()->setFlashdata('home', 'Home');
+            session()->markAsTempdata('keyword', 1);
         } else {
             $paginate = $this->mhs->paginate(5, 'mahasiswa');
+            session()->markAsTempdata('home', 1);
             $mhs = $this->mhs;
         }
 

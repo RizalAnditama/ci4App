@@ -24,6 +24,9 @@ $session = \Config\Services::session();
                 <div class="input-group mb-3">
                     <input name="keyword" type="search" class="form-control" placeholder="Masukan kata kunci..." value="<?php echo session()->get('keyword') ?>">
                     <button class="btn btn-outline-primary" type="submit" name="submit">Cari</button>
+                    <?php if (session()->getFlashdata('home')) : ?>
+                        <a class="btn btn-success" href="<?php echo base_url("mahasiswa") ?>">Home</a>
+                    <?php endif; ?>
                 </div>
             </form>
         </div>
@@ -196,7 +199,7 @@ $session = \Config\Services::session();
                         ?>
                     </div> -->
                     <div class="form-floating mb-3">
-                        <input type="text" name="nama" size="255" placeholder="Nama" id="inputNama" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : 'is-valid'; ?>" value="<?= old('nama'); ?>" required>
+                        <input type="text" name="nama" size="255" placeholder="Nama" id="inputNama" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" value="<?= old('nama'); ?>" required>
                         <label for="inputNama">Nama</label>
                         <?php if ($validation->getError('nama')) { ?>
                             <div class='invalid-feedback'>
@@ -205,7 +208,7 @@ $session = \Config\Services::session();
                         <?php } ?>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" name="TmpLahir" size="255" placeholder="TempatLahir" id="inputTempatLahir" class="form-control <?= ($validation->hasError('TmpLahir')) ? 'is-invalid' : 'is-valid'; ?>" value="<?= old('TmpLahir'); ?>" required>
+                        <input type="text" name="TmpLahir" size="255" placeholder="TempatLahir" id="inputTempatLahir" class="form-control <?= ($validation->hasError('TmpLahir')) ? 'is-invalid' : ''; ?>" value="<?= old('TmpLahir'); ?>" required>
                         <label for="inputTempatLahir">Tempat Lahir</label>
                         <?php if ($validation->getError('TmpLahir')) { ?>
                             <div class='invalid-feedback'>
@@ -214,7 +217,7 @@ $session = \Config\Services::session();
                         <?php } ?>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="date" name="TglLahir" placeholder="TanggalLahir" id="inputTanggalLahir" class="form-control <?= ($validation->hasError('TglLahir')) ? 'is-invalid' : 'is-valid'; ?>" value="<?= old('TglLahir'); ?>" required>
+                        <input type="date" name="TglLahir" placeholder="TanggalLahir" id="inputTanggalLahir" class="form-control <?= ($validation->hasError('TglLahir')) ? 'is-invalid' : ''; ?>" value="<?= old('TglLahir'); ?>" required>
                         <label for="inputTanggalLahir">Tanggal Lahir</label>
                         <?php if ($validation->getError('TglLahir')) { ?>
                             <div class='invalid-feedback'>
@@ -223,7 +226,7 @@ $session = \Config\Services::session();
                         <?php } ?>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" name="alamat" size="255" placeholder="Alamat" id="inputAlamat" class="form-control <?= ($validation->hasError('alamat')) ? 'is-invalid' : 'is-valid'; ?>" value="<?= old('alamat'); ?>" required>
+                        <input type="text" name="alamat" size="255" placeholder="Alamat" id="inputAlamat" class="form-control <?= ($validation->hasError('alamat')) ? 'is-invalid' : ''; ?>" value="<?= old('alamat'); ?>" required>
                         <label for="inputAlamat">Alamat</label>
                         <?php if ($validation->getError('alamat')) { ?>
                             <div class='invalid-feedback'>
@@ -232,7 +235,7 @@ $session = \Config\Services::session();
                         <?php } ?>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="tel" name="telepon" maxlength="13" placeholder="Telepon" id="inputTelepon" pattern="{0-9}+" class="form-control <?= ($validation->hasError('telepon')) ? 'is-invalid' : 'is-valid'; ?>" value="<?= old('telepon'); ?>" required>
+                        <input type="tel" name="telepon" maxlength="13" placeholder="Telepon" id="inputTelepon" pattern="{0-9}+" class="form-control <?= ($validation->hasError('telepon')) ? 'is-invalid' : ''; ?>" value="<?= old('telepon'); ?>" required>
                         <label for="inputTelepon">HP/Telepon</label>
                         <?php if ($validation->getError('telepon')) { ?>
                             <div class='invalid-feedback'>
@@ -241,7 +244,7 @@ $session = \Config\Services::session();
                         <?php } ?>
                     </div>
                     <div class="form-floating mb-0">
-                        <select class="form-control <?= ($validation->hasError('jurusan')) ? 'is-invalid' : 'is-valid'; ?>" name="jurusan" id="jurusan" required>
+                        <select class="form-control <?= ($validation->hasError('jurusan')) ? 'is-invalid' : ''; ?>" name="jurusan" id="jurusan" required>
                             <option value="sejarah" <?= (old('jurusan') == 'sejarah') ? 'selected' : ''; ?>>Sejarah</option>
                             <option value="mipa" <?= (old('jurusan') == 'mipa') ? 'selected' : '' ?>>Matematika & IPA</option>
                             <option value="sastra" <?= (old('jurusan') == 'sastra') ? 'selected' : ''; ?>>Sastra</option>

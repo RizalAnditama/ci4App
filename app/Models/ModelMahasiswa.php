@@ -35,23 +35,6 @@ class ModelMahasiswa extends Model
         }
     }
 
-    // autonumber
-    public function get_nim()
-    {
-        $query = $this->table('mahasiswa')->select('nim_mhs')->orderBy('nim_mhs', 'DESC')->limit(1)->get();
-        if ($query->getRowArray()) {
-            $nim = $query->getRowArray();
-            $nim = $nim['nim_mhs'];
-            $nim = substr($nim, 3, 4);
-            $nim = (int) $nim;
-            $nim = $nim + 1;
-            $nim = 'MHS' . str_pad($nim, 4, '0', STR_PAD_LEFT);
-            return $nim;
-        } else {
-            return 'MHS0001';
-        }
-    }
-
     // autonumber buat nambah string berdasar kode jurusan dan angka auto increment
     public function autonumber($jurusan)
     {
