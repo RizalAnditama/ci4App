@@ -12,7 +12,7 @@ $session = \Config\Services::session();
 
 //? Tempat testing dan debug
 // dd($this->db->insert_id());
-// dd($session->getFlashdata('id'));
+// dd(old('jurusan_edit'));
 ?>
 
 
@@ -20,9 +20,9 @@ $session = \Config\Services::session();
     <div class="row">
         <div class="col-6">
             <h1>Halo, <?= $session->get('username') ?></h1>
-            <form action="" method="post">
+            <form action="" method="get">
                 <div class="input-group mb-3">
-                    <input name="keyword" type="search" class="form-control" placeholder="Masukan Nama/NIM/Jurusan..." value="<?php echo $keyword ?>">
+                    <input name="keyword" type="search" class="form-control" placeholder="Masukan kata kunci..." value="<?php echo session()->get('keyword') ?>">
                     <button class="btn btn-outline-primary" type="submit" name="submit">Cari</button>
                 </div>
             </form>
@@ -72,7 +72,7 @@ $session = \Config\Services::session();
                 </svg>
                 <div class="ms-3">
                     <h4 class="alert-heading">Input tidak sesuai ketentuan</h4>
-                    <span>Gagal <?php echo $session->getFlashdata('fail_add') ? 'menambahkan data' : ($session->getFlashdata('fail_edit') ? 'mengedit' . ' data ' . '<a class="alert-link" data-bs-toggle="modal" data-bs-target="#editDataModal' . $session->get('id') . '" style="cursor: pointer;text-decoration: none;">' .  old('nama_edit') . ' ' . '(' . old('nim_edit') . ')' . '</a>' : 'menambahkan/mengedit data'); ?></span>
+                    <span>Gagal <?php echo $session->getFlashdata('fail_add') ? 'menambahkan data' : ($session->getFlashdata('fail_edit') ? 'mengedit' . ' data ' . '<a class="alert-link" data-bs-toggle="modal" data-bs-target="#editDataModal' . $session->get('id') . '" style="cursor: pointer;text-decoration: none;">' .  session()->get('nama') . ' ' . '(' . old('nim_edit') . ')' . '</a>' : 'menambahkan/mengedit data'); ?></span>
                     <br>
                     <a class="mb-0 alert-link" data-bs-toggle="modal" data-bs-target="<?php echo $session->getFlashdata('fail_add') ? '#addNewDataModal' : ($session->getFlashdata('fail_edit') ? '#editDataModal' . $session->get('id') : ' ');  ?>" style="cursor: pointer; text-decoration: underline;">Coba Lagi</a>
                 </div>
@@ -108,49 +108,62 @@ $session = \Config\Services::session();
         <? //php endif; 
         ?> -->
     </div>
-
-    <table class="table my-3">
-        <thead>
-            <tr>
-                <th scope="col">No</th>
-                <th scope="col">NIM</th>
-                <th scope="col">Nama Mahasiswa</th>
-                <th scope="col">Tempat<br>Tanggal Lahir</th>
-                <th scope="col">Alamat</th>
-                <th scope="col">Nomor HP</th>
-                <th scope="col">Jurusan</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-
-            $no = 1 + (5 * ($page - 1));
-            // $no = count($mahasiswa) * $page - (count($mahasiswa) - 1);
-
-            foreach ($mahasiswa as  $row) :
-            ?>
-
+    <?php
+    // cek kalo databases ada isinya
+    // dd(session()->getFlashdata());
+    if (session()->getFlashdata('fail_search') == true) { ?>
+        echo session()->getFlashdata('fail_search');
+    <?php } else if (empty($mahasiswa)) { ?>
+        <div class="container">
+            <div class="row">
+                <h3 class="text-center">Data Mahasiswa Kosong</h3>
+                <a class="text-center" data-bs-toggle="modal" data-bs-target="#addNewDataModal" style="cursor: pointer;text-decoration: none; color:aqubluea">-> Silahkan tambah data <- </a>
+            </div>
+        </div>
+    <?php } else { ?>
+        <table class="table my-3">
+            <thead>
                 <tr>
-                    <th><?= $no++; ?></th>
-                    <td><?= $row->nim_mhs ?></td>
-                    <td><?= $row->nama_mhs ?></td>
-                    <td><?= $row->TmpLahir_mhs . '<br>' . $row->TglLahir_mhs ?></td>
-                    <td><?= $row->alamat_mhs ?></td>
-                    <td><?= $row->hp_mhs ?></td>
-                    <td><?= $row->jurusan_mhs ?></td>
-
-
-                    <!-- Tombol Ubah & Hapus -->
-
-                    <td><button id="editModalBtn" class="btn btn-<?php echo (session()->getFlashdata('fail_edit') == true) ? ($session->get('id') == $row->id_mhs ? 'secondary' : 'warning') : 'warning'; ?>" type="button" data-bs-toggle="modal" data-bs-target="#editDataModal<?php echo $row->id_mhs; ?>">Edit</button></td>
-                    <?php $session->markAsTempdata('id', 2); //Hapus session id biar tombolnya bisa balik jadi warning lagi 
-                    ?>
-                    <td><button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $row->id_mhs; ?>">Hapus</button></td>
+                    <th scope="col">No</th>
+                    <th scope="col">NIM</th>
+                    <th scope="col">Nama Mahasiswa</th>
+                    <th scope="col">Tempat<br>Tanggal Lahir</th>
+                    <th scope="col">Alamat</th>
+                    <th scope="col">Nomor HP</th>
+                    <th scope="col">Jurusan</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <?= $pager->links('mahasiswa', 'mahasiswa_pagination') ?>
+            </thead>
+            <tbody>
+                <?php
+
+                $no = 1 + (5 * ($page - 1));
+                // $no = count($mahasiswa) * $page - (count($mahasiswa) - 1);
+
+                foreach ($mahasiswa as  $row) :
+                ?>
+
+                    <tr>
+                        <th><?= $no++; ?></th>
+                        <td><?= $row->nim_mhs ?></td>
+                        <td><?= $row->nama_mhs ?></td>
+                        <td><?= $row->TmpLahir_mhs . '<br>' . $row->TglLahir_mhs ?></td>
+                        <td><?= $row->alamat_mhs ?></td>
+                        <td><?= $row->hp_mhs ?></td>
+                        <td><?= $row->jurusan_mhs ?></td>
+
+
+                        <!-- Tombol Ubah & Hapus -->
+
+                        <td><button id="editModalBtn" class="btn btn-<?php echo (session()->getFlashdata('fail_edit') == true) ? ($session->get('id') == $row->id_mhs ? 'secondary' : 'warning') : 'warning'; ?>" type="button" data-bs-toggle="modal" data-bs-target="#editDataModal<?php echo $row->id_mhs; ?>">Edit</button></td>
+                        <?php $session->markAsTempdata('id', 2); //Hapus session id biar tombolnya bisa balik jadi warning lagi 
+                        ?>
+                        <td><button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $row->id_mhs; ?>">Hapus</button></td>
+                    </tr>
+            <?php endforeach;
+            } ?>
+            </tbody>
+        </table>
+        <?= $pager->links('mahasiswa', 'mahasiswa_pagination') ?>
 </div>
 
 
@@ -169,7 +182,7 @@ $session = \Config\Services::session();
 
                 <form method="POST" id="formAddNewData" enctype="multipart/form-data">
                     <!-- <div class="form-floating mb-3">
-                        <input type="number" name="nim" maxlength="7" placeholder="nim" id="inputNim" class="form-control <? //= ($validation->hasError('nim')) ? 'is-invalid' : ''; 
+                        <input type="number" name="nim" maxlength="7" placeholder="nim" id="inputNim" class="form-control <? //= ($validation->hasError('nim')) ? 'is-invalid' : 'is-valid'; 
                                                                                                                             ?>" value="<? //= old('nim'); 
                                                                                                                                         ?>" autofocus required>
                         <label for="inputNim">NIM</label>
@@ -183,7 +196,7 @@ $session = \Config\Services::session();
                         ?>
                     </div> -->
                     <div class="form-floating mb-3">
-                        <input type="text" name="nama" size="255" placeholder="Nama" id="inputNama" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" value="<?= old('nama'); ?>" required>
+                        <input type="text" name="nama" size="255" placeholder="Nama" id="inputNama" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : 'is-valid'; ?>" value="<?= old('nama'); ?>" required>
                         <label for="inputNama">Nama</label>
                         <?php if ($validation->getError('nama')) { ?>
                             <div class='invalid-feedback'>
@@ -192,7 +205,7 @@ $session = \Config\Services::session();
                         <?php } ?>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" name="TmpLahir" size="255" placeholder="TempatLahir" id="inputTempatLahir" class="form-control <?= ($validation->hasError('TmpLahir')) ? 'is-invalid' : ''; ?>" value="<?= old('TmpLahir'); ?>" required>
+                        <input type="text" name="TmpLahir" size="255" placeholder="TempatLahir" id="inputTempatLahir" class="form-control <?= ($validation->hasError('TmpLahir')) ? 'is-invalid' : 'is-valid'; ?>" value="<?= old('TmpLahir'); ?>" required>
                         <label for="inputTempatLahir">Tempat Lahir</label>
                         <?php if ($validation->getError('TmpLahir')) { ?>
                             <div class='invalid-feedback'>
@@ -201,7 +214,7 @@ $session = \Config\Services::session();
                         <?php } ?>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="date" name="TglLahir" placeholder="TanggalLahir" id="inputTanggalLahir" class="form-control <?= ($validation->hasError('TglLahir')) ? 'is-invalid' : ''; ?>" value="<?= old('TglLahir'); ?>" required>
+                        <input type="date" name="TglLahir" placeholder="TanggalLahir" id="inputTanggalLahir" class="form-control <?= ($validation->hasError('TglLahir')) ? 'is-invalid' : 'is-valid'; ?>" value="<?= old('TglLahir'); ?>" required>
                         <label for="inputTanggalLahir">Tanggal Lahir</label>
                         <?php if ($validation->getError('TglLahir')) { ?>
                             <div class='invalid-feedback'>
@@ -210,7 +223,7 @@ $session = \Config\Services::session();
                         <?php } ?>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" name="alamat" size="255" placeholder="Alamat" id="inputAlamat" class="form-control <?= ($validation->hasError('alamat')) ? 'is-invalid' : ''; ?>" value="<?= old('alamat'); ?>" required>
+                        <input type="text" name="alamat" size="255" placeholder="Alamat" id="inputAlamat" class="form-control <?= ($validation->hasError('alamat')) ? 'is-invalid' : 'is-valid'; ?>" value="<?= old('alamat'); ?>" required>
                         <label for="inputAlamat">Alamat</label>
                         <?php if ($validation->getError('alamat')) { ?>
                             <div class='invalid-feedback'>
@@ -219,7 +232,7 @@ $session = \Config\Services::session();
                         <?php } ?>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="tel" name="telepon" maxlength="13" placeholder="Telepon" id="inputTelepon" pattern="{0-9}+" class="form-control <?= ($validation->hasError('telepon')) ? 'is-invalid' : ''; ?>" value="<?= old('telepon'); ?>" required>
+                        <input type="tel" name="telepon" maxlength="13" placeholder="Telepon" id="inputTelepon" pattern="{0-9}+" class="form-control <?= ($validation->hasError('telepon')) ? 'is-invalid' : 'is-valid'; ?>" value="<?= old('telepon'); ?>" required>
                         <label for="inputTelepon">HP/Telepon</label>
                         <?php if ($validation->getError('telepon')) { ?>
                             <div class='invalid-feedback'>
@@ -228,7 +241,7 @@ $session = \Config\Services::session();
                         <?php } ?>
                     </div>
                     <div class="form-floating mb-0">
-                        <select class="form-control <?= ($validation->hasError('jurusan')) ? 'is-invalid' : ''; ?>" name="jurusan" id="jurusan" required>
+                        <select class="form-control <?= ($validation->hasError('jurusan')) ? 'is-invalid' : 'is-valid'; ?>" name="jurusan" id="jurusan" required>
                             <option value="sejarah" <?= (old('jurusan') == 'sejarah') ? 'selected' : ''; ?>>Sejarah</option>
                             <option value="mipa" <?= (old('jurusan') == 'mipa') ? 'selected' : '' ?>>Matematika & IPA</option>
                             <option value="sastra" <?= (old('jurusan') == 'sastra') ? 'selected' : ''; ?>>Sastra</option>
@@ -281,7 +294,7 @@ foreach ($mahasiswa as  $row) :
                             <label for="inputNim">NIM</label>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" name="nama_edit" size="255" placeholder="Nama" id="inputNama" class="form-control <?php if (old('id') == $row->id_mhs) : ?><?= ($validation->hasError('nama_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" value="<?php echo old('id') == $row->id_mhs ? old('nama_edit') : $row->nama_mhs ?>" required>
+                            <input type="text" name="nama_edit" size="255" placeholder="Nama" id="inputNama" class="form-control <?php if (old('id') == $row->id_mhs) : ?><?= ($validation->hasError('nama_edit')) ? 'is-invalid' : 'is-valid'; ?><?php endif; ?>" value="<?php echo old('id') == $row->id_mhs ? old('nama_edit') : $row->nama_mhs ?>" required>
                             <label for="inputNama">Nama</label>
 
                             <?php if (old('id') == $row->id_mhs) {
@@ -293,7 +306,7 @@ foreach ($mahasiswa as  $row) :
                                     } ?>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" name="TmpLahir_edit" size="255" placeholder="TempatLahir" id="inputTempatLahir" class="form-control <?php if (old('id') == $row->id_mhs) : ?><?= ($validation->hasError('TmpLahir_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" value="<?php echo old('id') == $row->id_mhs ? old('TmpLahir_edit') : $row->TmpLahir_mhs ?>" required>
+                            <input type="text" name="TmpLahir_edit" size="255" placeholder="TempatLahir" id="inputTempatLahir" class="form-control <?php if (old('id') == $row->id_mhs) : ?><?= ($validation->hasError('TmpLahir_edit')) ? 'is-invalid' : 'is-valid'; ?><?php endif; ?>" value="<?php echo old('id') == $row->id_mhs ? old('TmpLahir_edit') : $row->TmpLahir_mhs ?>" required>
                             <label for="inputTempatLahir">Tempat Lahir</label>
 
                             <?php if (old('id') == $row->id_mhs) {
@@ -305,7 +318,7 @@ foreach ($mahasiswa as  $row) :
                                     } ?>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="date" name="TglLahir_edit" placeholder="TanggalLahir" id="inputTanggalLahir" class="form-control <?php if (old('id') == $row->id_mhs) : ?><?= ($validation->hasError('TglLahir_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" value="<?php echo old('id') == $row->id_mhs ? old('TglLahir_edit') : $row->TglLahir_mhs ?>" required>
+                            <input type="date" name="TglLahir_edit" placeholder="TanggalLahir" id="inputTanggalLahir" class="form-control <?php if (old('id') == $row->id_mhs) : ?><?= ($validation->hasError('TglLahir_edit')) ? 'is-invalid' : 'is-valid'; ?><?php endif; ?>" value="<?php echo old('id') == $row->id_mhs ? old('TglLahir_edit') : $row->TglLahir_mhs ?>" required>
                             <label for="inputTanggalLahir">Tanggal Lahir</label>
 
                             <?php if (old('id') == $row->id_mhs) {
@@ -317,7 +330,7 @@ foreach ($mahasiswa as  $row) :
                                     } ?>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" name="alamat_edit" size="255" placeholder="Alamat" id="inputAlamat" class="form-control <?php if (old('id') == $row->id_mhs) : ?><?= ($validation->hasError('alamat_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" value="<?php echo old('id') == $row->id_mhs ? old('alamat_edit') : $row->alamat_mhs ?>" required>
+                            <input type="text" name="alamat_edit" size="255" placeholder="Alamat" id="inputAlamat" class="form-control <?php if (old('id') == $row->id_mhs) : ?><?= ($validation->hasError('alamat_edit')) ? 'is-invalid' : 'is-valid'; ?><?php endif; ?>" value="<?php echo old('id') == $row->id_mhs ? old('alamat_edit') : $row->alamat_mhs ?>" required>
                             <label for="inputAlamat">Alamat</label>
 
                             <?php if (old('id') == $row->id_mhs) {
@@ -329,7 +342,7 @@ foreach ($mahasiswa as  $row) :
                                     } ?>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="tel" name="telepon_edit" maxlength="13" placeholder="Telepon" id="inputTelepon" pattern="{0-9}+" class="form-control <?php if (old('id') == $row->id_mhs) : ?><?= ($validation->hasError('telepon_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" value="<?php echo old('id') == $row->id_mhs ? old('telepon_edit') : $row->hp_mhs ?>" required>
+                            <input type="tel" name="telepon_edit" maxlength="13" placeholder="Telepon" id="inputTelepon" pattern="{0-9}+" class="form-control <?php if (old('id') == $row->id_mhs) : ?><?= ($validation->hasError('telepon_edit')) ? 'is-invalid' : 'is-valid'; ?><?php endif; ?>" value="<?php echo old('id') == $row->id_mhs ? old('telepon_edit') : $row->hp_mhs ?>" required>
                             <label for="inputTelepon">HP/Telepon</label>
 
                             <?php if (old('id') == $row->id_mhs) {
@@ -342,15 +355,9 @@ foreach ($mahasiswa as  $row) :
                         </div>
                         <div class="form-floating mb-0">
                             <select class="form-control <?php if (old('id') == $row->id_mhs) : ?><?= ($validation->hasError('jurusan_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" name="jurusan_edit" id="jurusan_edit" required>
-                                <?php if ($validation->hasError('jurusan_edit')) { ?>
-                                    <option value="sejarah" <?= (old('jurusan') == 'sejarah') ? 'selected' : ''; ?>>Sejarah</option>
-                                    <option value="mipa" <?= (old('jurusan') == 'mipa') ? 'selected' : '' ?>>Matematika & IPA</option>
-                                    <option value="sastra" <?= (old('jurusan') == 'sastra') ? 'selected' : ''; ?>>Sastra</option>
-                                <?php } else { ?>
-                                    <option value="sejarah" <?= ($row->jurusan_mhs == 'Sejarah') ? 'selected' : ''; ?>>Sejarah</option>
-                                    <option value="mipa" <?= ($row->jurusan_mhs == 'MIPA') ? 'selected' : '' ?>>Matematika & IPA</option>
-                                    <option value="sastra" <?= ($row->jurusan_mhs == 'Sastra') ? 'selected' : ''; ?>>Sastra</option>
-                                <?php } ?>
+                                <option value="sejarah" <?= (old('jurusan_edit') == 'sejarah') ? 'selected' : ''; ?>>Sejarah</option>
+                                <option value="mipa" <?= (old('jurusan_edit') == 'mipa') ? 'selected' : '' ?>>Matematika & IPA</option>
+                                <option value="sastra" <?= (old('jurusan_edit') == 'sastra') ? 'selected' : ''; ?>>Sastra</option>
                             </select>
                             <label for="inputJurusan">Jurusan</label>
                             <?php if (old('id') == $row->id_mhs) {
@@ -452,6 +459,16 @@ foreach ($mahasiswa as  $row) :
 </div>
 
 <script>
+    $(document).ready(function() {
+
+        // Buat buka modal lewar url (Gangerti cara makenya)
+        if (window.location.href.indexOf('#editDataModal' + $id) != -1) {
+            $('#editDataModal' + $id).modal('show');
+        }
+
+    });
+
+    // Reset warna tombol saat klik close alerts (dah ga kepake)
     function resetColor() {
         var element = document.getElementById("editModalBtn");
         element.classList.remove("btn-secondary");

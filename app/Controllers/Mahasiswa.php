@@ -31,8 +31,10 @@ class Mahasiswa extends Controller
 
         if ($keyword) {
             $mhs = $this->mhs->search($keyword);
+            $paginate = $this->mhs->search($keyword)->paginate(5, 'mahasiswa');
+            $keyword = session()->set('keyword', $keyword);
         } else {
-            session()->setFlashdata('fail_search', 'Gagal mencari data mahasiswa');
+            $paginate = $this->mhs->paginate(5, 'mahasiswa');
             $mhs = $this->mhs;
         }
 
@@ -40,13 +42,13 @@ class Mahasiswa extends Controller
             'title'     => 'Dashboard | Admin',
             'tampil'    => 'viewdatamahasiswa',
             'validation' => \Config\Services::validation(),
-            'mahasiswa' => json_decode(json_encode($mhs->paginate(5, 'mahasiswa')), FALSE), //Ngubah data dari modelmahasiswa(array) ke object
+            'mahasiswa' => json_decode(json_encode($paginate), FALSE), //Ngubah data dari modelmahasiswa(array) ke string
             'pager'     => $mhs->pager,
             'page' => $page,
             'keyword' => $keyword,
         ];
 
-        echo view('pages/viewdatamahasiswa', $data);
+        return view('pages/viewdatamahasiswa', $data);
     }
 
     public function SimpanData()
@@ -135,10 +137,9 @@ class Mahasiswa extends Controller
             $id = $this->mhs->insert($data);
 
             session()->set('nama', $this->request->getVar('nama'));
-            session()->set('nim', $this->request->getVar('nim'));
             session()->setFlashdata('success_add', 'Data Berhasil Diinput');
 
-            return redirect()->to('/mahasiswa')->with('id', $id)->with('nim', $nim);
+            return redirect()->back()->with('id', $id)->with('nim', $nim);
         }
     }
 
@@ -206,6 +207,7 @@ class Mahasiswa extends Controller
                 ]
             ],
         ])) {
+            $id = $this->request->getVar('id');
             $flash = [
                 'head' => 'Input tidak sesuai ketentuan',
                 'body' => 'Gagal mengedit data',
@@ -214,6 +216,7 @@ class Mahasiswa extends Controller
             $validation = \Config\Services::validation();
 
             session()->set('id', $this->request->getVar('id'));
+            session()->set('nama', json_decode(json_encode(($this->mhs->query("SELECT nama_mhs FROM mahasiswa WHERE id_mhs = '$id'")->getRowArray()['nama_mhs']))), FALSE);
             session()->setFlashdata('fail_edit', $flash);
             return redirect()->back()->withInput();
         } else {
@@ -243,7 +246,7 @@ class Mahasiswa extends Controller
                 session()->set('nim', (string) $data['nim_mhs']);
                 session()->set('nama', $this->request->getVar('nama_edit'));
                 session()->setFlashdata('success_edit', 'Data Berhasil Diedit');
-                return redirect()->to('Mahasiswa');
+                return redirect()->back();
             }
         }
     }
@@ -255,34 +258,4 @@ class Mahasiswa extends Controller
         session()->setFlashdata('deleted', 'Data berhasil dihapus');
         return redirect()->to('mahasiswa')->withInput();
     }
-
-    // public function edit()
-    // {
-    //     $this->mhs = new ModelMahasiswa();
-    //     $nim = $this->request->getVar('nim_mhs');
-    //     $data = [
-    //         'nama_mhs' => $this->request->getVar('nama'),
-    //         'TmpLahir_mhs' => $this->request->getVar('TmpLahir'),
-    //         'TglLahir_mhs' => $this->request->getVar('TglLahir'),
-    //         'alamat_mhs' => $this->request->getVar('alamat'),
-    //         'hp_mhs' => $this->request->getVar('telepon'),
-    //         'jurusan_mhs' => $this->request->getVar('jurusan'),
-    //     ];
-    //     $this->mhs->EditData($data, $this->mhs);
-    //     return redirect()->to('/mahasiswa');
-    // }
-
-
-    // $data = [
-    //     'id_edit', $row['id_mhs'],
-    //     'nim_edit', $row['nim_mhs'],
-    //     'nama_edit', $row['nama_mhs'],
-    //     'TmpLahir_edit', $row['TmpLahir_mhs'],
-    //     'TglLahir_edit', $row['TglLahir_mhs'],
-    //     'alamat_edit', $row['alamat_mhs'],
-    //     'hp_edit', $row['hp_mhs'],
-    //     'jurusan_edit', $row['jurusan_mhs'],
-    // ];
-
-    // session()->set($data);
 }
