@@ -152,7 +152,8 @@ $session = \Config\Services::session();
                             <th class="row my-auto">
                                 <a class="col-6" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $row->id_mhs; ?>"><i class="bi bi-trash-fill" style="color: red; cursor: pointer;text-decoration: none;"></i></a>
 
-                                <a id="editModalBtn" class="col-6" data-bs-toggle="modal" data-bs-target="#editDataModal<?php echo $row->id_mhs; ?>"><i class="bi bi-pencil-fill" style="cursor: pointer;text-decoration: none; color:<?php echo (session()->getFlashdata('fail_edit') == true) ? ($session->get('id') == $row->id_mhs ? 'grey' : 'green') : 'green'; ?>;"></i></a>
+                                <a id="editModalBtn" class="col-6" data-bs-toggle="modal" data-bs-target="#editDataModal<?php echo $row->id_mhs; ?>"><i class="bi bi-pencil-fill" style="cursor: pointer;text-decoration: none; color:<?php echo (session()->getFlashdata('fail_edit')) ? (($session->get('id') == $row->id_mhs) ? 'grey' : 'yellow') : ((session()->getFlashdata('success_edit')) ? (($session->get('id') == $row->id_mhs) ? 'green' : 'yellow') : 'yellow'); ?>;"></i></a>
+
                                 <?php $session->markAsTempdata('id', 2); //Hapus session id biar tombolnya bisa balik jadi warning lagi 
                                 ?>
                             </th>
