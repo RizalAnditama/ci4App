@@ -119,53 +119,57 @@ $session = \Config\Services::session();
     <?php } else if (empty($mahasiswa)) { ?>
         <div class="container">
             <div class="row">
-                <h3 class="text-center">Data Mahasiswa Kosong</h3>
+                <h3 class="text-center">Data <?php echo $keyword = (session()->get('keyword')) ? '"' . session()->get('keyword') . '"' : 'Mahasiswa'; ?> Kosong</h3>
                 <a class="text-center" data-bs-toggle="modal" data-bs-target="#addNewDataModal" style="cursor: pointer;text-decoration: none; color:aqubluea">-> Silahkan tambah data <- </a>
             </div>
         </div>
     <?php } else { ?>
-        <table class="table my-3">
-            <thead>
-                <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">NIM</th>
-                    <th scope="col">Nama Mahasiswa</th>
-                    <th scope="col">Tempat<br>Tanggal Lahir</th>
-                    <th scope="col">Alamat</th>
-                    <th scope="col">Nomor HP</th>
-                    <th scope="col">Jurusan</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-
-                $no = 1 + (5 * ($page - 1));
-                // $no = count($mahasiswa) * $page - (count($mahasiswa) - 1);
-
-                foreach ($mahasiswa as  $row) :
-                ?>
-
+        <div class="mb-3" style="overflow-x:auto;">
+            <table class="table">
+                <thead>
                     <tr>
-                        <th><?= $no++; ?></th>
-                        <td><?= $row->nim_mhs ?></td>
-                        <td><?= $row->nama_mhs ?></td>
-                        <td><?= $row->TmpLahir_mhs . '<br>' . $row->TglLahir_mhs ?></td>
-                        <td><?= $row->alamat_mhs ?></td>
-                        <td><?= $row->hp_mhs ?></td>
-                        <td><?= $row->jurusan_mhs ?></td>
-
-
-                        <!-- Tombol Ubah & Hapus -->
-
-                        <td><button id="editModalBtn" class="btn btn-<?php echo (session()->getFlashdata('fail_edit') == true) ? ($session->get('id') == $row->id_mhs ? 'secondary' : 'warning') : 'warning'; ?>" type="button" data-bs-toggle="modal" data-bs-target="#editDataModal<?php echo $row->id_mhs; ?>">Edit</button></td>
-                        <?php $session->markAsTempdata('id', 2); //Hapus session id biar tombolnya bisa balik jadi warning lagi 
-                        ?>
-                        <td><button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $row->id_mhs; ?>">Hapus</button></td>
+                        <th scope="col">Action</th>
+                        <th scope="col">No</th>
+                        <th scope="col">NIM</th>
+                        <th scope="col">Nama Mahasiswa</th>
+                        <th scope="col">Tempat<br>Tanggal Lahir</th>
+                        <th scope="col">Alamat</th>
+                        <th scope="col">Nomor HP</th>
+                        <th scope="col">Jurusan</th>
                     </tr>
-            <?php endforeach;
-            } ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php
+
+                    $no = 1 + (5 * ($page - 1));
+                    // $no = count($mahasiswa) * $page - (count($mahasiswa) - 1);
+
+                    foreach ($mahasiswa as  $row) :
+                    ?>
+
+                        <tr>
+                            <!-- Tombol Ubah & Hapus -->
+                            <th class="row my-auto">
+                                <a class="col-6" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $row->id_mhs; ?>"><i class="bi bi-trash-fill" style="color: red; cursor: pointer;text-decoration: none;"></i></a>
+
+                                <a id="editModalBtn" class="col-6" data-bs-toggle="modal" data-bs-target="#editDataModal<?php echo $row->id_mhs; ?>"><i class="bi bi-pencil-fill" style="cursor: pointer;text-decoration: none; color:<?php echo (session()->getFlashdata('fail_edit') == true) ? ($session->get('id') == $row->id_mhs ? 'grey' : 'green') : 'green'; ?>;"></i></a>
+                                <?php $session->markAsTempdata('id', 2); //Hapus session id biar tombolnya bisa balik jadi warning lagi 
+                                ?>
+                            </th>
+
+                            <td><?= $no++; ?></td>
+                            <td><?= $row->nim_mhs ?></td>
+                            <td><?= $row->nama_mhs ?></td>
+                            <td><?= $row->TmpLahir_mhs . '<br>' . $row->TglLahir_mhs ?></td>
+                            <td><?= $row->alamat_mhs ?></td>
+                            <td><?= $row->hp_mhs ?></td>
+                            <td><?= $row->jurusan_mhs ?></td>
+                        </tr>
+                <?php endforeach;
+                } ?>
+                </tbody>
+            </table>
+        </div>
         <?= $pager->links('mahasiswa', 'mahasiswa_pagination') ?>
 </div>
 
@@ -358,9 +362,15 @@ foreach ($mahasiswa as  $row) :
                         </div>
                         <div class="form-floating mb-0">
                             <select class="form-control <?php if (old('id') == $row->id_mhs) : ?><?= ($validation->hasError('jurusan_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" name="jurusan_edit" id="jurusan_edit" required>
-                                <option value="sejarah" <?= (old('jurusan_edit') == 'sejarah') ? 'selected' : ''; ?>>Sejarah</option>
-                                <option value="mipa" <?= (old('jurusan_edit') == 'mipa') ? 'selected' : '' ?>>Matematika & IPA</option>
-                                <option value="sastra" <?= (old('jurusan_edit') == 'sastra') ? 'selected' : ''; ?>>Sastra</option>
+                                <?php if ($validation->hasError('jurusan_edit')) { ?>
+                                    <option value="sejarah" <?= (old('jurusan') == 'sejarah') ? 'selected' : ''; ?>>Sejarah</option>
+                                    <option value="mipa" <?= (old('jurusan') == 'mipa') ? 'selected' : '' ?>>Matematika & IPA</option>
+                                    <option value="sastra" <?= (old('jurusan') == 'sastra') ? 'selected' : ''; ?>>Sastra</option>
+                                <?php } else { ?>
+                                    <option value="sejarah" <?= ($row->jurusan_mhs == 'Sejarah') ? 'selected' : ''; ?>>Sejarah</option>
+                                    <option value="mipa" <?= ($row->jurusan_mhs == 'MIPA') ? 'selected' : '' ?>>Matematika & IPA</option>
+                                    <option value="sastra" <?= ($row->jurusan_mhs == 'Sastra') ? 'selected' : ''; ?>>Sastra</option>
+                                <?php } ?>
                             </select>
                             <label for="inputJurusan">Jurusan</label>
                             <?php if (old('id') == $row->id_mhs) {
