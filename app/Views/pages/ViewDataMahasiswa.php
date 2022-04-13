@@ -120,7 +120,7 @@ $session = \Config\Services::session();
         <div class="container">
             <div class="row">
                 <h3 class="text-center">Data <?php echo $keyword = (session()->get('keyword')) ? '"' . session()->get('keyword') . '"' : 'Mahasiswa'; ?> Kosong</h3>
-                <a class="text-center" data-bs-toggle="modal" data-bs-target="#addNewDataModal" style="cursor: pointer;text-decoration: none; color:aqubluea">-> Silahkan tambah data <- </a>
+                <a class="text-center" data-bs-toggle="modal" data-bs-target="#addNewDataModal" style="cursor: pointer;text-decoration: none; color:aqubluea"><i class="bi bi-cloud-arrow-up-fill"></i> Silahkan tambah data <i class="bi bi-cloud-arrow-up-fill"></i></a>
             </div>
         </div>
     <?php } else { ?>
@@ -148,11 +148,11 @@ $session = \Config\Services::session();
                     ?>
 
                         <tr>
-                            <!-- Tombol Ubah & Hapus -->
+                            <!-- Tombol Edit & Hapus -->
                             <th class="row my-auto">
                                 <a class="col-6" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $row->id_mhs; ?>"><i class="bi bi-trash-fill" style="color: red; cursor: pointer;text-decoration: none;"></i></a>
 
-                                <a id="editModalBtn" class="col-6" data-bs-toggle="modal" data-bs-target="#editDataModal<?php echo $row->id_mhs; ?>"><i class="bi bi-pencil-fill" style="cursor: pointer;text-decoration: none; color:<?php echo (session()->getFlashdata('fail_edit')) ? (($session->get('id') == $row->id_mhs) ? 'grey' : 'yellow') : ((session()->getFlashdata('success_edit')) ? (($session->get('id') == $row->id_mhs) ? 'green' : 'yellow') : 'yellow'); ?>;"></i></a>
+                                <a id="editModalBtn" class="col-6" data-bs-toggle="modal" data-bs-target="#editDataModal<?php echo $row->id_mhs; ?>"><i class="bi bi-pencil-fill" style="cursor: pointer;text-decoration: none; color:<?php echo (session()->getFlashdata('fail_edit')) ? (($session->get('id') == $row->id_mhs) ? 'orange' : 'black') : ((session()->getFlashdata('success_edit')) ? (($session->get('id') == $row->id_mhs) ? 'green' : 'black') : 'black'); ?>;"></i></a>
 
                                 <?php $session->markAsTempdata('id', 2); //Hapus session id biar tombolnya bisa balik jadi warning lagi 
                                 ?>
@@ -439,15 +439,15 @@ foreach ($mahasiswa as  $row) :
                             <label for="inputJurusan">Jurusan</label>
                         </div>
                 </div>
-                <div class="modal-footer">
-                    <h5>Yakin hapus data <?php echo $row->nama_mhs . ' ' . '(' . $row->nim_mhs . ')' ?> ?</h5>
-                    <div class="row">
-                        <form action="" method="post" class="d-inline">
+                <div class="modal-footer d-flex justify-content-evenly">
+                    <h5 class="text-center">Yakin hapus data <?php echo $row->nama_mhs . ' ' . '(' . $row->nim_mhs . ')' ?> ?</h5>
+                    <div class="d-inline">
+                        <button class="btn btn-secondary" type="button" name="tutup" data-bs-dismiss="modal">Batal</button>
+                        <form action="" method="post" class="d-inline text-center">
                             <?= csrf_field(); ?>
                             <input type="hidden" name="_method" value="DELETE">
                             <a href="<?php echo base_url('mahasiswa/hapus/' . $row->id_mhs) ?>" type="submit" class="btn btn-danger">Hapus</a>
                         </form>
-                        <button class="btn btn-secondary" type="button" name="tutup" data-bs-dismiss="modal">Batal</button>
                     </div>
                 </div>
                 </form> <?= form_close(); ?>
