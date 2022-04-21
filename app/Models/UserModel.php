@@ -20,11 +20,13 @@ class UserModel extends Model
         "phone_no",
         "password",
         "name",
-        "role"
+        "role",
+        "created_at",
+        "updated_at",
     ];
 
     // Dates
-    protected $useTimestamps        = false;
+    protected $useTimestamps        = true;
     protected $dateFormat           = 'datetime';
     protected $createdField         = 'created_at';
     protected $updatedField         = 'updated_at';

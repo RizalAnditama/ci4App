@@ -19,7 +19,7 @@ $session = \Config\Services::session();
                     ?>
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h4>Login</h4>
+                            <h4><?= $title; ?></h4>
                         </div>
 
                         <?php if (session()->get('success')) :
@@ -29,16 +29,11 @@ $session = \Config\Services::session();
                             </div>
                         <?php endif; ?>
 
-
-
                         <div class="card-body">
                             <form method="POST" action="<?= base_url('login') ?>" class="needs-validation">
                                 <div class="form-group">
-                                    <label for="email">Email</label>
-                                    <input id="email" type="email" class="form-control" name="email" tabindex="1" value="<?= $email ?>" required autofocus>
-                                    <div class="invalid-feedback">
-                                        Please fill a valid email (Must contain "@" and ".com")
-                                    </div>
+                                    <label for="user">Email atau Username</label>
+                                    <input id="user" type="text" class="form-control" name="user" tabindex="1" value="<?= $user ?>" required autofocus>
                                 </div>
 
                                 <div class="form-group">
@@ -50,18 +45,33 @@ $session = \Config\Services::session();
                                         Please fill in your password
                                     </div>
                                 </div>
-                                <?php if (isset($validation)) : ?>
+
+                                <?php if (isset($validation)) { ?>
                                     <div class="col-12">
                                         <div class="alert alert-danger" role="alert">
                                             <?= $validation->listErrors() ?>
+                                            <a href="<?= base_url('/forgot-password') ?>" id="forgotpass">Forgot Password?</a>
                                         </div>
                                     </div>
-                                <?php endif; ?>
+                                <?php } else { ?>
+                                    <div class="forgot-password my-2">
+                                        <a href="<?= base_url('/forgot-password') ?>" id="forgotpass">Forgot Password?</a>
+                                    </div>
+                                <?php } ?>
+
+                                <div class="form-group my-3 d-inline">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" name="remember" class="custom-control-input" tabindex="3" id="remember" <?= $remember ?>>
+                                        <label class="custom-control-label" for="remember">Remember Me(Unfinished)</label>
+                                    </div>
+                                </div>
+
                                 <div class="form-group my-3">
                                     <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
                                         Login
                                     </button>
                                 </div>
+
                             </form>
                             <div class="mt-5 text-muted text-center">
                                 Don't have an account? <a href="<?= base_url('register'); ?>">Create One</a>

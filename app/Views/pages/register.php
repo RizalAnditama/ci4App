@@ -27,7 +27,7 @@ $validation = \Config\Services::validation();
                     ?>
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h4>Register</h4>
+                            <h4><?= $title; ?></h4>
                         </div>
 
                         <div class="ms-4 text-muted">
@@ -35,7 +35,7 @@ $validation = \Config\Services::validation();
                         </div>
 
                         <div class="card-body">
-                            <form method="POST">
+                            <form method="POST" action="<?= base_url('register'); ?>">
                                 <div class="form-group row">
                                     <div class="col-6">
                                         <label for="name">Full Name</label>

@@ -9,6 +9,7 @@ class UserController extends BaseController
 {
     public function login()
     {
+        // Data awal
         $data = [
             'title' => 'Login',
             'tampil' => 'login',
@@ -16,50 +17,86 @@ class UserController extends BaseController
             'username' => '',
             'name' => '',
             'phone_no' => '',
+            'user' => '',
             'email' => '',
             'password' => '',
+
+            'remember' => '',
+            
         ];
 
+        // Check if $user is a username or email
+        $userEmail = $this->request->getVar('user');
+        $userEmail = filter_var($userEmail, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
         if ($this->request->getMethod() == 'post') {
-
-            $rules = [
-                // 'username' => 'required|min_length[3]|max_length[50]',
-                // 'name' => 'required|alpha_numeric_space|min_length[2]|max_length[255]',
-                // 'phone' => 'required|numeric|min_length[7]|max_length[15]',
-                'email' => 'required|min_length[6]|max_length[50]|valid_email',
-                'password' => 'required|min_length[8]|max_length[255]|validateUser[email,password]',
-            ];
-
-            $errors = [
-                'email' => [
+            $userVal = $userEmail;
+            if ($userVal == 'email') {
+                $user = 'required|min_length[6]|max_length[50]|valid_email';
+                $err = [
                     'required' => 'Field Email harus diisi',
                     'valid_email' => 'Email harus valid "(Memakai @ dan .com)"',
-                    'min_length' => 'Minimum karakter untuk Field Email adalah 3 karakter',
+                    'min_length' => 'Minimum karakter untuk Field Email adalah 6 karakter',
                     'max_length' => 'Maksimum karakter untuk Field Email adalah 50 karakter'
-                ],
-                'password' => [
+                ];
+                $pass = [
                     'required' => 'Field password harus diisi',
                     'validateUser' => 'Email atau password tidak cocok',
                     'min_length' => 'Minimum karakter untuk Field password adalah 8 karakter',
                     'max_length' => 'Maksimum karakter untuk Field password adalah 255 karakter'
-                ],
+                ];
+            } else {
+                $user = 'required|min_length[3]|max_length[50]';
+                $err = [
+                    'required' => 'Field Username harus diisi',
+                    'alpha_numeric' => 'Field Username hanya boleh berisi huruf dan angka',
+                    'min_length' => 'Minimum karakter untuk Field Username adalah 3 karakter',
+                    'max_length' => 'Maksimum karakter untuk Field Username adalah 50 karakter'
+                ];
+                $pass = [
+                    'required' => 'Field password harus diisi',
+                    'validateUser' => 'Username atau password tidak cocok',
+                    'min_length' => 'Minimum karakter untuk Field password adalah 8 karakter',
+                    'max_length' => 'Maksimum karakter untuk Field password adalah 255 karakter'
+                ];
+            }
+
+            $rules = [
+                'user' => $user,
+                'password' => 'required|min_length[8]|max_length[255]|validateUser[email,password]',
+                // 'name' => 'required|alpha_numeric_space|min_length[2]|max_length[255]',
+                // 'phone' => 'required|numeric|min_length[7]|max_length[15]',
             ];
 
+            $errors = [
+                'user' => $err,
+                'password' => $pass,
+            ];
+
+            if ($userEmail == 'email') {
+                $email = $this->request->getVar('user');
+            } else {
+                $email = '';
+            }
+
+            // Validate if user input is valid
             if (!$this->validate($rules, $errors)) {
                 $data = [
                     'validation' => $this->validator,
                     'tampil' => 'login',
                     'title' => 'Login',
-                    'email' => $this->request->getPost('email'),
+                    'user' => $this->request->getPost('user'),
                     'password' => $this->request->getPost('password'),
+                    'email' => $email,
+                    'emailforgot' => $email,
                 ];
 
                 return view('pages/login', $data);
             } else {
                 $model = new UserModel();
 
-                $user = $model->where('email', $this->request->getVar('email'))
-                    ->first();
+                // Let user login via email or username
+                $user = $model->where('email', $this->request->getVar('user'))->orwhere('username', $this->request->getVar('user'))->first();
 
                 // Storing session values
                 $this->setUserSession($user);
@@ -91,6 +128,79 @@ class UserController extends BaseController
         return true;
     }
 
+    //! Unfinished function 
+    //TODO : Create a function to send email to user 
+    public function sendEmail($user)
+    {
+        $email = \Config\Services::email();
+
+        $email->setTo($user);
+
+        $email->setSubject('Email Test');
+        $email->setMessage('Testing the email class.');
+
+        $email->send();
+    }
+
+    //! Unfinished function
+    // TODO : Create a function to send email to user about changing password
+    // ? How to send email to user about changing password?
+    public function ForgotPassword()
+    {
+        $data = [
+            'title' => 'Forgot Your Password ? (Unfinished)',
+            'email' => '',
+        ];
+
+        // validate email
+        if ($this->request->getMethod() == 'post') {
+            $rules = [
+                'email' => 'required|valid_email',
+            ];
+
+            $errors = [
+                'email' => [
+                    'required' => 'Field Email harus diisi',
+                    'valid_email' => 'Email harus valid "(Memakai @ dan .com)"',
+                ],
+            ];
+
+            if (!$this->validate($rules, $errors)) {
+                $data = [
+                    'title' => 'Forgot Your Password ? (Unfinished)',
+                    'validation' => $this->validator,
+                    'email' => $this->request->getVar('email'),
+                ];
+
+                return view('pages/forgot-password', $data);
+            } else {
+                $model = new UserModel();
+                $user = $model->where('email', $this->request->getVar('email'))->first();
+
+                if ($user) {
+
+                    $this->sendEmail($user);
+
+                    session()->setFlashdata('success', 'Silahkan cek email anda untuk melakukan reset password');
+                    
+                    $data = [
+                        'title' => 'Forgot Your Password ? (Unfinished)',
+                        'email' => $this->request->getVar('email'),
+                    ];
+                } else {
+                    $data = [
+                        'title' => 'Forgot Your Password ? (Unfinished)',
+                        'email' => $this->request->getVar('email'),
+                        session()->setFlashdata('error', 'Email tidak terdaftar'),
+                    ];
+                    return view('pages/forgot-password', $data);
+                }
+            }
+        }
+
+        return view('pages/forgot-password', $data);
+    }
+
     public function register()
     {
         $data = [
@@ -103,6 +213,9 @@ class UserController extends BaseController
             'email' => '',
             'password' => '',
             'password_confirm' => '',
+
+            'remember' => '',
+            
         ];
 
         if ($this->request->getMethod() == 'post') {
@@ -198,6 +311,8 @@ class UserController extends BaseController
                 $data = [
                     'email' => $this->request->getVar('email'),
                     'password' => $this->request->getVar('password'),
+                    'remember' => '',
+                    
                     'tampil' => 'login',
                     'title' => 'Login'
                 ];
@@ -206,6 +321,33 @@ class UserController extends BaseController
         }
         return view('pages/register', $data);
     }
+
+    // Make a function to remember me
+    public function remember()
+    {
+        $model = new UserModel();
+        $user = $model->where('email', $this->request->getVar('email'))->first();
+        if ($user) {
+            $data = [
+                'email' => $this->request->getVar('email'),
+                'password' => $this->request->getVar('password'),
+                'remember' => 'checked',
+                'tampil' => 'login',
+                'title' => 'Login'
+            ];
+            return view('pages/login', $data);
+        } else {
+            $data = [
+                'email' => $this->request->getVar('email'),
+                'password' => $this->request->getVar('password'),
+                'remember' => '',
+                'tampil' => 'forgot-password',
+                'title' => 'Forgot Your Password ? (Unfinished)'
+            ];
+            return view('pages/forgot-password', $data);
+        }
+    }
+
     public function logout()
     {
         session()->destroy();
