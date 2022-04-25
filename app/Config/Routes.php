@@ -37,26 +37,34 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 //...
 
-$routes->match(['get', 'post'], 'register', 'UserController::register', ['filter' => 'noauth']);
-$routes->match(['get', 'post'], 'login', 'UserController::login', ["filter" => "noauth"]);
+// Public Routes
+$routes->group('', ['filter' => 'noauth'], function ($routes) {
+    $routes->match(['get', 'post'], 'register', 'UserController::register');
+    $routes->match(['get', 'post'], 'login', 'UserController::login');
+    $routes->match(['get', 'post'], 'forgot-password', 'UserController::ForgotPassword');
+});
+
 // Admin routes
 $routes->group("admin", ["filter" => "auth"], function ($routes) {
     $routes->get("/", "AdminController::index");
+    $routes->group('mahasiswa', function ($routes) {
+        $routes->post('SimpanData', 'Mahasiswa::SimpanData');
+        $routes->add('edit/(:any)', 'Mahasiswa::edit/$1');
+        $routes->get('hapus/(:segment)', 'Mahasiswa::hapus/$1');
+    });
 });
+
 // Member routes
 $routes->group("member", ["filter" => "auth"], function ($routes) {
     $routes->get("/", "MemberController::index");
 });
-$routes->get('logout', 'UserController::logout');
 
-//Simpan Data Mahasiswa
-$routes->post('/mahasiswa/SimpanData', 'Mahasiswa::SimpanData');
-//Edit Data Mahasiswa
-$routes->add('/mahasiswa/edit/(:any)', 'Mahasiswa::edit/$1');
-// Hapus Data Mahasiswa
-$routes->get('/mahasiswa/hapus/(:segment)', 'Mahasiswa::hapus/$1');
-
-
+// Settings routes
+$routes->group('settings', ['filter' => 'auth'], function ($routes) {
+    $routes->get('/', 'Settings::index');
+    $routes->get('profile', 'Settings::profile');
+    $routes->get('logout', 'Settings::logout');
+});
 /*
  * --------------------------------------------------------------------
  * Additional Routing
