@@ -9,10 +9,10 @@ class UserController extends BaseController
 {
     public function login()
     {
+        helper('form');
         // Data awal
         $data = [
             'title' => 'Login',
-            'tampil' => 'login',
 
             'username' => '',
             'name' => '',
@@ -22,7 +22,7 @@ class UserController extends BaseController
             'password' => '',
 
             'remember' => '',
-            
+
         ];
 
         // Check if $user is a username or email
@@ -89,6 +89,8 @@ class UserController extends BaseController
                     'password' => $this->request->getPost('password'),
                     'email' => $email,
                     'emailforgot' => $email,
+
+                    'remember' => '',
                 ];
 
                 return view('pages/login', $data);
@@ -100,6 +102,8 @@ class UserController extends BaseController
 
                 // Storing session values
                 $this->setUserSession($user);
+                session()->set('ye', 'active');
+                session()->markAsTempdata('ye', 3);
 
                 // Redirecting to dashboard after login
                 if ($user['role'] == "admin") {
@@ -115,7 +119,7 @@ class UserController extends BaseController
     private function setUserSession($user)
     {
         $data = [
-            'id' => $user['id'],
+            'id_user' => $user['id'],
             'username' => $user['username'],
             'name' => $user['name'],
             'phone_no' => $user['phone_no'],
@@ -182,7 +186,7 @@ class UserController extends BaseController
                     $this->sendEmail($user);
 
                     session()->setFlashdata('success', 'Silahkan cek email anda untuk melakukan reset password');
-                    
+
                     $data = [
                         'title' => 'Forgot Your Password ? (Unfinished)',
                         'email' => $this->request->getVar('email'),
@@ -215,10 +219,16 @@ class UserController extends BaseController
             'password_confirm' => '',
 
             'remember' => '',
-            
+
         ];
 
         if ($this->request->getMethod() == 'post') {
+            $admin = $this->request->getVar('admin');
+            if (null != $admin) {
+                $admin = 'required|admin_key[admin]';
+            } else {
+                $admin = 'permit_empty';
+            }
             $rules = [
                 'username' => [
                     'label' => 'Username',
@@ -278,6 +288,14 @@ class UserController extends BaseController
                         'matches' => 'Password konfirmasi harus sama',
                     ]
                 ],
+                'admin' => [
+                    'label' => 'Admin',
+                    'rules' => $admin,
+                    'errors' => [
+                        'required' => 'Field Admin harus diisi',
+                        'admin_key' => 'Keycode salah',
+                    ]
+                ],
             ];
 
             if (!$this->validate($rules)) {
@@ -291,11 +309,18 @@ class UserController extends BaseController
                     'email' => $this->request->getVar('email'),
                     'password' => $this->request->getVar('password'),
                     'password_confirm' => $this->request->getVar('password_confirm'),
+                    'admin' => $this->request->getVar('admin'),
                 ];
 
                 return view('pages/register', $data);
             } else {
                 $model = new UserModel();
+
+                if ($this->request->getVar('admin') == 'endit') {
+                    $newData = 'admin';
+                } else {
+                    $newData = 'member';
+                }
 
                 $newData = [
                     'username' => $this->request->getVar('username'),
@@ -303,16 +328,18 @@ class UserController extends BaseController
                     'phone_no' => $this->request->getVar('phone_no'),
                     'email' => $this->request->getVar('email'),
                     'password' => $this->request->getVar('password'),
+                    'role' => $newData,
                 ];
                 $model->save($newData);
                 session();
                 $session = session();
                 $session->setFlashdata('success', 'Successful Registration');
                 $data = [
+                    'user' => $this->request->getVar('username'),
                     'email' => $this->request->getVar('email'),
                     'password' => $this->request->getVar('password'),
                     'remember' => '',
-                    
+
                     'tampil' => 'login',
                     'title' => 'Login'
                 ];
@@ -322,7 +349,8 @@ class UserController extends BaseController
         return view('pages/register', $data);
     }
 
-    // Make a function to remember me
+    //! Unfinished function 
+    //TODO : Create a function to remember me 
     public function remember()
     {
         $model = new UserModel();
@@ -346,11 +374,5 @@ class UserController extends BaseController
             ];
             return view('pages/forgot-password', $data);
         }
-    }
-
-    public function logout()
-    {
-        session()->destroy();
-        return redirect()->to('login');
     }
 }

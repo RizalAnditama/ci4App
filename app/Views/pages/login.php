@@ -6,8 +6,6 @@
 
 $session = \Config\Services::session();
 //? Tempat Debug
-// dd($session->get())
-
 ?>
 <div id="app">
     <section class="section">

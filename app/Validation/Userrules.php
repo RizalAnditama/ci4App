@@ -18,4 +18,13 @@ class Userrules
 
         return password_verify($data['password'], $user['password']);
     }
+
+    public function admin_key(string $str, string $fields, array $data)
+    {
+        if ($data['admin'] == 'endit') {
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -15,11 +15,6 @@ $validation = \Config\Services::validation();
         <div class="container mt-5">
             <div class="row">
                 <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
-                    <!-- <div class="login-brand">
-                            <img src="<? //= base_url('template'); 
-                                        ?>/assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle">
-                        </div> -->
-
                     <?php
 
                     use App\Controllers\Register;
@@ -56,10 +51,6 @@ $validation = \Config\Services::validation();
                                 </div>
 
                                 <div class="row">
-                                    <!-- <div class="form-group col-6">
-                                        <label for="phone_no">No. Telepon</label>
-                                        <input type="tel" pattern="[0-9]{0-15}" id="phone_no" class="form-control">
-                                    </div> -->
                                     <div class="form-group col-6">
                                         <label for="phone_no">Phone No</label>
                                         <input type="tel" pattern="[0-9]{0-15}" class="form-control <?= ($validation->hasError('phone_no')) ? 'is-invalid' : ''; ?>" name="phone_no" id="phone_no" value="<?= $phone_no ?>"><?php if ($validation->getError('phone_no')) { ?>
@@ -78,7 +69,7 @@ $validation = \Config\Services::validation();
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
+                                <div class="form-group row mb-3">
                                     <div class="col-6">
                                         <label for="password" class="d-block">Password</label>
                                         <input id="password" type="password" class="form-control <?= ($validation->hasError('password')) ? 'is-invalid' : ''; ?>" name="password" value="<?= $password ?>"><?php if ($validation->getError('password')) { ?>
@@ -89,12 +80,25 @@ $validation = \Config\Services::validation();
                                     </div>
                                     <div class="col-6">
                                         <label for="password_confirm" class="d-block">Confirm Password</label>
-                                        <input id="password_confirm" type="password" class="form-control <?= ($validation->hasError('password_confirm')) ? 'is-invalid' : ''; ?>" name="password_confirm" value="<?= $password_confirm ?>"><?php if ($validation->getError('password_confirm')) { ?>
+                                        <input id="password_confirm" type="password" class="form-control <?= ($validation->hasError('password_confirm')) ? 'is-invalid' : ''; ?>" name="password_confirm" value="<?= $password_confirm ?>">
+                                        <?php if ($validation->getError('password_confirm')) { ?>
                                             <div class='invalid-feedback mb-2'>
                                                 <?= $error = $validation->getError('password_confirm'); ?>
                                             </div>
                                         <?php } ?>
-
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6"></div>
+                                    <div class="col-6">
+                                        <div class="form-outline">
+                                            <input name="admin" id="admin" type="password" class="form-control <?= ($validation->hasError('admin')) ? 'is-invalid' : ''; ?>">
+                                            <label for="admin" class="form-label">Special Key (admin only)</label><?php if ($validation->getError('admin')) { ?>
+                                                <div class='invalid-feedback mb-2'>
+                                                    <?= $error = $validation->getError('admin'); ?>
+                                                </div>
+                                            <?php } ?>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
