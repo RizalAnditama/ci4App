@@ -32,10 +32,11 @@ class UserController extends BaseController
         if ($this->request->getMethod() == 'post') {
             $userVal = $userEmail;
             if ($userVal == 'email') {
-                $user = 'required|min_length[6]|max_length[50]|valid_email';
+                $user = 'required|min_length[6]|max_length[50]|valid_email|is_exist[email]';
                 $err = [
                     'required' => 'Field Email harus diisi',
                     'valid_email' => 'Email harus valid "(Memakai @ dan .com)"',
+                    'is_exist' => 'Email tidak terdaftar',
                     'min_length' => 'Minimum karakter untuk Field Email adalah 6 karakter',
                     'max_length' => 'Maksimum karakter untuk Field Email adalah 50 karakter'
                 ];
@@ -46,9 +47,10 @@ class UserController extends BaseController
                     'max_length' => 'Maksimum karakter untuk Field password adalah 255 karakter'
                 ];
             } else {
-                $user = 'required|min_length[3]|max_length[50]';
+                $user = 'required|min_length[3]|max_length[50]|is_exist[username]';
                 $err = [
                     'required' => 'Field Username harus diisi',
+                    'is_exist' => 'Username tidak terdaftar',
                     'alpha_numeric' => 'Field Username hanya boleh berisi huruf dan angka',
                     'min_length' => 'Minimum karakter untuk Field Username adalah 3 karakter',
                     'max_length' => 'Maksimum karakter untuk Field Username adalah 50 karakter'
@@ -322,12 +324,15 @@ class UserController extends BaseController
                     $newData = 'member';
                 }
 
+                // hash the password
+                $password = $this->request->getVar('password');
+                $hash = password_hash($password, PASSWORD_DEFAULT);
                 $newData = [
                     'username' => $this->request->getVar('username'),
                     'name' => $this->request->getVar('name'),
                     'phone_no' => $this->request->getVar('phone_no'),
                     'email' => $this->request->getVar('email'),
-                    'password' => $this->request->getVar('password'),
+                    'password' => $hash,
                     'role' => $newData,
                 ];
                 $model->save($newData);

@@ -1,11 +1,18 @@
 <?= $this->extend("layouts/app") ?>
 
 <?= $this->section("body") ?>
-
 <?php
 
+use CodeIgniter\Validation\Validation;
+
+$baseurlhome = basename(base_url('home'));
+$baseurllogin = basename(base_url('login'));
+$baseurlregister = basename(base_url('register'));
+
+$current = basename(current_url());
 $session = \Config\Services::session();
 //? Tempat Debug
+// dd($validation->getErrors());
 ?>
 <div id="app">
     <section class="section">
@@ -47,8 +54,15 @@ $session = \Config\Services::session();
                                 <?php if (isset($validation)) { ?>
                                     <div class="col-12">
                                         <div class="alert alert-danger" role="alert">
-                                            <?= $validation->listErrors() ?>
-                                            <a href="<?= base_url('/forgot-password') ?>" id="forgotpass">Forgot Password?</a>
+                                            <?php if ($validation->getError('user') == "Email tidak terdaftar") { ?>
+                                                <?= $validation->getError('user') ?>
+                                                <br>
+                                                <a href="<?= base_url('register'); ?>" onclick="registerActive()">Create account</a>
+                                            <?php } else { ?>
+                                                <?= $validation->listErrors() ?>
+                                                <br>
+                                                <a href="<?= base_url('/forgot-password') ?>" id="forgotpass">Forgot Password?</a>
+                                            <?php } ?>
                                         </div>
                                     </div>
                                 <?php } else { ?>
@@ -65,14 +79,14 @@ $session = \Config\Services::session();
                                 </div>
 
                                 <div class="form-group my-3">
-                                    <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4" onclick="loginActive()">
                                         Login
                                     </button>
                                 </div>
 
                             </form>
                             <div class="mt-5 text-muted text-center">
-                                Don't have an account? <a href="<?= base_url('register'); ?>">Create One</a>
+                                Don't have an account? <a href="<?= base_url('register'); ?>" onclick="registerActive()">Create One</a>
                             </div>
                         </div>
                     </div>
