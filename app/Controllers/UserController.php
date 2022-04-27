@@ -324,15 +324,12 @@ class UserController extends BaseController
                     $newData = 'member';
                 }
 
-                // hash the password
-                $password = $this->request->getVar('password');
-                $hash = password_hash($password, PASSWORD_DEFAULT);
                 $newData = [
                     'username' => $this->request->getVar('username'),
                     'name' => $this->request->getVar('name'),
                     'phone_no' => $this->request->getVar('phone_no'),
                     'email' => $this->request->getVar('email'),
-                    'password' => $hash,
+                    'password' => $this->request->getVar('password'),
                     'role' => $newData,
                 ];
                 $model->save($newData);
