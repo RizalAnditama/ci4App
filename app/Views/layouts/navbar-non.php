@@ -80,4 +80,18 @@ $current = basename(current_url());
         register.classList.remove("btn-secondary");
         register.classList.add("btn-primary");
     }
+
+    function forgotpassActive() {
+        var forgotpass = document.getElementById("forgotpass");
+        forgotpass.classList.remove("text-primary");
+        forgotpass.classList.add("text-white");
+
+        var login = document.getElementById("login");
+        login.classList.remove("btn-primary");
+        login.classList.add("btn-outline-light");
+
+        var register = document.getElementById("register");
+        register.classList.remove("btn-primary");
+        register.classList.add("btn-secondary");
+    }
 </script>

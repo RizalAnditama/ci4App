@@ -19,17 +19,12 @@
                         ?>
                             <div class="alert alert-success" role="alert">
                                 <?= session()->get('success') ?>
-                                <a href="<?php echo base_url('login') ?>" class="mt-1 alert-link">Kembali ke halaman login?</a>
+                                <br>
+                                <a href="<?php echo base_url('login') ?>" class="mt-1 alert-link" onclick="loginActive()">Kembali ke halaman login?</a>
                             </div>
                         <?php endif; ?>
-                        <?php if (session()->get('error')) :
-                        ?>
-                            <div class="alert alert-danger" role="alert">
-                                <?= session()->get('error') ?>
-                            </div>
-                        <?php endif; ?>
-                        <div class="card-body">
 
+                        <div class="card-body">
                             <form method="POST" action="<?= base_url('forgot-password') ?>">
                                 <?= csrf_field(); ?>
                                 <?php if (isset($validation)) { ?>
@@ -39,6 +34,14 @@
                                         </div>
                                     </div>
                                 <?php } ?>
+                                <?php if (session()->get('error')) :
+                                ?>
+                                    <div class="alert alert-danger" role="alert">
+                                        <?= session()->get('error') ?>
+                                        <br>
+                                        <a href="<?php echo base_url('register') ?>" class="mt-1 alert-link" onclick="registerActive()">Create account</a>
+                                    </div>
+                                <?php endif; ?>
                                 <div class="form-group">
                                     <!-- <label for="email">Email</label> -->
                                     <input id="email" type="email" class="form-control" name="email" tabindex="1" placeholder="Email" value="<?php echo $email ?>" required autofocus>
@@ -50,7 +53,7 @@
                             </form>
 
                             <div class="mt-5 text-muted text-center">
-                                Go back? <a href="<?= base_url('login'); ?>">Login</a>
+                                Go back? <a href="<?= base_url('login'); ?>" onclick="loginActive()">Login</a>
                             </div>
                         </div>
                     </div>
