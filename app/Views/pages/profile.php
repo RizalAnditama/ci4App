@@ -9,7 +9,8 @@
     <?php endif ?>
 </script>
 
-<?php $milliseconds = round(microtime(true) * 1000) ?>
+<!-- <? //php $milliseconds = round(microtime(true) * 1000) 
+        ?> -->
 
 <?php
 if (null != session()->getFlashdata('errors')) {
@@ -132,8 +133,8 @@ if (null != session()->getFlashdata('errors')) {
                                 <img src="<?php echo old('profile_pic') ?? $profile_pic; ?>" alt="avatar" class="rounded-circle img-fluid" style="min-width: 250px; min-height: 100px;">
                                 <div class="form-outline">
                                     <div class="custom-file">
-                                        <input name="profile-pic" type="file" class="custom-file-input" id="profile-pic">
-                                        <label for="profile-pic">Photo Profile</label>
+                                        <input name="profile_pic" type="file" class="custom-file-input" id="profile_pic">
+                                        <label for="profile_pic">Max size : 4MB</label>
                                     </div>
                                 </div>
                             </div>
@@ -141,13 +142,13 @@ if (null != session()->getFlashdata('errors')) {
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-outline username">
-                                            <input type="text" class="form-control <?php echo $invalid = (isset($errors['username']) || array_key_exists('username', $errors)) ? 'is-invalid' : ''; ?>" id="inputusername" name="username" value="<?php echo old('username', session()->get('username')) ?>">
+                                            <input type="text" class="form-control form-control-lg <?php echo $invalid = (isset($errors['username']) || array_key_exists('username', $errors)) ? 'is-invalid' : ''; ?>" id="inputusername" name="username" value="<?php echo old('username', session()->get('username')) ?>">
                                             <label class="form-label" for="inputusername">Username</label>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-outline name">
-                                            <input type="text" class="form-control <?php echo $invalid = (isset($errors['name']) || array_key_exists('name', $errors)) ? 'is-invalid' : ''; ?>" id="inputname" name="name" value="<?php echo old('name', session()->get('name')) ?>">
+                                            <input type="text" class="form-control form-control-lg <?php echo $invalid = (isset($errors['name']) || array_key_exists('name', $errors)) ? 'is-invalid' : ''; ?>" id="inputname" name="name" value="<?php echo old('name', session()->get('name')) ?>">
                                             <label class="form-label" for="inputname">Name</label>
                                         </div>
                                     </div>
@@ -155,7 +156,7 @@ if (null != session()->getFlashdata('errors')) {
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-outline email">
-                                            <input type="email" class="form-control <?php echo $invalid = (isset($errors['email']) || array_key_exists('email', $errors)) ? 'is-invalid' : ''; ?>" id="inputemail" name="email" readonly value="<?php echo old('email', session()->get('email')) ?>">
+                                            <input type="email" class="form-control form-control-lg <?php echo $invalid = (isset($errors['email']) || array_key_exists('email', $errors)) ? 'is-invalid' : ''; ?>" id="inputemail" name="email" readonly value="<?php echo old('email', session()->get('email')) ?>">
                                             <label class="form-label" for="inputemail">Email</label>
                                         </div>
                                     </div>
@@ -163,13 +164,13 @@ if (null != session()->getFlashdata('errors')) {
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-outline phone_no">
-                                            <input type="text" class="form-control <?php echo $invalid = (isset($errors['phone_no']) || array_key_exists('phone_no', $errors)) ? 'is-invalid' : ''; ?>" id="inputphone_no" name="phone_no" value="<?php echo old('phone_no', session()->get('phone_no')) ?>">
+                                            <input type="text" class="form-control form-control-lg <?php echo $invalid = (isset($errors['phone_no']) || array_key_exists('phone_no', $errors)) ? 'is-invalid' : ''; ?>" id="inputphone_no" name="phone_no" value="<?php echo old('phone_no', session()->get('phone_no')) ?>">
                                             <label class="form-label" for="inputphone_no">Mobile</label>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-outline oldPassword">
-                                            <input type="password" class="form-control <?php echo $invalid = (isset($errors['oldPassword']) || array_key_exists('oldPassword', $errors)) ? 'is-invalid' : ''; ?>" id="inputoldPassword" name="oldPassword" value="<?php echo old('oldPassword') ?>">
+                                            <input type="password" class="form-control form-control-lg <?php echo $invalid = (isset($errors['oldPassword']) || array_key_exists('oldPassword', $errors)) ? 'is-invalid' : ''; ?>" id="inputoldPassword" name="oldPassword" value="<?php echo old('oldPassword') ?>">
                                             <label class="form-label" for="inputoldPassword">Old Password</label>
                                         </div>
                                     </div>
@@ -177,13 +178,13 @@ if (null != session()->getFlashdata('errors')) {
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-outline newPassword">
-                                            <input type="password" class="form-control <?php echo $invalid = (isset($errors['newPassword']) || array_key_exists('newPassword', $errors)) ? 'is-invalid' : ''; ?>" id="inputnewPassword" name="newPassword" value="<?php echo old('newPassword') ?>">
+                                            <input type="password" class="form-control form-control-lg <?php echo $invalid = (isset($errors['newPassword']) || array_key_exists('newPassword', $errors)) ? 'is-invalid' : ''; ?>" id="inputnewPassword" name="newPassword" value="<?php echo old('newPassword') ?>">
                                             <label class="form-label" for="inputnewPassword">New Password</label>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-outline passwordConfirm">
-                                            <input name="passwordConfirm" type="password" id="passwordConfirm" class="form-control <?php echo $invalid = (isset($errors['passwordConfirm']) || array_key_exists('passwordConfirm', $errors)) ? 'is-invalid' : ''; ?>" value="<?php echo old('passwordConfirm') ?>">
+                                            <input name="passwordConfirm" type="password" id="passwordConfirm" class="form-control form-control-lg <?php echo $invalid = (isset($errors['passwordConfirm']) || array_key_exists('passwordConfirm', $errors)) ? 'is-invalid' : ''; ?>" value="<?php echo old('passwordConfirm') ?>">
                                             <label class="form-label" for="passwordConfirm">Confirm Password</label>
                                         </div>
                                     </div>
@@ -192,8 +193,8 @@ if (null != session()->getFlashdata('errors')) {
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary" value="profile">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
                 </form> <?php echo form_close() ?>
             </div>
@@ -211,5 +212,6 @@ if (null != session()->getFlashdata('errors')) {
         // add ajax validation with messages get from controller
         // then add validation to form
     </script>
-    <?php d(round(microtime(true) * 1000) - $milliseconds); ?>
+    <!-- <? //php d(round(microtime(true) * 1000) - $milliseconds); 
+            ?> -->
     <?= $this->endSection() ?>

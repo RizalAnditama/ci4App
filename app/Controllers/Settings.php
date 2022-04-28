@@ -35,6 +35,7 @@ class Settings extends BaseController
             'title' => 'My Profile',
             'errors' => [],
             'validation' => $this->validator,
+            'profile_pic' => base_url('assets') . $this->userModel->getProfilePic(session()->get('id_user')),
         ];
 
         if ($this->request->getMethod() == 'post') {
@@ -127,6 +128,16 @@ class Settings extends BaseController
                         'matches' => 'Password konfirmasi harus sama',
                     ]
                 ],
+                'profile_pic' => [
+                    'label' => 'Profile Picture',
+                    'rules' => 'permit_empty|max_size[profile_pic,10000]|mime_in[profile_pic,image/jpg,image/jpeg,image/png]|is_image[profile_pic]|is_allowed_file_type[profile_pic,jpg,jpeg,png]',
+                    'errors' => [
+                        'max_size' => 'Ukuran file terlalu besar (max: 10MB)',
+                        'mime_in' => 'Format file tidak sesuai',
+                        'is_image' => 'File yang diupload bukan gambar',
+                        'is_allowed_file_type' => 'Format file tidak sesuai',
+                    ]
+                ],
             ])) {
                 if (null !== ($this->request->getPost('newPassword'))) {
                     // check old password
@@ -140,16 +151,27 @@ class Settings extends BaseController
                     }
                 }
 
-                $data = [
-                    'username' => $this->request->getPost('username'),
-                    'name' => $this->request->getPost('name'),
-                    'phone_no' => $this->request->getPost('phone_no'),
-                ];
+                $file = $this->request->getFile('profile_pic');
+                $profile_pic = $file->getName();
 
-                session()->set($data);
+                if ($file->move("images", $profile_pic)) {
 
-                $this->userModel->update(['id' => session()->get('id_user')], $data);
-                session()->setFlashdata('success', 'Profile berhasil diubah');
+                    $userModel = new UserModel();
+
+                    $data = [
+                        "name" => $this->request->getVar("name"),
+                        "email" => $this->request->getVar("email"),
+                        "phone_no" => $this->request->getVar("phone_no"),
+                        "profile_pic" => $profile_pic,
+                    ];
+
+                    if ($userModel->insert($data)) {
+                        $this->userModel->update(['id' => session()->get('id_user')], $data);
+                        session()->setFlashdata('success', 'Profile berhasil diubah');
+                    } else {
+                        session()->setFlashdata("error", "Failed to save data");
+                    }
+                }
                 return redirect()->back();
             } else {
                 $errors = $this->validator->getErrors();
