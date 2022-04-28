@@ -24,7 +24,7 @@ if (null != session()->getFlashdata('errors')) {
             <div class="col-lg-4">
                 <div class="card mb-4">
                     <div class="card-body text-center">
-                        <img src="https://picsum.photos/id/500/100/100" alt="avatar" class="rounded-circle img-fluid" style="min-width: 150px; min-height: 150px;">
+                        <img src="<?php echo $profile_pic; ?>" alt="avatar" class="rounded-circle img-fluid" style="min-width: 100px; min-height: 100px;">
                         <h5 class="my-3"><?= session()->get('name') ?></h5>
                         <p class="text-muted mb-1"><?php
                                                     $role = session()->get('role');
@@ -129,7 +129,7 @@ if (null != session()->getFlashdata('errors')) {
                                 </div>
                             <?php endif ?>
                             <div class="col-<?php echo (null != $errors) ? '4' : '6'; ?> row">
-                                <img src="https://picsum.photos/id/500/100/100" alt="avatar" class="rounded-circle img-fluid" style="min-width: 250px; min-height: 150px;">
+                                <img src="<?php echo old('profile_pic') ?? $profile_pic; ?>" alt="avatar" class="rounded-circle img-fluid" style="min-width: 250px; min-height: 100px;">
                                 <div class="form-outline">
                                     <div class="custom-file">
                                         <input name="profile-pic" type="file" class="custom-file-input" id="profile-pic">

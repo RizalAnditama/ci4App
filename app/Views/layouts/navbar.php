@@ -45,9 +45,9 @@ use App\Models\UserModel;
 $baseurlprof = basename(base_url('profile'));
 $baseurlsettings = basename(base_url('settings'));
 $current = basename(current_url());
-$this->userModel = new UserModel();
 
-$profile_pic = $this->userModel->getProfilePic(session()->get('id_user'));
+$this->userModel = new UserModel();
+$profile_pic = base_url('assets') . $this->userModel->getProfilePic(session()->get('id_user'));
 ?>
 
 <script>
@@ -114,7 +114,7 @@ $profile_pic = $this->userModel->getProfilePic(session()->get('id_user'));
             <!-- Avatar -->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
-                    <img src="<?php echo base_url('assets') . $profile_pic; ?>" class="rounded-circle" height="22" alt="" loading="lazy">
+                    <img src="<?php echo $profile_pic; ?>" class="rounded-circle" height="22" alt="" loading="lazy">
                     <!-- // get profile-pic from database
                     $this->db->select('profile_pic');
                     $this->db->from('users');
