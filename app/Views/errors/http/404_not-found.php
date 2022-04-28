@@ -11,19 +11,15 @@
         --glowSize: 10px;
     }
 
-    html,
-    body {
+    #canvas {
         width: 100%;
         height: 100%;
         margin: 0px;
     }
 
-    * {
+    #app {
         font-family: 'Press Start 2P', cursive;
         box-sizing: border-box;
-    }
-
-    #app {
         padding: 1rem;
         background: black;
         display: flex;
@@ -41,7 +37,7 @@
         font-size: 1.8rem;
     }
 
-    a {
+    #canvas a {
         color: var(--color-a);
         text-decoration: none;
         font-size: 1.8rem;
@@ -72,27 +68,29 @@
         animation-iteration-count: infinite;
     }
 </style>
-<div id="app">
-    <div>404</div>
-    <p class="txt">File Not Found</p>
-    <p class="txt">
-        <?php if (!empty($message) && $message !== '(null)') : ?>
-            <?= nl2br(esc($message)) ?>
-        <?php else : ?>
-            Sorry! Cannot seem to find the page you were looking for.
-        <?php endif ?>
-    </p>
-    <br>
-    <a href="<?php
-                if (session()->get('role') == "admin") {
-                    echo base_url('admin');
-                } elseif (session()->get('role') == "member") {
-                    echo base_url('member');
-                } else {
-                    echo base_url('login');
-                }
-                ?>">Go Back?</a><span class="blink">_</span>
+<div id="canvas">
+    <div id="app">
+        <div>404</div>
+        <p class="txt">File Not Found</p>
+        <p class="txt">
+            <?php if (!empty($message) && $message !== '(null)') : ?>
+                <?= nl2br(esc($message)) ?>
+            <?php else : ?>
+                Sorry! Cannot seem to find the page you were looking for.
+            <?php endif ?>
+        </p>
+        <br>
+        <a href="<?php
+                    if (session()->get('role') == "admin") {
+                        echo base_url('admin');
+                    } elseif (session()->get('role') == "member") {
+                        echo base_url('member');
+                    } else {
+                        echo base_url('login');
+                    }
+                    ?>">Go Back?</a><span class="blink">_</span>
 
+    </div>
 </div>
 
 

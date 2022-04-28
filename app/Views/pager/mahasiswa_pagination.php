@@ -22,7 +22,7 @@
         <?php if ($pager->hasPrevious()) : ?>
             <li class="page-item">
                 <a class="page-link" href="<?= $pager->getFirst() ?>" aria-label="<?= lang('Pager.first') ?>">
-                    <span aria-hidden="true"><?= lang('Pager.first') ?></span>
+                    <i class="bi bi-skip-backward-fill"></i>
                 </a>
             </li>
             <li class="page-item">
@@ -48,7 +48,7 @@
             </li>
             <li class="page-item">
                 <a class="page-link" href="<?= $pager->getLast() ?>" aria-label="<?= lang('Pager.last') ?>">
-                    <span aria-hidden="true"><?= lang('Pager.last') ?></span>
+                    <i class="bi bi-skip-forward-fill"></i>
                 </a>
             </li>
         <?php endif ?>

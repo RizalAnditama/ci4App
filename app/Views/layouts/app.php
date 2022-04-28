@@ -10,27 +10,98 @@
 
     <!-- General CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link rel="stylesheet" href="<?= base_url('assets'); ?>/mdb/css/mdb.min.css">
+
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css"> -->
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="<?= base_url('template'); ?>/assets/css/components.css">
+
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous" type="text/javascript"></script>
+    <style>
+        .noselect {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+    </style>
 </head>
 
 <body>
 
-    <?= $this->renderSection("body") ?>
+    <div class="container-fluid">
+        <div class="row">
+            <?php if (session()->get('role') == 'admin') { ?>
+                <div class="col-md-2 p-0">
+                    <?= $this->include('layouts/sidebar') ?>
+                </div>
+                <div class="col-md-10 my-5 py-2" loading="lazy">
+                    <?= $this->renderSection('body') ?>
+                </div>
+                <div class=" p-0">
+                    <?= $this->include('layouts/navbar') ?>
+                </div>
+            <?php } else if (session()->get('role') == 'member') { ?>
+                <div class="col-md-2 p-0">
+                    <?= $this->include('layouts/sidebar') ?>
+                </div>
+                <div class="col-md-10 my-5 py-2" loading="lazy">
+                    <?= $this->renderSection('body') ?>
+                </div>
+                <div class=" p-0">
+                    <?= $this->include('layouts/navbar') ?>
+                </div>
+            <?php } else { ?>
+                <div class="p-0">
+                    <?= $this->include('layouts/navbar-non') ?>
+                </div>
+                <div class="p-0" loading="lazy">
+                    <?= $this->renderSection('body') ?>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+
+    <!-- Modal logout -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="modal-title h5" id="logoutModalLabel">Yakin ingin Logout ?</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-danger col-6 " href="<?= site_url('settings/logout') ?>">Logout</a>
+                    <button class="btn btn-outline-secondary col-6" type="button" data-bs-dismiss="modal">Batal</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- General JS Scripts -->
-    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/@bootstrap/core@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script src="<?= base_url('template'); ?>/assets/js/stisla.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.min.js"></script>
+    <!-- MDB -->
+    <script type="text/javascript" src="<?= base_url('assets'); ?>/mdb/js/mdb.min.js"></script>
+    <!-- <script src="<//?= base_url('template'); ?>/assets/js/stisla.js"></script> -->
 
-    <!-- Template JS File -->
-    <script src="<?= base_url('template'); ?>/assets/js/scripts.js"></script>
-    <script src="<?= base_url('template'); ?>/assets/js/custom.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/additional-methods.min.js"></script> -->
 
+    <!-- Template JS File
+    <script src="<//?= base_url('template'); ?>/assets/js/scripts.js"></script>
+    <script src="<//?= base_url('template'); ?>/assets/js/custom.js"></script> -->
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
         <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />

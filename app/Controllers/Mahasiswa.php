@@ -41,6 +41,24 @@ class Mahasiswa extends Controller
             $mhs = $this->mhs;
         }
 
+        // findall unique data in table mahasiswa and put it in option variable
+        $option = $this->mhs->findAll();
+        $nama = array_column($option, 'nama_mhs');
+        $nama = array_unique($nama);
+        $nama = array_values($nama);
+
+        $nim = array_column($option, 'nim_mhs');
+        $nim = array_unique($nim);
+        $nim = array_values($nim);
+
+        $TmpLahir = array_column($option, 'TmpLahir_mhs');
+        $TmpLahir = array_unique($TmpLahir);
+        $TmpLahir = array_values($TmpLahir);
+
+        $hp = array_column($option, 'hp_mhs');
+        $hp = array_unique($hp);
+        $hp = array_values($hp);
+
         $data = [
             'title'     => 'Dashboard | Admin',
             'tampil'    => 'viewdatamahasiswa',
@@ -49,6 +67,10 @@ class Mahasiswa extends Controller
             'pager'     => $mhs->pager,
             'page' => $page,
             'keyword' => $keyword,
+            'nama' => $nama,
+            'nim' => $nim,
+            'TmpLahir' => $TmpLahir,
+            'hp' => $hp,
         ];
 
         return view('pages/viewdatamahasiswa', $data);
@@ -113,6 +135,16 @@ class Mahasiswa extends Controller
                     'max_length' => 'maksimum karakter untuk field Jurusan adalah 255 karakter'
                 ]
             ],
+            // 'foto' => [
+            //     'label' => 'foto',
+            //     'rules' => 'uploaded[foto]|max_size[foto,1024]|is_image[foto]|mime_in[foto,image/jpg,image/jpeg,image/png]',
+            //     'errors' => [
+            //         'uploaded' => 'Foto harus diisi',
+            //         'max_size' => 'Ukuran foto maksimal 1MB',
+            //         'is_image' => 'Yang anda upload bukan gambar, coba lampirkan gambar',
+            //         'mime_in' => 'Format foto harus jpg, jpeg, atau png',
+            //     ]
+            // ],
         ])) {
             $flash = [
                 'head' => 'Input tidak sesuai ketentuan',
@@ -133,6 +165,7 @@ class Mahasiswa extends Controller
                 'alamat_mhs' => $this->request->getVar('alamat'),
                 'hp_mhs' => $this->request->getVar('telepon'),
                 'jurusan_mhs' => $this->request->getVar('jurusan'),
+                'foto' => $this->request->getVar('foto'),
             ];
 
             // Ngambil data terakhir dari database (untuk nim dan id)

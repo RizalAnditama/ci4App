@@ -6,11 +6,15 @@ class Home extends BaseController
 {
     public function index()
     {
-        $data = [
-            'title' => 'Home',
-            'tampil' => 'home'
-        ];
-        echo view('pages/home', $data);
+        if (session()->get('role') == "admin") {
+            return redirect()->to(base_url('mahasiswa'));
+        } else {
+            $data = [
+                'title' => 'Home',
+                'tampil' => 'home'
+            ];
+            echo view('pages/home', $data);
+        }
     }
 
     public function welcome()

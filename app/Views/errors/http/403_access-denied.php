@@ -7,24 +7,6 @@
 
 <?= $this->section("body") ?>
 
-<div id="app">
-    <div>403</div>
-    <div class="txt">
-        Access denied
-        <br>
-        Pls go <a href="
-        <?php
-        if (session()->get('role') == "admin") {
-            echo base_url('admin');
-        } elseif (session()->get('role') == "member") {
-            echo base_url('member');
-        } else {
-            echo base_url('login');
-        }
-        ?>">back</a><span class="blink">_</span>
-
-    </div>
-</div>
 
 <style>
     @import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
@@ -43,7 +25,7 @@
         margin: 0px;
     }
 
-    * {
+    #app {
         font-family: 'Press Start 2P', cursive;
         box-sizing: border-box;
     }
@@ -52,6 +34,7 @@
         padding: 1rem;
         background: black;
         display: flex;
+        min-height: 100vh;
         height: 100%;
         justify-content: center;
         align-items: center;
@@ -96,4 +79,24 @@
         animation-iteration-count: infinite;
     }
 </style>
+
+<div id="app">
+    <div>403</div>
+    <div class="txt">
+        Access denied
+        <br>
+        Pls go <a href="
+        <?php
+        if (session()->get('role') == "admin") {
+            echo base_url('admin');
+        } elseif (session()->get('role') == "member") {
+            echo base_url('member');
+        } else {
+            echo base_url('login');
+        }
+        ?>" onclick="loginActive()">back</a><span class="blink">_</span>
+
+    </div>
+</div>
+
 <?= $this->endSection() ?>

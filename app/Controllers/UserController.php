@@ -104,7 +104,7 @@ class UserController extends BaseController
 
                 // Storing session values
                 $this->setUserSession($user);
-                session()->set('ye', 'active');
+                session()->setFlashdata('ye', 'active');
                 session()->markAsTempdata('ye', 3);
 
                 // Redirecting to dashboard after login

@@ -47,6 +47,7 @@ $routes->group('', ['filter' => 'noauth'], function ($routes) {
 // Admin routes
 $routes->group("admin", ["filter" => "auth"], function ($routes) {
     $routes->get("/", "AdminController::index");
+    $routes->get("dashboard", "AdminController::dashboard");
     $routes->group('mahasiswa', function ($routes) {
         $routes->post('SimpanData', 'Mahasiswa::SimpanData');
         $routes->add('edit/(:any)', 'Mahasiswa::edit/$1');
@@ -57,12 +58,17 @@ $routes->group("admin", ["filter" => "auth"], function ($routes) {
 // Member routes
 $routes->group("member", ["filter" => "auth"], function ($routes) {
     $routes->get("/", "MemberController::index");
+    $routes->get("dashboard", "MemberController::dashboard");
 });
 
 // Settings routes
 $routes->group('settings', ['filter' => 'auth'], function ($routes) {
     $routes->get('/', 'Settings::index');
-    $routes->get('profile', 'Settings::profile');
+    // $routes->match(['get', 'post'], 'profile', 'Settings::profile');
+    $routes->group('profile',['filter' => 'auth'], function($routes)
+    {
+        $routes->match(['get', 'post'], 'profile', 'Settings::profile');
+    });
     $routes->get('logout', 'Settings::logout');
 });
 /*

@@ -19,11 +19,18 @@ class MemberController extends BaseController
     public function index()
     {
         $data = [
-            'title'     => 'Dashboard | Member',
-            'tampil'    => 'dashboard_member'
+            'title'     => 'Main Dashboard',
         ];
 
-        return view('pages/dashboard_member', $data);
+        return view('pages/dashboard', $data);
+    }
+
+    public function dashboard()
+    {
+        $data = [
+            'title' => 'Main Dashboard',
+        ];
+        return view('pages/dashboard', $data);
     }
 }
 // 

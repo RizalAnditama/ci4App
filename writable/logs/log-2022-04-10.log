@@ -34,3 +34,23 @@ CRITICAL - 2022-04-10 05:52:41 --> Too few arguments to function App\Controllers
 #3 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
 #4 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
 #5 {main}
+CRITICAL - 2022-04-10 20:08:55 --> Call to a member function getVar() on null
+#0 C:\xampp\htdocs\ci4App\app\Controllers\Mahasiswa.php(126): App\Models\ModelMahasiswa->autonumber()
+#1 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->SimpanData()
+#2 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#3 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#6 {main}
+CRITICAL - 2022-04-10 20:15:23 --> Undefined property: CodeIgniter\View\View::$request
+#0 C:\xampp\htdocs\ci4App\app\Views\pages\ViewDataMahasiswa.php(19): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined prope...', 'C:\\xampp\\htdocs...', 19)
+#1 C:\xampp\htdocs\ci4App\system\View\View.php(210): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\ci4App\system\View\View.php(213): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+#3 C:\xampp\htdocs\ci4App\system\Common.php(1089): CodeIgniter\View\View->render('pages/viewdatam...', Array, true)
+#4 C:\xampp\htdocs\ci4App\app\Controllers\Mahasiswa.php(49): view('pages/viewdatam...', Array)
+#5 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(832): App\Controllers\Mahasiswa->index()
+#6 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Mahasiswa))
+#7 C:\xampp\htdocs\ci4App\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ci4App\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ci4App\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#10 {main}

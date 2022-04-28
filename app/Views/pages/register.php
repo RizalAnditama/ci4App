@@ -26,7 +26,7 @@ $validation = \Config\Services::validation();
                         </div>
 
                         <div class="ms-4 text-muted">
-                            Already have an account? <a href="<?= base_url('login'); ?>">Login</a>
+                            Already have an account? <a href="<?= base_url('login'); ?>" onclick="loginActive()">Login</a>
                         </div>
 
                         <div class="card-body">

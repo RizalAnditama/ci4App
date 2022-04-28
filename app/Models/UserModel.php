@@ -50,21 +50,6 @@ class UserModel extends Model
     protected $beforeDelete         = [];
     protected $afterDelete          = [];
 
-    public function edit($id)
-    {
-        // update
-        $data = [
-            'username' => $this->request->getVar('username'),
-            'email' => $this->request->getVar('email'),
-            'phone_no' => $this->request->getVar('phone_no'),
-            'name' => $this->request->getVar('name'),
-            'role' => $this->request->getVar('role'),
-            'profile_pic' => $this->request->getVar('profile_pic'),
-        ];
-
-        $this->update($id, $data);
-    }
-
     protected function beforeInsert(array $data)
     {
         $data = $this->passwordHash($data);
@@ -116,6 +101,12 @@ class UserModel extends Model
         return $oldPassword;
     }
 
+    // Get profile picture by id_user
+    public function getProfilePic($id_user)
+    {
+        $user = $this->where('id', $id_user)->first();
+        return $user['profile_pic'];
+    }
     // // Update the user's profile data
     // public function updateProfile($data)
     // {

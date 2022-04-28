@@ -17,8 +17,21 @@ class AdminController extends BaseController
             exit;
         }
     }
+
     public function index()
     {
-        return redirect()->to(base_url('Mahasiswa'));
+        $data = [
+            'title' => 'Admin Dashboard',
+        ];
+
+        return view('pages/dashboard', $data);
+    }
+
+    public function dashboard()
+    {
+        $data = [
+            'title' => 'Main Dashboard',
+        ];
+        return view('pages/dashboard', $data);
     }
 }

@@ -10,6 +10,7 @@ class ModelMahasiswa extends Model
     protected $primaryKey = 'id_mhs';
     protected $useAutoIncrement = true;
     protected $returnType     = 'object';
+    // protected $useSoftDeletes = true;
     protected $allowedFields = [
         'nim_mhs',
         'nama_mhs',
@@ -18,7 +19,18 @@ class ModelMahasiswa extends Model
         'alamat_mhs',
         'hp_mhs',
         'jurusan_mhs',
+        'foto',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
+
+    // Dates
+    protected $useTimestamps        = true;
+    protected $dateFormat           = 'datetime';
+    protected $createdField         = 'created_at';
+    protected $updatedField         = 'updated_at';
+    // protected $deletedField         = 'deleted_at';
 
     public function search($keyword)
     {
@@ -29,7 +41,10 @@ class ModelMahasiswa extends Model
                 ->orLike('TmpLahir_mhs', $keyword)
                 ->orLike('TglLahir_mhs', $keyword)
                 ->orLike('alamat_mhs', $keyword)
-                ->orLike('hp_mhs', $keyword);
+                ->orLike('hp_mhs', $keyword)
+                ->orLike('foto', $keyword)
+                ->orLike('created_at', $keyword)
+                ->orLike('updated_at', $keyword);
         } else {
             return session()->setFlashdata('fail_search', 'Gagal mencari data mahasiswa');
         }
