@@ -85,7 +85,6 @@ class UserController extends BaseController
             if (!$this->validate($rules, $errors)) {
                 $data = [
                     'validation' => $this->validator,
-                    'tampil' => 'login',
                     'title' => 'Login',
                     'user' => $this->request->getPost('user'),
                     'password' => $this->request->getPost('password'),
@@ -138,72 +137,44 @@ class UserController extends BaseController
     //TODO : Create a function to send email to user 
     public function sendEmail($user)
     {
-        $email = \Config\Services::email();
-
-        $email->setTo($user);
-
-        $email->setSubject('Email Test');
-        $email->setMessage('Testing the email class.');
-
-        $email->send();
     }
 
     //! Unfinished function
     // TODO : Create a function to send email to user about changing password
     // ? How to send email to user about changing password?
-    public function ForgotPassword()
+    public function forgotPassword()
     {
         $data = [
-            'title' => 'Forgot Your Password ? (Unfinished)',
-            'email' => '',
+            'title' => 'Forgot Password',
+            'validation' => \Config\Services::validation()
         ];
 
-        // validate email
         if ($this->request->getMethod() == 'post') {
             $rules = [
-                'email' => 'required|valid_email',
+                'email' => 'required|valid_email|is_exist[email]',
             ];
 
             $errors = [
                 'email' => [
                     'required' => 'Field Email harus diisi',
                     'valid_email' => 'Email harus valid "(Memakai @ dan .com)"',
+                    'is_exist' => 'Email tidak terdaftar',
                 ],
             ];
 
             if (!$this->validate($rules, $errors)) {
-                $data = [
-                    'title' => 'Forgot Your Password ? (Unfinished)',
-                    'validation' => $this->validator,
-                    'email' => $this->request->getVar('email'),
-                ];
-
+                $data['validation'] = $this->validator;
                 return view('pages/forgot-password', $data);
             } else {
                 $model = new UserModel();
                 $user = $model->where('email', $this->request->getVar('email'))->first();
 
-                if ($user) {
-
-                    $this->sendEmail($user);
-
-                    session()->setFlashdata('success', 'Silahkan cek email anda untuk melakukan reset password');
-
-                    $data = [
-                        'title' => 'Forgot Your Password ? (Unfinished)',
-                        'email' => $this->request->getVar('email'),
-                    ];
-                } else {
-                    $data = [
-                        'title' => 'Forgot Your Password ? (Unfinished)',
-                        'email' => $this->request->getVar('email'),
-                        session()->setFlashdata('error', 'Email tidak terdaftar'),
-                    ];
-                    return view('pages/forgot-password', $data);
-                }
+                $this->sendEmail($user);
+                session()->setFlashdata('ye', 'active');
+                session()->markAsTempdata('ye', 3);
+                return redirect()->to(base_url('user/forgot-password'));
             }
         }
-
         return view('pages/forgot-password', $data);
     }
 
@@ -211,7 +182,6 @@ class UserController extends BaseController
     {
         $data = [
             'title' => 'Register',
-            'tampil' => 'register',
 
             'username' => '',
             'name' => '',
@@ -303,7 +273,6 @@ class UserController extends BaseController
             if (!$this->validate($rules)) {
                 $data = [
                     'validation' => $this->validator,
-                    'tampil' => 'register',
                     'title' => 'Register',
                     'username' => $this->request->getVar('username'),
                     'name' => $this->request->getVar('name'),
@@ -342,7 +311,6 @@ class UserController extends BaseController
                     'password' => $this->request->getVar('password'),
                     'remember' => '',
 
-                    'tampil' => 'login',
                     'title' => 'Login'
                 ];
                 return view('pages/login', $data);
@@ -362,7 +330,6 @@ class UserController extends BaseController
                 'email' => $this->request->getVar('email'),
                 'password' => $this->request->getVar('password'),
                 'remember' => 'checked',
-                'tampil' => 'login',
                 'title' => 'Login'
             ];
             return view('pages/login', $data);
@@ -371,7 +338,6 @@ class UserController extends BaseController
                 'email' => $this->request->getVar('email'),
                 'password' => $this->request->getVar('password'),
                 'remember' => '',
-                'tampil' => 'forgot-password',
                 'title' => 'Forgot Your Password ? (Unfinished)'
             ];
             return view('pages/forgot-password', $data);

@@ -11,7 +11,6 @@ class Home extends BaseController
         } else {
             $data = [
                 'title' => 'Home',
-                'tampil' => 'home'
             ];
             echo view('pages/home', $data);
         }

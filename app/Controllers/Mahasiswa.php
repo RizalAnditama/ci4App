@@ -61,7 +61,6 @@ class Mahasiswa extends Controller
 
         $data = [
             'title'     => 'Dashboard | Admin',
-            'tampil'    => 'viewdatamahasiswa',
             'validation' => \Config\Services::validation(),
             'mahasiswa' => json_decode(json_encode($paginate), FALSE), //Ngubah data dari modelmahasiswa(array) ke string
             'pager'     => $mhs->pager,

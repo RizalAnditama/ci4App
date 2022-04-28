@@ -33,6 +33,7 @@ class Settings extends BaseController
         helper(['form']);
         $data = [
             'title' => 'My Profile',
+            'profile_pic' => $this->userModel->getProfilePic($this->session->get('id_user')),
             'errors' => [],
             'validation' => $this->validator,
         ];

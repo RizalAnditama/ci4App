@@ -82,6 +82,18 @@ class UserModel extends Model
         return $user;
     }
 
+    // check if email already in database
+    public function checkEmail($email)
+    {
+        $user = $this->where('email', $email)->first();
+
+        if ($user) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // Get password by id_user
     public function getPassword($id_user)
     {
