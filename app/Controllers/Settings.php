@@ -35,7 +35,7 @@ class Settings extends BaseController
             'title' => 'My Profile',
             'errors' => [],
             'validation' => $this->validator,
-            'profile_pic' => base_url('assets') . $this->userModel->getProfilePic(session()->get('id_user')),
+            'profile_pic' => base_url() . '/' . $this->userModel->getProfilePic(session()->get('id_user')),
         ];
 
         if ($this->request->getMethod() == 'post') {
@@ -154,7 +154,7 @@ class Settings extends BaseController
                 $file = $this->request->getFile('profile_pic');
                 $profile_pic = $file->getName();
 
-                if ($file->move("images", $profile_pic)) {
+                if ($file->move("images/profile", $profile_pic)) {
 
                     $userModel = new UserModel();
 
@@ -162,11 +162,10 @@ class Settings extends BaseController
                         "name" => $this->request->getVar("name"),
                         "email" => $this->request->getVar("email"),
                         "phone_no" => $this->request->getVar("phone_no"),
-                        "profile_pic" => $profile_pic,
+                        "profile_pic" => 'images/profile/' . $profile_pic,
                     ];
 
-                    if ($userModel->insert($data)) {
-                        $this->userModel->update(['id' => session()->get('id_user')], $data);
+                    if ($userModel->update(['id' => session()->get('id_user')], $data)) {
                         session()->setFlashdata('success', 'Profile berhasil diubah');
                     } else {
                         session()->setFlashdata("error", "Failed to save data");

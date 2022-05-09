@@ -47,7 +47,7 @@ $baseurlsettings = basename(base_url('settings'));
 $current = basename(current_url());
 
 $this->userModel = new UserModel();
-$profile_pic = base_url('assets') . $this->userModel->getProfilePic(session()->get('id_user'));
+$profile_pic = base_url() . '/' . $this->userModel->getProfilePic(session()->get('id_user'));
 ?>
 
 <script>
@@ -111,7 +111,7 @@ $profile_pic = base_url('assets') . $this->userModel->getProfilePic(session()->g
                 </a>
             </li>
 
-            <!-- Avatar -->
+            <!-- Profile -->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
                     <img src="<?php echo $profile_pic; ?>" class="rounded-circle" height="22" alt="" loading="lazy">

@@ -108,11 +108,11 @@ if (null != session()->getFlashdata('errors')) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <?=
-                    form_open('settings/profile');
+                    <?php
+                    echo form_open_multipart('settings/profile');
                     echo csrf_field();
                     ?>
-                    <form method="post" action="<?php echo base_url() ?>/settings/profile" enctype="multipart/form-data">
+                    <form method="post" action="<?php echo site_url('/settings/profile') ?>" enctype="multipart/form-data">
                         <div class="row mb-3">
                             <?php if (null != $errors) : ?>
                                 <div class="col-<?php echo (null != $errors) ? '4' : '6'; ?> row">
@@ -130,7 +130,7 @@ if (null != session()->getFlashdata('errors')) {
                                 </div>
                             <?php endif ?>
                             <div class="col-<?php echo (null != $errors) ? '4' : '6'; ?> row">
-                                <img src="<?php echo old('profile_pic') ?? $profile_pic; ?>" alt="avatar" class="rounded-circle img-fluid" style="min-width: 250px; min-height: 100px;">
+                                <img src="<?php echo $profile_pic; ?>" alt="profile pic" class="rounded-circle img-fluid" style="min-width: 250px; min-height: 100px;">
                                 <div class="form-outline">
                                     <div class="custom-file">
                                         <input name="profile_pic" type="file" class="custom-file-input" id="profile_pic">
