@@ -71,6 +71,11 @@ class UserModel extends Model
         return $data;
     }
 
+    /**
+     * Get username 
+     *
+     * @var string
+     */
     public function getUser($username = false)
     {
         if ($username == false) {
@@ -82,15 +87,24 @@ class UserModel extends Model
         return $user;
     }
 
-    // Get password by id_user
+    /**
+     * Get password by user id 
+     *
+     * @var string
+     */
     public function getPassword($id_user)
     {
         $user = $this->where('id', $id_user)->first();
         return $user['password'];
     }
 
-    // Get old password with query
-    // then compare with new password
+    /**
+     * --------------------------------------------------------------------------------
+     * Check Old Password
+     * ********************************************************************************************
+     * Get old password with query, then compare it with new password 
+     * @var string
+     */
     public function checkOldPassword($oldPassword)
     {
         $model = new UserModel();
@@ -101,7 +115,10 @@ class UserModel extends Model
         return $oldPassword;
     }
 
-    // Get profile picture by id_user
+    /**
+     * Get Profile Pic by user id
+     * @var string
+     */
     public function getProfilePic($id_user)
     {
         $user = $this->where('id', $id_user)->first();
