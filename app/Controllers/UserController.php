@@ -7,6 +7,13 @@ use App\Models\UserModel;
 
 class UserController extends BaseController
 {
+    public function __construct()
+    {
+        $this->userModel = new UserModel();
+        $this->session = session();
+        $this->email = \Config\Services::email();
+    }
+
     public function login()
     {
         helper('form');
@@ -138,14 +145,18 @@ class UserController extends BaseController
     //TODO : Create a function to send email to user 
     public function sendEmail($user)
     {
-        $email = \Config\Services::email();
+        $this->email->setFrom('anditamarizal@gmail.com', 'Rizal Anditama');
+        $this->email->setTo($user);
 
-        $email->setTo($user);
+        $this->email->setSubject('Reset Password');
+        $this->email->setMessage('Click');
 
-        $email->setSubject('Email Test');
-        $email->setMessage('Testing the email class.');
-
-        $email->send();
+        if ($this->email->send()) {
+            return true;
+        } else {
+            echo $this->email->printDebugger();
+            return false;
+        }
     }
 
     //! Unfinished function
@@ -185,9 +196,10 @@ class UserController extends BaseController
 
                 if ($user) {
 
-                    $this->sendEmail($user);
+                    $this->sendEmail($this->request->getVar('email'));
 
                     session()->setFlashdata('success', 'Silahkan cek email anda untuk melakukan reset password');
+                    session()->markAsTempdata('success', 1);
 
                     $data = [
                         'title' => 'Forgot Your Password ? (Unfinished)',
@@ -197,8 +209,9 @@ class UserController extends BaseController
                     $data = [
                         'title' => 'Forgot Your Password ? (Unfinished)',
                         'email' => $this->request->getVar('email'),
-                        session()->setFlashdata('error', 'Email tidak terdaftar'),
                     ];
+                    session()->setFlashdata('error', 'Email tidak terdaftar');
+                    session()->markAsTempdata('error', 1);
                     return view('pages/forgot-password', $data);
                 }
             }

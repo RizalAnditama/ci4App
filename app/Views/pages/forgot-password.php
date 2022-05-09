@@ -43,7 +43,6 @@
                                     </div>
                                 <?php endif; ?>
                                 <div class="form-group">
-                                    <!-- <label for="email">Email</label> -->
                                     <input id="email" type="email" class="form-control" name="email" tabindex="1" placeholder="Email" value="<?php echo $email ?>" required autofocus>
                                 </div>
 
