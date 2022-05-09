@@ -47,7 +47,7 @@ $baseurlsettings = basename(base_url('settings'));
 $current = basename(current_url());
 
 $this->userModel = new UserModel();
-$profile_pic = base_url('assets') . $this->userModel->getProfilePic(session()->get('id_user'));
+$profile_pic = base_url() . '/' . $this->userModel->getProfilePic(session()->get('id_user'));
 ?>
 
 <script>

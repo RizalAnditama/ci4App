@@ -35,6 +35,7 @@ class Settings extends BaseController
             'title' => 'My Profile',
             'errors' => [],
             'validation' => $this->validator,
+            'profile_pic' => base_url() . '/' . $this->userModel->getProfilePic(session()->get('id_user')),
         ];
 
         if ($this->request->getMethod() == 'post') {
