@@ -4,7 +4,6 @@ $baseurllogin = basename(base_url('login'));
 $baseurlregister = basename(base_url('register'));
 
 $current = basename(current_url());
-$profile_pic = base_url('assets') . $this->userModel->getProfilePic(session()->get('id_user'));
 ?>
 
 <header class="p-3 bg-dark text-white">
