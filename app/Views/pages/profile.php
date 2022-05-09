@@ -2,14 +2,18 @@
 
 <?= $this->section("body") ?>
 <script>
-    <?php if (null != $errors) : ?>
+    <?php
+
+    use App\Models\UserModel;
+
+    if (null != $errors) : ?>
         $(document).ready(function() {
             $('#editProfile').modal('show');
         });
     <?php endif ?>
 </script>
 
-<?php $milliseconds = round(microtime(true) * 1000) ?>
+<?php $milliseconds = round(microtime(true) * 1000); ?>
 
 <?php
 if (null != session()->getFlashdata('errors')) {
