@@ -152,11 +152,9 @@ class Settings extends BaseController
                 }
 
                 $file = $this->request->getFile('profile_pic');
-                $profile_pic = $file->getName();
+                $profile_pic = $this->userModel->timestampFile($file->getName());
 
                 if ($file->move("images/profile", $profile_pic)) {
-
-                    $userModel = new UserModel();
 
                     $data = [
                         "name" => $this->request->getVar("name"),
@@ -165,7 +163,7 @@ class Settings extends BaseController
                         "profile_pic" => 'images/profile/' . $profile_pic,
                     ];
 
-                    if ($userModel->update(['id' => session()->get('id_user')], $data)) {
+                    if ($this->userModel->update(['id' => session()->get('id_user')], $data)) {
                         session()->setFlashdata('success', 'Profile berhasil diubah');
                     } else {
                         session()->setFlashdata("error", "Failed to save data");

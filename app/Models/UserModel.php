@@ -107,42 +107,13 @@ class UserModel extends Model
         $user = $this->where('id', $id_user)->first();
         return $user['profile_pic'];
     }
-    // // Update the user's profile data
-    // public function updateProfile($data)
-    // {
-    //     $user = $this->find($this->session->get('id'));
 
-    //     if ($user['username'] != $data['username']) {
-    //         $user = $this->where('username', $data['username'])->first();
-    //         if ($user) {
-    //             $data['errors'] = 'Username already exists';
-    //             return json_encode($data);
-    //         }
-    //     }
-
-    //     if ($user['email'] != $data['email']) {
-    //         $user = $this->where('email', $data['email'])->first();
-    //         if ($user) {
-    //             $data['errors'] = 'Email already exists';
-    //             return json_encode($data);
-    //         }
-    //     }
-
-    //     if ($user['phone_no'] != $data['phone_no']) {
-    //         $user = $this->where('phone_no', $data['phone_no'])->first();
-    //         if ($user) {
-    //             $data['errors'] = 'Phone number already exists';
-    //             return json_encode($data);
-    //         }
-    //     }
-
-    //     $user = $this->find($this->session->get('id'));
-    //     $user->username = $data['username'];
-    //     $user->email = $data['email'];
-    //     $user->phone_no = $data['phone_no'];
-    //     $user->name = $data['name'];
-    //     $user->role = $data['role'];
-    //     $user->profile_pic = $data['profile_pic'];
-    //     $user->save();
-    // }
+    public function timestampFile($file)
+    {
+        $ext = pathinfo($file, PATHINFO_EXTENSION);
+        $name = pathinfo($file, PATHINFO_FILENAME);
+        $newName = time() . '_' . $name;
+        $newFile = $newName . '.' . $ext;
+        return $newFile;
+    }
 }
