@@ -53,6 +53,7 @@ $routes->group("admin", ["filter" => "auth"], function ($routes) {
         $routes->add('edit/(:any)', 'Mahasiswa::edit/$1');
         $routes->get('hapus/(:segment)', 'Mahasiswa::hapus/$1');
     });
+    $routes->match(["get", "post"], 'test','Test::index');
 });
 
 // Member routes
