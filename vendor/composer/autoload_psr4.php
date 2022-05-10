@@ -27,6 +27,8 @@ return array(
     'Symfony\\Component\\Filesystem\\' => array($vendorDir . '/symfony/filesystem'),
     'Symfony\\Component\\EventDispatcher\\' => array($vendorDir . '/symfony/event-dispatcher'),
     'Symfony\\Component\\Console\\' => array($vendorDir . '/symfony/console'),
+    'Ramsey\\Uuid\\' => array($vendorDir . '/ramsey/uuid/src'),
+    'Ramsey\\Collection\\' => array($vendorDir . '/ramsey/collection/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Psr\\EventDispatcher\\' => array($vendorDir . '/psr/event-dispatcher/src'),
     'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
@@ -38,6 +40,7 @@ return array(
     'Nexus\\PHPUnit\\Extension\\' => array($vendorDir . '/nexusphp/tachycardia/src'),
     'Nexus\\CsConfig\\' => array($vendorDir . '/nexusphp/cs-config/src'),
     'Myth\\Auth\\' => array($vendorDir . '/myth/auth/src'),
+    'Michalsn\\Uuid\\' => array($vendorDir . '/michalsn/codeigniter4-uuid/src'),
     'Laminas\\Escaper\\' => array($vendorDir . '/laminas/laminas-escaper/src'),
     'Kint\\' => array($vendorDir . '/kint-php/kint/src'),
     'Faker\\' => array($vendorDir . '/fakerphp/faker/src/Faker'),
@@ -50,4 +53,5 @@ return array(
     'Composer\\Pcre\\' => array($vendorDir . '/composer/pcre/src'),
     'CodeIgniter\\CodingStandard\\' => array($vendorDir . '/codeigniter/coding-standard/src'),
     'CodeIgniter\\' => array($baseDir . '/system', $baseDir . '/tests/system'),
+    'Brick\\Math\\' => array($vendorDir . '/brick/math/src'),
 );

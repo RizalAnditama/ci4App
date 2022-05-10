@@ -14,6 +14,7 @@
         "ext-mbstring": "*",
         "kint-php/kint": "^4.0",
         "laminas/laminas-escaper": "^2.9",
+        "michalsn/codeigniter4-uuid": "^1.0",
         "myth/auth": "^1.0",
         "psr/log": "^1.1"
     },
