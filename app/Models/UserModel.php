@@ -15,6 +15,7 @@ class UserModel extends Model
     protected $useSoftDelete        = false;
     protected $protectFields        = true;
     protected $allowedFields        = [
+        'uuid',
         "username",
         "email",
         "phone_no",
@@ -49,6 +50,15 @@ class UserModel extends Model
     protected $afterFind            = [];
     protected $beforeDelete         = [];
     protected $afterDelete          = [];
+
+    /** 
+     * Generate UUID from hash
+     */
+    public function generateUuid()
+    {
+        $uuid = hash('sha256', random_bytes(36));
+        return $uuid;
+    }
 
     /**
      * Before insert callback

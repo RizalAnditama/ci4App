@@ -338,6 +338,7 @@ class UserController extends BaseController
                 }
 
                 $newData = [
+                    'uuid' => $model->generateUuid(),
                     'username' => $this->request->getVar('username'),
                     'name' => $this->request->getVar('name'),
                     'phone_no' => $this->request->getVar('phone_no'),
