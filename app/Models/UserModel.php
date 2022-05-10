@@ -50,18 +50,33 @@ class UserModel extends Model
     protected $beforeDelete         = [];
     protected $afterDelete          = [];
 
+    /**
+     * Before insert callback
+     * ------------------------------------------------------------
+     * Will be called before inserting a new record, and automatically sets the created_at and updated_at fields.
+     */
     protected function beforeInsert(array $data)
     {
         $data = $this->passwordHash($data);
         return $data;
     }
 
+    /** 
+     * Before update callback
+     * ------------------------------------------------------------
+     * Will be called before updating an existing record, and automatically sets the updated_at field.
+     */
     protected function beforeUpdate(array $data)
     {
         $data = $this->passwordHash($data);
         return $data;
     }
 
+    /**
+     * Password hash callback
+     * ------------------------------------------------------------
+     * Will be called before inserting or updating a record, and automatically hashes the password field.
+     */
     protected function passwordHash(array $data)
     {
         if (isset($data['data']['password'])) {
@@ -73,8 +88,6 @@ class UserModel extends Model
 
     /**
      * Get username 
-     *
-     * @var string
      */
     public function getUser($username = false)
     {
@@ -90,7 +103,7 @@ class UserModel extends Model
     /**
      * Get password by user id 
      *
-     * @var string
+     * @var int
      */
     public function getPassword($id_user)
     {
@@ -101,7 +114,7 @@ class UserModel extends Model
     /**
      * --------------------------------------------------------------------------------
      * Check Old Password
-     * ********************************************************************************************
+     * --------------------------------------------------------------------------------
      * Get old password with query, then compare it with new password 
      * @var string
      */
@@ -117,7 +130,7 @@ class UserModel extends Model
 
     /**
      * Get Profile Pic by user id
-     * @var string
+     * @var int
      */
     public function getProfilePic($id_user)
     {
