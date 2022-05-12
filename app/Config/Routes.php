@@ -42,6 +42,8 @@ $routes->group('', ['filter' => 'noauth'], function ($routes) {
     $routes->match(['get', 'post'], 'register', 'UserController::register');
     $routes->match(['get', 'post'], 'login', 'UserController::login');
     $routes->match(['get', 'post'], 'forgot-password', 'UserController::ForgotPassword');
+    $routes->match(['get', 'post'], 'reset-password', 'UserController::error404');
+    $routes->match(['get', 'post'], 'reset-password/(:segment)', 'UserController::resetPassword/$1');
 });
 
 // Admin routes
@@ -65,8 +67,7 @@ $routes->group("member", ["filter" => "auth"], function ($routes) {
 $routes->group('settings', ['filter' => 'auth'], function ($routes) {
     $routes->get('/', 'Settings::index');
     // $routes->match(['get', 'post'], 'profile', 'Settings::profile');
-    $routes->group('profile',['filter' => 'auth'], function($routes)
-    {
+    $routes->group('profile', ['filter' => 'auth'], function ($routes) {
         $routes->match(['get', 'post'], 'profile', 'Settings::profile');
     });
     $routes->get('logout', 'Settings::logout');

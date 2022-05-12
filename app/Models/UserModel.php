@@ -25,6 +25,9 @@ class UserModel extends Model
         "profile_pic",
         "created_at",
         "updated_at",
+        "token",
+        "token_expire",
+        "status",
     ];
 
     // Dates
@@ -56,7 +59,7 @@ class UserModel extends Model
      */
     public function generateUuid()
     {
-        $uuid = hash('sha256', random_bytes(36));
+        $uuid = hash('sha256', random_bytes(8));
         return $uuid;
     }
 
@@ -110,15 +113,67 @@ class UserModel extends Model
         return $user;
     }
 
+    /** 
+     * Get username by email
+     * 
+     * @return array
+     */
+    public function getUsername($email = 0)
+    {
+        $user = $this->where('email', $email)->first();
+        return $user;
+    }
+
     /**
      * Get password by user id 
      *
-     * @var int
      */
     public function getPassword($id_user)
     {
         $user = $this->where('id', $id_user)->first();
         return $user['password'];
+    }
+
+    /**
+     * Get uuid by email
+     */
+    public function getUuid($email)
+    {
+        $user = $this->where('email', $email)->first();
+        return $user['uuid'];
+    }
+
+    /**
+     * Get all UUIDs
+     */
+    public function getAllUuid()
+    {
+        $query = $this->db->query("SELECT uuid FROM users");
+        $result = $query->getResult();
+        return $result;
+    }
+
+    /**
+     * Check if uuid exists
+     */
+    public function uuidExists($uuid)
+    {
+        $user = $this->where('uuid', $uuid)->first();
+        return $user;
+    }
+
+    /**
+     * Create token for user
+     */
+    public function createToken($email)
+    {
+        $user = $this->where('email', $email)->first();
+        $data = [
+            'token' => substr(hash('md5', microtime(), false), 0, 16),
+            'token_expire' => date('Y-m-d H:i:s', strtotime('+15 minutes')),
+        ];
+        $this->update($user['id'], $data);
+        return $data['token'];
     }
 
     /**
@@ -128,7 +183,7 @@ class UserModel extends Model
      * Get old password with query, then compare it with new password 
      * @var string
      */
-    public function checkOldPassword($oldPassword)
+    public function checkOldPassword(string $oldPassword)
     {
         $model = new UserModel();
 
@@ -140,49 +195,10 @@ class UserModel extends Model
 
     /**
      * Get Profile Pic by user id
-     * @var int
      */
     public function getProfilePic($id_user)
     {
         $user = $this->where('id', $id_user)->first();
         return $user['profile_pic'];
     }
-    // // Update the user's profile data
-    // public function updateProfile($data)
-    // {
-    //     $user = $this->find($this->session->get('id'));
-
-    //     if ($user['username'] != $data['username']) {
-    //         $user = $this->where('username', $data['username'])->first();
-    //         if ($user) {
-    //             $data['errors'] = 'Username already exists';
-    //             return json_encode($data);
-    //         }
-    //     }
-
-    //     if ($user['email'] != $data['email']) {
-    //         $user = $this->where('email', $data['email'])->first();
-    //         if ($user) {
-    //             $data['errors'] = 'Email already exists';
-    //             return json_encode($data);
-    //         }
-    //     }
-
-    //     if ($user['phone_no'] != $data['phone_no']) {
-    //         $user = $this->where('phone_no', $data['phone_no'])->first();
-    //         if ($user) {
-    //             $data['errors'] = 'Phone number already exists';
-    //             return json_encode($data);
-    //         }
-    //     }
-
-    //     $user = $this->find($this->session->get('id'));
-    //     $user->username = $data['username'];
-    //     $user->email = $data['email'];
-    //     $user->phone_no = $data['phone_no'];
-    //     $user->name = $data['name'];
-    //     $user->role = $data['role'];
-    //     $user->profile_pic = $data['profile_pic'];
-    //     $user->save();
-    // }
 }

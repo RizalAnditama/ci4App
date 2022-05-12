@@ -14,6 +14,11 @@ class UserController extends BaseController
         $this->email = \Config\Services::email();
     }
 
+    public function error404()
+    {
+        throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+    }
+
     public function login()
     {
         helper('form');
@@ -141,22 +146,103 @@ class UserController extends BaseController
         return true;
     }
 
-    //! Unfinished function 
     //TODO : Create a function to send email to user 
     public function sendEmail($user)
     {
-        $this->email->setFrom('anditamarizal@gmail.com', 'Rizal Anditama');
-        $this->email->setTo($user);
+        $this->email->setFrom('anditamarizal@gmail.com', 'Rizal Codeigniter');
+        $this->email->setTo($user['email']);
 
         $this->email->setSubject('Reset Password');
-        $this->email->setMessage('Click');
+        $this->email->setMessage(
+            '<h3>Hi, ' . $user['username'] . '</h3> 
+            Click here to reset your password: <br> 
+            <a class="btn btn-primary" href=">' . base_url('reset-password/' . $user['token']) .
+                '"></a><br>or click the link below and use the token <br>' .
+                '<a href="' . base_url('reset-password') . '/' . $user['uuid'] . '">Reset Password</a><br>' .
+                '<br>Token: <h3>' . $user['token'] .  '</h3>'
+        );
 
         if ($this->email->send()) {
+            session()->set('token', $user['token']);
             return true;
         } else {
             echo $this->email->printDebugger();
             return false;
         }
+    }
+
+    public function resetPassword($slug)
+    {
+        $model = new UserModel();
+        $data = [
+            'title' => 'Reset Password',
+            'slug' => $slug,
+        ];
+
+        $user = $model->where('uuid', $slug)->first();
+        if (null != $user) {
+            if ($user['token_expire'] > date('Y-m-d H:i:s')) {
+                if ($this->request->getMethod() == 'post') {
+                    $rules = [
+                        'token' => 'required|is_token_expired[token]',
+                        'user' => 'required|valid_email|is_exist[user]|is_token_in_email[user,token]',
+                        'password' => 'required|min_length[8]|max_length[255]',
+                        'pass_confirm' => 'required|matches[password]',
+                    ];
+                    $errors = [
+                        'token' => [
+                            'required' => 'Token tidak boleh kosong',
+                            'is_token' => 'Token tidak cocok',
+                            'is_token_expired' => 'Token sudah kadaluarsa',
+                        ],
+                        'user' => [
+                            'required' => 'Email tidak boleh kosong',
+                            'valid_email' => 'Email tidak valid',
+                            'is_exist' => 'Email tidak terdaftar',
+                            'is_token_in_email' => 'Token tidak cocok dengan email. Silahkan cek email anda',
+                        ],
+                        'password' => [
+                            'required' => 'Password tidak boleh kosong',
+                            'min_length' => 'Minimum karakter untuk Field password adalah 8 karakter',
+                            'max_length' => 'Maksimum karakter untuk Field password adalah 255 karakter',
+                        ],
+                        'pass_confirm' => [
+                            'required' => 'Konfirmasi password tidak boleh kosong',
+                            'matches' => 'Konfirmasi password tidak cocok',
+                        ],
+                    ];
+
+                    if (!$this->validate($rules, $errors)) {
+                        $data = [
+                            'validation' => $this->validator,
+                            'title' => 'Reset Password',
+                            'slug' => $slug,
+                            'token' => $this->request->getPost('token'),
+                            'user' => $this->request->getPost('user'),
+                        ];
+                    } else {
+                        $user = $model->where('email', $this->request->getVar('user'))->first();
+
+                        $data = [
+                            'token' => null,
+                            'token_expire' => null,
+                            'password' => $this->request->getVar('password'),
+                        ];
+
+                        $model->update($user['id'], $data);
+
+                        session()->destroy();
+                        session()->set('success', 'Password berhasil diubah');
+                        return redirect()->to(base_url('login'));
+                    }
+                }
+            } else {
+                session()->setTempdata('expired', 'expired', 3);
+            }
+        } else {
+            session()->setTempdata('not-found', 'not found', 3);
+        }
+        return view('pages/reset-password', $data);
     }
 
     //! Unfinished function
@@ -195,10 +281,14 @@ class UserController extends BaseController
                 $user = $model->where('email', $this->request->getVar('email'))->first();
 
                 if ($user) {
+                    $this->sendEmail([
+                        'email' => $this->request->getVar('email'),
+                        'username' => $model->getUsername($this->request->getVar('email'))['username'],
+                        'uuid' => $model->getUuid($this->request->getVar('email')),
+                        'token' => $model->createToken($this->request->getVar('email')),
+                    ]);
 
-                    $this->sendEmail($this->request->getVar('email'));
-
-                    session()->setFlashdata('success', 'Silahkan cek email anda untuk melakukan reset password');
+                    session()->setFlashdata('success', 'Silahkan cek email anda untuk melakukan reset password<br><b>Link akan dihapus dalam 15 menit</b>');
                     session()->markAsTempdata('success', 1);
 
                     $data = [
