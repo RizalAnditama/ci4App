@@ -1,15 +1,24 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => NULL,
+        'reference' => '98467de4a10b088a3ef28e3e9deb2d50e4bf7835',
         'name' => 'codeigniter4/codeigniter4',
         'dev' => true,
     ),
     'versions' => array(
+        'brick/math' => array(
+            'pretty_version' => '0.9.3',
+            'version' => '0.9.3.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../brick/math',
+            'aliases' => array(),
+            'reference' => 'ca57d18f028f84f777b2168cd1911b0dee2343ae',
+            'dev_requirement' => false,
+        ),
         'codeigniter/coding-standard' => array(
             'pretty_version' => 'v1.2.0',
             'version' => '1.2.0.0',
@@ -26,12 +35,12 @@
             ),
         ),
         'codeigniter4/codeigniter4' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => NULL,
+            'reference' => '98467de4a10b088a3ef28e3e9deb2d50e4bf7835',
             'dev_requirement' => false,
         ),
         'composer/pcre' => array(
@@ -122,6 +131,15 @@
             'install_path' => __DIR__ . '/../laminas/laminas-escaper',
             'aliases' => array(),
             'reference' => '58af67282db37d24e584a837a94ee55b9c7552be',
+            'dev_requirement' => false,
+        ),
+        'michalsn/codeigniter4-uuid' => array(
+            'pretty_version' => 'v1.0.1',
+            'version' => '1.0.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../michalsn/codeigniter4-uuid',
+            'aliases' => array(),
+            'reference' => 'c8bbd961401015307bc72f6f6aa93509ffac1d5f',
             'dev_requirement' => false,
         ),
         'mikey179/vfsstream' => array(
@@ -361,6 +379,24 @@
                 0 => '1.0|2.0',
             ),
         ),
+        'ramsey/collection' => array(
+            'pretty_version' => '1.2.2',
+            'version' => '1.2.2.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../ramsey/collection',
+            'aliases' => array(),
+            'reference' => 'cccc74ee5e328031b15640b51056ee8d3bb66c0a',
+            'dev_requirement' => false,
+        ),
+        'ramsey/uuid' => array(
+            'pretty_version' => '4.3.1',
+            'version' => '4.3.1.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../ramsey/uuid',
+            'aliases' => array(),
+            'reference' => '8505afd4fea63b81a85d3b7b53ac3cb8dc347c28',
+            'dev_requirement' => false,
+        ),
         'rector/rector' => array(
             'pretty_version' => '0.12.10',
             'version' => '0.12.10.0',
@@ -369,6 +405,12 @@
             'aliases' => array(),
             'reference' => '8c823197becb3905e42b9d7f7849f1174e8b47cf',
             'dev_requirement' => true,
+        ),
+        'rhumsaa/uuid' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '4.3.1',
+            ),
         ),
         'sebastian/cli-parser' => array(
             'pretty_version' => '1.0.1',
@@ -653,7 +695,7 @@
             'install_path' => __DIR__ . '/../symfony/polyfill-php81',
             'aliases' => array(),
             'reference' => '5de4ba2d41b15f9bd0e19b2ab9674135813ec98f',
-            'dev_requirement' => true,
+            'dev_requirement' => false,
         ),
         'symfony/process' => array(
             'pretty_version' => 'v5.4.5',

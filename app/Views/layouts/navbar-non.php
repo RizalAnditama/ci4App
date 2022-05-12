@@ -81,10 +81,17 @@ $current = basename(current_url());
         register.classList.add("btn-primary");
     }
 
+<<<<<<< HEAD
     function forgotPass() {
         var home = document.getElementById("home");
         home.classList.remove("text-secondary");
         home.classList.add("text-white");
+=======
+    function forgotpassActive() {
+        var forgotpass = document.getElementById("forgotpass");
+        forgotpass.classList.remove("text-primary");
+        forgotpass.classList.add("text-white");
+>>>>>>> forgot-password
 
         var login = document.getElementById("login");
         login.classList.remove("btn-primary");
@@ -93,9 +100,12 @@ $current = basename(current_url());
         var register = document.getElementById("register");
         register.classList.remove("btn-primary");
         register.classList.add("btn-secondary");
+<<<<<<< HEAD
 
         var forgotpass = document.getElementById("forgotpass");
         forgotpass.classList.remove("text-white");
         forgotpass.classList.add("text-secondary");
+=======
+>>>>>>> forgot-password
     }
 </script>
