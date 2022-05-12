@@ -20,11 +20,7 @@
                             <div class="alert alert-success" role="alert">
                                 <?= session()->get('success') ?>
                                 <br>
-<<<<<<< HEAD
-                                <a href="<?php echo base_url('login') ?>" class="mt-1 alert-link">Kembali ke halaman login?</a>
-=======
                                 <a href="<?php echo base_url('login') ?>" class="mt-1 alert-link" onclick="loginActive()">Kembali ke halaman login?</a>
->>>>>>> forgot-password
                             </div>
                         <?php endif; ?>
 
@@ -43,16 +39,12 @@
                                 ?>
                                     <div class="alert alert-danger" role="alert">
                                         <?= session()->get('error') ?>
-<<<<<<< HEAD
-                                        <a class="alert-link" href="<?php echo base_url('register') ?>">Buat akun</a>
-=======
                                         <br>
                                         <a href="<?php echo base_url('register') ?>" class="mt-1 alert-link" onclick="registerActive()">Create account</a>
->>>>>>> forgot-password
                                     </div>
                                 <?php endif; ?>
                                 <div class="form-group">
-                                    <input id="email" type="email" class="form-control" name="email" tabindex="1" placeholder="Email" value="<?php echo $email ?>" required autofocus>
+                                    <input id="email" type="email" class="form-control" name="email" tabindex="1" placeholder="Email" value="<?php echo $email ?? '' ?>" required autofocus>
                                 </div>
 
                                 <div class="form-group my-3">

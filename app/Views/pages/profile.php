@@ -6,7 +6,7 @@
 
     use App\Models\UserModel;
 
-    if (null != $errors) : ?>
+    if (null != session()->getFlashdata('errors')) : ?>
         $(document).ready(function() {
             $('#editProfile').modal('show');
         });

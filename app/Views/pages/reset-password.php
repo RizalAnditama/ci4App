@@ -23,7 +23,6 @@
                                     </svg>
                                     <div>
                                         <?= $validation->listErrors() ?>
-                                        <a class="alert-link" href="<?php echo base_url("forgot-password") ?>">Kirim token ulang</a>
                                     </div>
                                 </div>
                                 <!-- <?php endif ?> -->

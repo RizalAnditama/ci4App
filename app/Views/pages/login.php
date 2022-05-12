@@ -61,21 +61,13 @@ $session = \Config\Services::session();
                                             <?php } else { ?>
                                                 <?= $validation->listErrors() ?>
                                                 <br>
-<<<<<<< HEAD
-                                                <a href="<?= base_url('/forgot-password') ?>" id="forgotpass" onclick="forgotPass()">Forgot Password?</a>
-=======
                                                 <a href="<?= base_url('/forgot-password') ?>" onclick="forgotpassActive()" id="forgotpass">Forgot Password?</a>
->>>>>>> forgot-password
                                             <?php } ?>
                                         </div>
                                     </div>
                                 <?php } else { ?>
                                     <div class="forgot-password my-2 ">
-<<<<<<< HEAD
-                                        <a class="noselect" href="<?= base_url('/forgot-password') ?>" id="forgotpass" onclick="forgotPass()">Forgot Password?</a>
-=======
                                         <a class="noselect" href="<?= base_url('/forgot-password') ?>" id="forgotpass" onclick="forgotpassActive()">Forgot Password?</a>
->>>>>>> forgot-password
                                     </div>
                                 <?php } ?>
 

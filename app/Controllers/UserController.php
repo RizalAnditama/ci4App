@@ -145,7 +145,6 @@ class UserController extends BaseController
         return true;
     }
 
-    //TODO : Create a function to send email to user 
     public function sendEmail($user)
     {
         $this->email->setFrom('anditamarizal@gmail.com', 'Rizal Codeigniter');
@@ -244,31 +243,32 @@ class UserController extends BaseController
         return view('pages/reset-password', $data);
     }
 
-    //! Unfinished function
-    // TODO : Create a function to send email to user about changing password
-    // ? How to send email to user about changing password?
-    public function forgotPassword()
+    public function ForgotPassword()
     {
         $data = [
-            'title' => 'Forgot Password',
-            'validation' => \Config\Services::validation()
+            'title' => 'Forgot Your Password ?',
         ];
 
+        // validate email
         if ($this->request->getMethod() == 'post') {
             $rules = [
-                'email' => 'required|valid_email|is_exist[email]',
+                'email' => 'required|valid_email',
             ];
 
             $errors = [
                 'email' => [
                     'required' => 'Field Email harus diisi',
                     'valid_email' => 'Email harus valid "(Memakai @ dan .com)"',
-                    'is_exist' => 'Email tidak terdaftar',
                 ],
             ];
 
             if (!$this->validate($rules, $errors)) {
-                $data['validation'] = $this->validator;
+                $data = [
+                    'title' => 'Forgot Your Password ? (Unfinished)',
+                    'validation' => $this->validator,
+                    'email' => $this->request->getVar('email'),
+                ];
+
                 return view('pages/forgot-password', $data);
             } else {
                 $model = new UserModel();
@@ -300,6 +300,7 @@ class UserController extends BaseController
                 }
             }
         }
+
         return view('pages/forgot-password', $data);
     }
 

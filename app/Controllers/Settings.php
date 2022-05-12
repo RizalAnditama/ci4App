@@ -33,7 +33,6 @@ class Settings extends BaseController
         helper(['form']);
         $data = [
             'title' => 'My Profile',
-            'profile_pic' =>  base_url('assets') . $this->userModel->getProfilePic(session()->get('id_user')),
             'errors' => [],
             'validation' => $this->validator,
             'profile_pic' => base_url() . '/' . $this->userModel->getProfilePic(session()->get('id_user')),
@@ -153,22 +152,20 @@ class Settings extends BaseController
                 }
 
                 $file = $this->request->getFile('profile_pic');
-                $profile_pic = $this->userModel->timestampFile($file->getName());
-
-                if ($file->move("images/profile", $profile_pic)) {
-
-                    $data = [
-                        "name" => $this->request->getVar("name"),
-                        "email" => $this->request->getVar("email"),
-                        "phone_no" => $this->request->getVar("phone_no"),
-                        "profile_pic" => 'images/profile/' . $profile_pic,
-                    ];
-
-                    if ($this->userModel->update(['id' => session()->get('id_user')], $data)) {
-                        session()->setFlashdata('success', 'Profile berhasil diubah');
-                    } else {
-                        session()->setFlashdata("error", "Failed to save data");
+                if ($file->getSize() > 0) {
+                    $profile_pic = $this->userModel->timestampFile($file->getName());
+                    if ($file->move("images/profile", $profile_pic)) {
+                        $user['profile_pic'] = 'images/profile/' . $profile_pic;
                     }
+                }
+                $user['name'] = $this->request->getPost('name');
+                $user['email'] = $this->request->getPost('email');
+                $user['phone_no'] = $this->request->getPost('phone_no');
+
+                if ($this->userModel->update(['id' => session()->get('id_user')], $user)) {
+                    session()->setFlashdata('success', 'Profile berhasil diubah');
+                } else {
+                    session()->setFlashdata("error", "Failed to save data");
                 }
                 return redirect()->back();
             } else {

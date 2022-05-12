@@ -42,7 +42,7 @@ $routes->group('', ['filter' => 'noauth'], function ($routes) {
     $routes->match(['get', 'post'], 'register', 'UserController::register');
     $routes->match(['get', 'post'], 'login', 'UserController::login');
     $routes->match(['get', 'post'], 'forgot-password', 'UserController::ForgotPassword');
-    $routes->match(['get', 'post'], 'reset-password', 'UserController::error404');
+    $routes->match(['get', 'post'], 'reset-password', 'UserController::ForgotPassword');
     $routes->match(['get', 'post'], 'reset-password/(:segment)', 'UserController::resetPassword/$1');
 });
 
@@ -55,7 +55,7 @@ $routes->group("admin", ["filter" => "auth"], function ($routes) {
         $routes->add('edit/(:any)', 'Mahasiswa::edit/$1');
         $routes->get('hapus/(:segment)', 'Mahasiswa::hapus/$1');
     });
-    $routes->match(["get", "post"], 'test','Test::index');
+    $routes->match(["get", "post"], 'test', 'Test::index');
 });
 
 // Member routes
