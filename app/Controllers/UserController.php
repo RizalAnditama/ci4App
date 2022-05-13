@@ -15,25 +15,6 @@ class UserController extends BaseController
         $this->email = \Config\Services::email();
     }
 
-    public function __call()
-    {
-        $userModel = new UserModel();
-        if (isset(session()->get('isLoggedIn'))) {
-            $user = $userModel->getUser(session()->get('id_user'));
-            if (session()->get('isLoggedIn') == true) {
-                $data = [
-                    'status' => 'active',
-                ];
-            } else {
-                $data = [
-                    'status' => 'inactive',
-                ];
-            }
-            dd();
-            $userModel->update($user['id'], $data);
-        }
-    }
-
     public function error404()
     {
         throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();

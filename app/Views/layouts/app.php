@@ -1,3 +1,11 @@
+<?php
+
+use App\Libraries\checkStatus;
+
+$check = new checkStatus();
+$check->checkStatus();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 

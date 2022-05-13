@@ -158,7 +158,7 @@ class Settings extends BaseController
                         $user['profile_pic'] = 'images/profile/' . $profile_pic;
                     }
                 }
-                $user['name'] = $this->reqfuest->getPost('name');
+                $user['name'] = $this->request->getPost('name');
                 $user['email'] = $this->request->getPost('email');
                 $user['phone_no'] = $this->request->getPost('phone_no');
 

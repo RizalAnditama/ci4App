@@ -19,8 +19,8 @@ class checkStatus
     public function checkStatus()
     {
         $userModel = new UserModel();
-        if (isset(session()->get('isLoggedIn'))) {
-            $user = $userModel->getUser(session()->get('id_user'));
+        if (null !== (session()->get('isLoggedIn'))) {
+            $user = $userModel->getUser(session()->get('username'));
             if (session()->get('isLoggedIn') == true) {
                 $data = [
                     'status' => 'active',
@@ -30,7 +30,6 @@ class checkStatus
                     'status' => 'inactive',
                 ];
             }
-            dd();
             $userModel->update($user['id'], $data);
         }
     }
