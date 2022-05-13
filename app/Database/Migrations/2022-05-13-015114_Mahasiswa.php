@@ -12,7 +12,7 @@ class Mahasiswa extends Migration
         $this->forge->addField([
             'id_mhs'          => [
                 'type'           => 'INT',
-                'constraint'     => 11,
+                'constraint'     => 10,
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
@@ -39,16 +39,20 @@ class Mahasiswa extends Migration
                 'constraint'     => 15,
             ],
             'jurusan_mhs'      => [
-                'type'           => 'VARCHAR',
-                'constraint' => 100,
+                'type'           => 'ENUM',
+                'constraint'     => ['Sejarah', 'MIPA', 'Sastra'],
+                'NULL'           => true,
+                'DEFAULT'        => null,
             ],
             'created_at'       => [
-                'type'           => 'DATETIME',   
-                'null'           => true,   
+                'type'           => 'TIMESTAMP',
+                'default'        => 'CURRENT_TIMESTAMP',
+                'null'           => true,
             ],
             'updated_at'       => [
-                'type'           => 'DATETIME',   
-                'null'           => true,   
+                'type'           => 'TIMESTAMP',
+                'default'        => 'CURRENT_TIMESTAMP',
+                'null'           => true,
             ],
         ]);
 

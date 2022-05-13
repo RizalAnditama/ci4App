@@ -4,11 +4,13 @@ namespace App\Controllers;
 
 use CodeIgniter\Controller;
 use App\Models\ModelMahasiswa;
+use App\Models\UserModel;
 
 class Mahasiswa extends Controller
 {
     public function __construct()
     {
+        $this->userModel = new UserModel();
         $this->mhs = new ModelMahasiswa();
         if (session()->get('role') != "admin") {
             $data = [
@@ -134,16 +136,16 @@ class Mahasiswa extends Controller
                     'max_length' => 'maksimum karakter untuk field Jurusan adalah 255 karakter'
                 ]
             ],
-            // 'foto' => [
-            //     'label' => 'foto',
-            //     'rules' => 'uploaded[foto]|max_size[foto,1024]|is_image[foto]|mime_in[foto,image/jpg,image/jpeg,image/png]',
-            //     'errors' => [
-            //         'uploaded' => 'Foto harus diisi',
-            //         'max_size' => 'Ukuran foto maksimal 1MB',
-            //         'is_image' => 'Yang anda upload bukan gambar, coba lampirkan gambar',
-            //         'mime_in' => 'Format foto harus jpg, jpeg, atau png',
-            //     ]
-            // ],
+            'foto' => [
+                'label' => 'foto',
+                'rules' => 'permit_empty|uploaded[foto]|max_size[foto,1024]|is_image[foto]|mime_in[foto,image/jpg,image/jpeg,image/png]',
+                'errors' => [
+                    'uploaded' => 'Foto harus diisi',
+                    'max_size' => 'Ukuran foto maksimal 1MB',
+                    'is_image' => 'Yang anda upload bukan gambar, coba lampirkan gambar',
+                    'mime_in' => 'Format foto harus jpg, jpeg, atau png',
+                ]
+            ],
         ])) {
             $flash = [
                 'head' => 'Input tidak sesuai ketentuan',
@@ -156,6 +158,16 @@ class Mahasiswa extends Controller
             // return redirect()->to('mahasiswa')->withInput()->with('validation', $validation);
         } else {
             $this->mhs = new ModelMahasiswa();
+            $foto = $this->request->getFile('foto');
+            if ($foto->getSize() > 0) {
+                $fileName = $this->userModel->timestampFile($foto->getName());
+                if ($foto->move("images/mahasiswa", $fileName)) {
+                    $foto = base_url() . '/' . 'images/mahasiswa/' . $fileName;
+                }
+            } else {
+                $foto = null;
+            }
+
             $data = [
                 'nim_mhs' => $this->mhs->autonumber($this->request->getVar('jurusan')), // Pake autonumber dari model buat ngenomorinnya
                 'nama_mhs' => $this->request->getVar('nama'),
@@ -164,7 +176,7 @@ class Mahasiswa extends Controller
                 'alamat_mhs' => $this->request->getVar('alamat'),
                 'hp_mhs' => $this->request->getVar('telepon'),
                 'jurusan_mhs' => $this->request->getVar('jurusan'),
-                'foto' => $this->request->getVar('foto'),
+                'foto' => $foto,
             ];
 
             // Ngambil data terakhir dari database (untuk nim dan id)
@@ -241,6 +253,16 @@ class Mahasiswa extends Controller
                     'max_length' => 'maksimum karakter untuk field Jurusan adalah 255 karakter'
                 ]
             ],
+            'foto_edit' => [
+                'label' => 'foto',
+                'rules' => 'permit_empty|uploaded[foto]|max_size[foto,1024]|is_image[foto]|mime_in[foto,image/jpg,image/jpeg,image/png]',
+                'errors' => [
+                    'uploaded' => 'Foto harus diisi',
+                    'max_size' => 'Ukuran foto maksimal 1MB',
+                    'is_image' => 'Yang anda upload bukan gambar, coba lampirkan gambar',
+                    'mime_in' => 'Format foto harus jpg, jpeg, atau png',
+                ]
+            ],
         ])) {
             $id = $this->request->getVar('id');
             $flash = [
@@ -256,6 +278,17 @@ class Mahasiswa extends Controller
             return redirect()->back()->withInput();
         } else {
             $id = $this->request->getVar('id');
+
+            $foto = $this->request->getFile('foto_edit');
+            if ($foto->getSize() > 0) {
+                $fileName = $this->userModel->timestampFile($foto->getName());
+                if ($foto->move("images/mahasiswa", $fileName)) {
+                    $foto = base_url() . '/' . 'images/mahasiswa/' . $fileName;
+                }
+            } else {
+                $foto = null;
+            }
+
             $data = [
                 'nama_mhs' => $this->request->getVar('nama_edit'),
                 'TmpLahir_mhs' => $this->request->getVar('TmpLahir_edit'),
@@ -263,6 +296,7 @@ class Mahasiswa extends Controller
                 'alamat_mhs' => $this->request->getVar('alamat_edit'),
                 'hp_mhs' => $this->request->getVar('telepon_edit'),
                 'jurusan_mhs' => $this->request->getVar('jurusan_edit'),
+                'foto' => $foto,
             ];
             // get the original value of jurusan_mhs and store it in $jurusan
             $jurusan_edit = $this->request->getVar('jurusan_edit');
