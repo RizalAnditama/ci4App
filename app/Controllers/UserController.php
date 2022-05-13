@@ -145,7 +145,7 @@ class UserController extends BaseController
         return true;
     }
 
-    public function sendEmail($user)
+    private function sendEmail($user)
     {
         $this->email->setFrom('anditamarizal@gmail.com', 'Rizal Codeigniter');
         $this->email->setTo($user['email']);
