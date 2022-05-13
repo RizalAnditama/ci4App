@@ -40,7 +40,9 @@
                                     <div class="alert alert-danger" role="alert">
                                         <?= session()->get('error') ?>
                                         <br>
-                                        <a href="<?php echo base_url('register') ?>" class="mt-1 alert-link" onclick="registerActive()">Create account</a>
+                                        <?php if (session()->get('error') === 'Email tidak terdaftar') : ?>
+                                            <a href="<?php echo base_url('register') ?>" class="mt-1 alert-link" onclick="registerActive()">Create account</a>
+                                        <?php endif ?>
                                     </div>
                                 <?php endif; ?>
                                 <div class="form-group">

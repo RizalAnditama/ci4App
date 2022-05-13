@@ -38,14 +38,14 @@ $session = \Config\Services::session();
                             <form method="POST" action="<?= base_url('login') ?>" class="needs-validation">
                                 <div class="form-group">
                                     <label class="noselect" for="user">Email atau Username</label>
-                                    <input id="user" type="text" class="form-control" name="user" tabindex="1" value="<?= $user ?>" required autofocus>
+                                    <input id="user" type="text" class="form-control" name="user" tabindex="1" value="<?= $user ?? '' ?>" required autofocus>
                                 </div>
 
                                 <div class="form-group">
                                     <div class="d-block">
                                         <label class="noselect" for="password" class="control-label">Password</label>
                                     </div>
-                                    <input id="password" type="password" class="form-control" name="password" tabindex="2" value="<?= $password; ?>" required>
+                                    <input id="password" type="password" class="form-control" name="password" tabindex="2" value="<?= $password ?? '' ?>" required>
                                     <div class="invalid-feedback">
                                         Please fill in your password
                                     </div>
@@ -73,7 +73,7 @@ $session = \Config\Services::session();
 
                                 <div class="form-group my-3 d-inline noselect">
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" name="remember" class="custom-control-input" tabindex="3" id="remember" <?= $remember ?>>
+                                        <input type="checkbox" name="remember" class="custom-control-input" tabindex="3" id="remember" <?= $remember ?? '' ?>>
                                         <label class="noselect" class="custom-control-label" for="remember">Remember Me(Unfinished)</label>
                                     </div>
                                 </div>

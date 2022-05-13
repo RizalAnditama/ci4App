@@ -222,16 +222,19 @@ class UserController extends BaseController
                         $user = $model->where('email', $this->request->getVar('user'))->first();
 
                         $data = [
+                            'title' => 'Login',
                             'token' => null,
                             'token_expire' => null,
                             'password' => $this->request->getVar('password'),
+                            'user' => $user['email'],
                         ];
 
                         $model->update($user['id'], $data);
 
                         session()->destroy();
                         session()->set('success', 'Password berhasil diubah');
-                        return redirect()->to(base_url('login'));
+
+                        return view('pages/login', $data);
                     }
                 }
             } else {
@@ -264,7 +267,7 @@ class UserController extends BaseController
 
             if (!$this->validate($rules, $errors)) {
                 $data = [
-                    'title' => 'Forgot Your Password ? (Unfinished)',
+                    'title' => 'Forgot Your Password',
                     'validation' => $this->validator,
                     'email' => $this->request->getVar('email'),
                 ];
@@ -275,23 +278,34 @@ class UserController extends BaseController
                 $user = $model->where('email', $this->request->getVar('email'))->first();
 
                 if ($user) {
-                    $this->sendEmail([
+                    $sendMail = $this->sendEmail([
                         'email' => $this->request->getVar('email'),
                         'username' => $model->getUsername($this->request->getVar('email'))['username'],
                         'uuid' => $model->getUuid($this->request->getVar('email')),
                         'token' => $model->createToken($this->request->getVar('email')),
                     ]);
 
-                    session()->setFlashdata('success', 'Silahkan cek email anda untuk melakukan reset password<br><b>Link akan dihapus dalam 15 menit</b>');
-                    session()->markAsTempdata('success', 1);
+                    if ($sendMail !== false) {
+                        session()->setFlashdata('success', 'Silahkan cek email anda untuk melakukan reset password<br><b>Link akan dihapus dalam 15 menit</b>');
+                        session()->markAsTempdata('success', 1);
+                        $data = [
+                            'user' => $this->request->getVar('email'),
+                            'title' => 'Login',
+                        ];
+
+                        return view('pages/login', $data);
+                    } else {
+                        session()->setTempdata('error', 'Email gagal dikirim, coba lagi', 3);
+                        session()->markAsTempdata('error', 1);
+                    }
 
                     $data = [
-                        'title' => 'Forgot Your Password ? (Unfinished)',
+                        'title' => 'Forgot Your Password',
                         'email' => $this->request->getVar('email'),
                     ];
                 } else {
                     $data = [
-                        'title' => 'Forgot Your Password ? (Unfinished)',
+                        'title' => 'Forgot Your Password',
                         'email' => $this->request->getVar('email'),
                     ];
                     session()->setFlashdata('error', 'Email tidak terdaftar');
@@ -465,7 +479,7 @@ class UserController extends BaseController
                 'email' => $this->request->getVar('email'),
                 'password' => $this->request->getVar('password'),
                 'remember' => '',
-                'title' => 'Forgot Your Password ? (Unfinished)'
+                'title' => 'Forgot Your Password'
             ];
             return view('pages/forgot-password', $data);
         }
