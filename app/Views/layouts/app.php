@@ -80,7 +80,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-footer">
-                    <a class="btn btn-danger col-6" href="<?= site_url('settings/logout') ?>">Logout</a>
+                    <a class="btn btn-danger col-6" href="<?= site_url('usercontroller/logout') ?>">Logout</a>
                     <button class="btn btn-outline-secondary col-6" type="button" data-bs-dismiss="modal">Batal</button>
                 </div>
             </div>

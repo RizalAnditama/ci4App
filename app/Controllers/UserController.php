@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Libraries\checkStatus;
 use App\Models\UserModel;
 
 class UserController extends BaseController
@@ -14,9 +15,36 @@ class UserController extends BaseController
         $this->email = \Config\Services::email();
     }
 
+    public function __call()
+    {
+        $userModel = new UserModel();
+        if (isset(session()->get('isLoggedIn'))) {
+            $user = $userModel->getUser(session()->get('id_user'));
+            if (session()->get('isLoggedIn') == true) {
+                $data = [
+                    'status' => 'active',
+                ];
+            } else {
+                $data = [
+                    'status' => 'inactive',
+                ];
+            }
+            dd();
+            $userModel->update($user['id'], $data);
+        }
+    }
+
     public function error404()
     {
         throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+    }
+
+    public function logout()
+    {
+        $this->userModel = new UserModel();
+        $this->userModel->update(session()->get('id_user'), ['status' => 'inactive']);
+        session()->destroy();
+        return redirect()->to('login');
     }
 
     public function login()
@@ -118,6 +146,7 @@ class UserController extends BaseController
                 session()->setFlashdata('ye', 'active');
                 session()->markAsTempdata('ye', 3);
 
+                $model->update($user['id'], ['status' => 'active']);
                 // Redirecting to dashboard after login
                 if ($user['role'] == "admin") {
                     return redirect()->to(base_url('admin'));

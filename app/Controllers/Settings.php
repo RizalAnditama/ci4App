@@ -175,10 +175,4 @@ class Settings extends BaseController
         }
         return view('pages/profile', $data);
     }
-
-    public function logout()
-    {
-        session()->destroy();
-        return redirect()->to('login');
-    }
 }
