@@ -61,7 +61,7 @@ class Mahasiswa extends Migration
         ]);
 
         // Membuat primary key
-        $this->forge->addKey('id_mhs', TRUE);
+        $this->forge->addKey('id_mhs', true);
 
         // Membuat tabel mahasiswa
         $this->forge->createTable('mahasiswa', TRUE);
