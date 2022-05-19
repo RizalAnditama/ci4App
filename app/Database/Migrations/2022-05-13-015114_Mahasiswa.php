@@ -38,6 +38,10 @@ class Mahasiswa extends Migration
                 'type'           => 'CHAR',
                 'constraint'     => 15,
             ],
+            'foto'      => [
+                'type'           => 'VARCHAR',
+                'constraint'     => 255,
+            ],
             'jurusan_mhs'      => [
                 'type'           => 'ENUM',
                 'constraint'     => ['Sejarah', 'MIPA', 'Sastra'],
