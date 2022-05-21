@@ -48,11 +48,7 @@ class Mahasiswa extends Migration
                 'NULL'           => true,
                 'DEFAULT'        => null,
             ],
-            'created_at'       => [
-                'type'           => 'TIMESTAMP',
-                'default'        => 'CURRENT_TIMESTAMP',
-                'null'           => true,
-            ],
+            'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
             'updated_at'       => [
                 'type'           => 'TIMESTAMP',
                 'default'        => 'CURRENT_TIMESTAMP',
