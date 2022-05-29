@@ -24,7 +24,7 @@ $session = \Config\Services::session();
                     ?>
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h4><?= $title; ?></h4>
+                            <h4><?= $title ?? 'Login'; ?></h4>
                         </div>
 
                         <?php if (session()->get('success')) :

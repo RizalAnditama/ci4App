@@ -34,16 +34,6 @@ class UserController extends BaseController
         // Data awal
         $data = [
             'title' => 'Login',
-
-            'username' => '',
-            'name' => '',
-            'phone_no' => '',
-            'user' => '',
-            'email' => '',
-            'password' => '',
-
-            'remember' => '',
-
         ];
 
         // Check if $user is a username or email
@@ -332,16 +322,6 @@ class UserController extends BaseController
     {
         $data = [
             'title' => 'Register',
-
-            'username' => '',
-            'name' => '',
-            'phone_no' => '',
-            'email' => '',
-            'password' => '',
-            'password_confirm' => '',
-
-            'remember' => '',
-
         ];
 
         if ($this->request->getMethod() == 'post') {

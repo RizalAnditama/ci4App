@@ -22,7 +22,7 @@ $validation = \Config\Services::validation();
                     ?>
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h4><?= $title; ?></h4>
+                            <h4><?= $title ?? 'Register'; ?></h4>
                         </div>
 
                         <div class="ms-4 text-muted">
@@ -34,7 +34,7 @@ $validation = \Config\Services::validation();
                                 <div class="form-group row">
                                     <div class="col-6">
                                         <label for="name">Full Name</label>
-                                        <input id="name" type="text" class="form-control <?= ($validation->hasError('name')) ? 'is-invalid' : ''; ?>" name=" name" value="<?= $name ?>" autofocus><?php if ($validation->getError('name')) { ?>
+                                        <input id="name" type="text" class="form-control <?= ($validation->hasError('name')) ? 'is-invalid' : ''; ?>" name=" name" value="<?= $name ?? '' ?>" autofocus><?php if ($validation->getError('name')) { ?>
                                             <div class='invalid-feedback mb-2'>
                                                 <?= $error = $validation->getError('name'); ?>
                                             </div>
@@ -42,7 +42,7 @@ $validation = \Config\Services::validation();
                                     </div>
                                     <div class="col-6">
                                         <label for="username">Username</label>
-                                        <input id="username" type="text" class="form-control <?= ($validation->hasError('username')) ? 'is-invalid' : ''; ?>" name="username" value="<?= $username ?>"><?php if ($validation->getError('username')) { ?>
+                                        <input id="username" type="text" class="form-control <?= ($validation->hasError('username')) ? 'is-invalid' : ''; ?>" name="username" value="<?= $username ?? '' ?>"><?php if ($validation->getError('username')) { ?>
                                             <div class='invalid-feedback mb-2'>
                                                 <?= $error = $validation->getError('username'); ?>
                                             </div>
@@ -53,7 +53,7 @@ $validation = \Config\Services::validation();
                                 <div class="row">
                                     <div class="form-group col-6">
                                         <label for="phone_no">Phone No</label>
-                                        <input type="tel" pattern="[0-9]{0-15}" class="form-control <?= ($validation->hasError('phone_no')) ? 'is-invalid' : ''; ?>" name="phone_no" id="phone_no" value="<?= $phone_no ?>"><?php if ($validation->getError('phone_no')) { ?>
+                                        <input type="tel" pattern="[0-9]{0-15}" class="form-control <?= ($validation->hasError('phone_no')) ? 'is-invalid' : ''; ?>" name="phone_no" id="phone_no" value="<?= $phone_no ?? '' ?>"><?php if ($validation->getError('phone_no')) { ?>
                                             <div class='invalid-feedback mb-2'>
                                                 <?= $error = $validation->getError('phone_no'); ?>
                                             </div>
@@ -61,7 +61,7 @@ $validation = \Config\Services::validation();
                                     </div>
                                     <div class="form-group col-6">
                                         <label for="email">Email</label>
-                                        <input id="email" type="email" class="form-control <?= ($validation->hasError('email')) ? 'is-invalid' : ''; ?>" name="email" value="<?= $email ?>"><?php if ($validation->getError('email')) { ?>
+                                        <input id="email" type="email" class="form-control <?= ($validation->hasError('email')) ? 'is-invalid' : ''; ?>" name="email" value="<?= $email ?? '' ?>"><?php if ($validation->getError('email')) { ?>
                                             <div class='invalid-feedback mb-2'>
                                                 <?= $error = $validation->getError('email'); ?>
                                             </div>
@@ -72,7 +72,7 @@ $validation = \Config\Services::validation();
                                 <div class="form-group row mb-3">
                                     <div class="col-6">
                                         <label for="password" class="d-block">Password</label>
-                                        <input id="password" type="password" class="form-control <?= ($validation->hasError('password')) ? 'is-invalid' : ''; ?>" name="password" value="<?= $password ?>"><?php if ($validation->getError('password')) { ?>
+                                        <input id="password" type="password" class="form-control <?= ($validation->hasError('password')) ? 'is-invalid' : ''; ?>" name="password" value="<?= $password ?? '' ?>"><?php if ($validation->getError('password')) { ?>
                                             <div class='invalid-feedback mb-2'>
                                                 <?= $error = $validation->getError('password'); ?>
                                             </div>
@@ -80,7 +80,7 @@ $validation = \Config\Services::validation();
                                     </div>
                                     <div class="col-6">
                                         <label for="password_confirm" class="d-block">Confirm Password</label>
-                                        <input id="password_confirm" type="password" class="form-control <?= ($validation->hasError('password_confirm')) ? 'is-invalid' : ''; ?>" name="password_confirm" value="<?= $password_confirm ?>">
+                                        <input id="password_confirm" type="password" class="form-control <?= ($validation->hasError('password_confirm')) ? 'is-invalid' : ''; ?>" name="password_confirm" value="<?= $password_confirm ?? '' ?>">
                                         <?php if ($validation->getError('password_confirm')) { ?>
                                             <div class='invalid-feedback mb-2'>
                                                 <?= $error = $validation->getError('password_confirm'); ?>
