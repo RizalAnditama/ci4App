@@ -2,15 +2,23 @@
 
 use App\Libraries\checkStatus;
 
+// setcookie('bruh', password_hash('bruh', PASSWORD_DEFAULT));
+// $pass = password_verify('bruh', $_COOKIE['bruh']);
+// if ($pass) {
+//     echo 'its right';
+// }
+// dd($pass);
+
 $check = new checkStatus();
-$check->checkStatus();
+// $check->checkStatus();
+$check->checkCookies();
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title><?= $title; ?></title>
+    <title><?= $title ?? 'Randy Education' ?></title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="CI4app">

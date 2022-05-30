@@ -25,7 +25,11 @@ class UserController extends BaseController
         $this->userModel = new UserModel();
         $this->userModel->update(session()->get('id_user'), ['status' => 'inactive']);
         session()->destroy();
-        return redirect()->to('login');
+        // unset the cookies
+        setcookie('uuid', '', time() - 3600, '/');
+        setcookie('token', '', time() - 3600, '/');
+
+        return redirect()->to('/');
     }
 
     public function login()
@@ -39,6 +43,12 @@ class UserController extends BaseController
         // Check if $user is a username or email
         $userEmail = $this->request->getVar('user');
         $userEmail = filter_var($userEmail, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        // Set the value of the remember me cho=ckbox (For later use)
+        $remember = $this->request->getVar('remember');
+        if ($remember === 'on') {
+            $remember = true;
+        }
 
         if ($this->request->getMethod() == 'post') {
             $userVal = $userEmail;
@@ -99,10 +109,9 @@ class UserController extends BaseController
                     'title' => 'Login',
                     'user' => $this->request->getPost('user'),
                     'password' => $this->request->getPost('password'),
-                    'email' => $email,
                     'emailforgot' => $email,
 
-                    'remember' => '',
+                    'remember' => $remember,
                 ];
 
                 return view('pages/login', $data);
@@ -112,8 +121,26 @@ class UserController extends BaseController
                 // Let user login via email or username
                 $user = $model->where('email', $this->request->getVar('user'))->orwhere('username', $this->request->getVar('user'))->first();
 
+                // check if user want cookie
+                if ($remember === true) {
+                    $cookie1 = [
+                        'name' => 'uuid',
+                        'value' => $user['uuid'],
+                        'expire' => time() + 315360000, // 10 years
+                    ];
+                    $cookie2 = [
+                        'name' => 'token',
+                        'value' => password_hash($user['username'], PASSWORD_DEFAULT),
+                        'expire' => time() + 315360000,
+                    ];
+
+                    setcookie($cookie1['name'], $cookie1['value'], $cookie1['expire'], '/');
+                    setcookie($cookie2['name'], $cookie2['value'], $cookie2['expire'], '/');
+                }
+
                 // Storing session values
                 $this->setUserSession($user);
+
                 session()->setFlashdata('ye', 'active');
                 session()->markAsTempdata('ye', 3);
 
@@ -448,30 +475,5 @@ class UserController extends BaseController
             }
         }
         return view('pages/register', $data);
-    }
-
-    //! Unfinished function 
-    //TODO : Create a function to remember me 
-    public function remember()
-    {
-        $model = new UserModel();
-        $user = $model->where('email', $this->request->getVar('email'))->first();
-        if ($user) {
-            $data = [
-                'email' => $this->request->getVar('email'),
-                'password' => $this->request->getVar('password'),
-                'remember' => 'checked',
-                'title' => 'Login'
-            ];
-            return view('pages/login', $data);
-        } else {
-            $data = [
-                'email' => $this->request->getVar('email'),
-                'password' => $this->request->getVar('password'),
-                'remember' => '',
-                'title' => 'Forgot Your Password'
-            ];
-            return view('pages/forgot-password', $data);
-        }
     }
 }
