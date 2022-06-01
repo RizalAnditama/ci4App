@@ -74,7 +74,7 @@ $session = \Config\Services::session();
                                 <div class="form-group my-3 d-inline noselect">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" name="remember" class="custom-control-input" tabindex="3" id="remember" <?php $remember = $remember ?? '' ?> <?= ($remember === true) ? 'checked' : '' ?? '' ?>>
-                                        <label class="noselect" class="custom-control-label" for="remember">Remember Me(Unfinished)</label>
+                                        <label class="noselect" class="custom-control-label" for="remember">Remember Me</label>
                                     </div>
                                 </div>
 
