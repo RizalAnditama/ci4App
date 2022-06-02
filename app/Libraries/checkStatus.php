@@ -41,7 +41,7 @@ class checkStatus
             // ambil username berdasarkan uuid
             $user = $model->where('uuid', $uuid)->first();
             if ($user === null) {
-                return false;
+                $controller->logout();
             }
 
             $username = $user['username'];

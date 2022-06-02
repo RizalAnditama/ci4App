@@ -133,7 +133,6 @@ class UserController extends BaseController
                         'value' => password_hash($user['username'], PASSWORD_DEFAULT),
                         'expire' => time() + 315360000,
                     ];
-
                     setcookie($cookie1['name'], $cookie1['value'], $cookie1['expire'], '/');
                     setcookie($cookie2['name'], $cookie2['value'], $cookie2['expire'], '/');
                 }
