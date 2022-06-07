@@ -16,16 +16,16 @@
                             <h2 class="card-header">Reset Your Password</h2>
                             <div class="card-body">
 
-                                <!-- <?php if (isset($validation)) : ?> -->
-                                <div class="alert alert-danger d-flex align-items-center" role="alert">
-                                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
-                                        <use xlink:href="#exclamation-triangle-fill" />
-                                    </svg>
-                                    <div>
-                                        <?= $validation->listErrors() ?>
+                                <?php if (isset($validation)) : ?>
+                                    <div class="alert alert-danger d-flex align-items-center" role="alert">
+                                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+                                            <use xlink:href="#exclamation-triangle-fill" />
+                                        </svg>
+                                        <div>
+                                            <?= $validation->listErrors() ?>
+                                        </div>
                                     </div>
-                                </div>
-                                <!-- <?php endif ?> -->
+                                <?php endif ?>
 
                                 <p>Enter the code you received via email, your email address, and your new password.</p>
 
@@ -34,14 +34,14 @@
                                     <input type="hidden" name="csrf_test_name" value="0f55076ee794a58889968501ebf76fcd">
                                     <div class="form-group">
                                         <label for="token">Token</label>
-                                        <input type="text" class="form-control " name="token" placeholder="Token" value="<?php echo $token ?? '' ?>">
+                                        <input type="text" class="form-control " name="token" placeholder="Token" value="<?php echo $token ?? '' ?>" <?= $aut = (isset($token)) ? 'autocompleted' : 'autofocus'; ?>>
                                         <div class="invalid-feedback">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="email">Email</label>
-                                        <input type="email" class="form-control " name="user" aria-describedby="emailHelp" placeholder="Email" value="<?php echo $user ?? '' ?>">
+                                        <input type="email" class="form-control " name="user" aria-describedby="emailHelp" placeholder="Email" value="<?php echo $user ?? '' ?>" <?= $aut = (isset($token)) ? 'autofocus' : ''; ?>>
                                         <div class="invalid-feedback">
                                         </div>
                                     </div>

@@ -180,8 +180,9 @@ class UserModel extends Model
     public function createToken($email)
     {
         $user = $this->where('email', $email)->first();
+        $hash = hash('md5', microtime(), false);
         $data = [
-            'token' => substr(hash('md5', microtime(), false), 0, 16),
+            'token' => (int) substr(filter_var($hash, FILTER_SANITIZE_NUMBER_INT), 0, 6),
             'token_expire' => date('Y-m-d H:i:s', strtotime('+15 minutes')),
         ];
         $this->update($user['id'], $data);
