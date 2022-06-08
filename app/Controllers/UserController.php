@@ -203,12 +203,14 @@ class UserController extends BaseController
                 $user = $model->where('email', $this->request->getVar('email'))->first();
 
                 if ($user) {
-                    $sendMail = $this->sendEmail([
+                    $userInfo = [
                         'email' => $this->request->getVar('email'),
                         'username' => $model->getUsername($this->request->getVar('email'))['username'],
                         'uuid' => $model->getUuid($this->request->getVar('email')),
                         'token' => $model->createToken($this->request->getVar('email')),
-                    ]);
+                    ];
+
+                    $sendMail = $this->sendEmail($userInfo, 'Reset Password', view('mail/forgot-password', $userInfo), true);
 
                     if ($sendMail !== false) {
                         session()->setFlashdata('success', 'Silahkan cek email anda untuk melakukan reset password<br><b>Link akan dihapus dalam 15 menit</b>');
@@ -243,24 +245,18 @@ class UserController extends BaseController
         return view('pages/forgot-password', $data);
     }
 
-    private function sendEmail($user)
+    private function sendEmail($user, $title, $msg, $token)
     {
         $this->email->setFrom('anditamarizal@gmail.com', 'Rizal Codeigniter');
         $this->email->setTo($user['email']);
 
-        $this->email->setSubject('Reset Password');
-        $this->email->setMessage(
-            '<h3>Hi, ' . $user['username'] . '</h3> 
-            Click the button to reset your password: <br><br><br>
-            <a style="background-color: #734aa7; color: white; padding: 15px 25px; text-decoration: none;" href="' . base_url('reset-password/' . $user['token']) . '">Reset Password</a>
-
-            <br><br><br>or click the link below and use the token <br>' .
-                '<a href="' . base_url('reset-password') . '/' . $user['uuid'] . '">Reset Password</a><br>' .
-                '<br>Token: <h3>' . $user['token'] .  '</h3>'
-        );
+        $this->email->setSubject($title);
+        $this->email->setMessage($msg);
 
         if ($this->email->send()) {
-            session()->set('token', $user['token']);
+            if ($token === true) {
+                session()->set('token', $user['token']);
+            }
             return true;
         } else {
             echo $this->email->printDebugger();
@@ -271,7 +267,7 @@ class UserController extends BaseController
     public function resetPassword($slug)
     {
         $model = new UserModel();
-        
+
         $data['title'] = 'Reset Password';
         $data['slug'] = $slug;
 

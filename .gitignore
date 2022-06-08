@@ -1,3 +1,4 @@
 /bekas
 /writable
 app/Config/Email.php
+app/Controllers/Test.php
