@@ -14,6 +14,9 @@ class ModelMahasiswa extends Model
     protected $allowedFields = [
         'nim_mhs',
         'nama_mhs',
+        'jenis_kelamin',
+        'agama_mhs',
+        'pendidikan',
         'TmpLahir_mhs',
         'TglLahir_mhs',
         'alamat_mhs',
@@ -32,7 +35,10 @@ class ModelMahasiswa extends Model
     protected $updatedField         = 'updated_at';
     // protected $deletedField         = 'deleted_at';
 
-    public function search($keyword)
+    /**
+     * Buat ngesearch sesuatu berdasar keyword
+     */
+    public function search(string $keyword)
     {
         if (true) {
             return $this->table('mahasiswa')->like('nama_mhs', $keyword)
@@ -43,6 +49,9 @@ class ModelMahasiswa extends Model
                 ->orLike('alamat_mhs', $keyword)
                 ->orLike('hp_mhs', $keyword)
                 ->orLike('foto', $keyword)
+                ->orLike('jenis_kelamin', $keyword)
+                ->orLike('agama_mhs', $keyword)
+                ->orLike('pendidikan', $keyword)
                 ->orLike('created_at', $keyword)
                 ->orLike('updated_at', $keyword);
         } else {
@@ -50,7 +59,9 @@ class ModelMahasiswa extends Model
         }
     }
 
-    // autonumber buat nambah string berdasar kode jurusan dan angka auto increment
+    /**
+     * autonumber buat nambah string berdasar kode jurusan dan angka auto increment
+     */
     public function autonumber($jurusan)
     {
         $query = $this->db->query("SELECT MAX(RIGHT(nim_mhs,4)) AS kode FROM mahasiswa");
@@ -71,19 +82,24 @@ class ModelMahasiswa extends Model
         } else if ($jurusan == 'sastra') {
             return "MHS" . "SAS" . $kode;
         } else {
+            // Akan menampilkan error jika kode jurusan tidak sesuai
             return "MHS" . "ERR" . $kode;
         }
     }
 
-    // Ngambil nama jurusan
-    public function getJurusan($id)
+    /** 
+     * Ngambil nama jurusan
+     */
+    public function getJurusan(int $id)
     {
         $query = $this->db->query("SELECT jurusan_mhs FROM mahasiswa WHERE id_mhs = '$id'");
         return $query->getRowArray();
     }
 
-    // Ganti format kode nim berdasar jurusan
-    public function changeFormat($nim, $jurusan)
+    /** 
+     * Ganti format kode nim berdasar jurusan
+     */
+    public function changeFormat(string $nim, string $jurusan)
     {
         $kode = substr($nim, 6, 4);
         if ($jurusan == 'sejarah') {
@@ -95,5 +111,15 @@ class ModelMahasiswa extends Model
         }
 
         return $nim;
+    }
+
+    /**
+     * Find unique value in a table
+     */
+    public function findUnique(array $option, string $column_name)
+    {
+        $name = array_column($option, $column_name);
+        $name = array_unique($name);
+        return array_values($name);
     }
 }
