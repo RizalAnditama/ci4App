@@ -2,11 +2,10 @@
 
 namespace App\Controllers;
 
-use CodeIgniter\Controller;
 use App\Models\ModelMahasiswa;
 use App\Models\UserModel;
 
-class Mahasiswa extends Controller
+class Mahasiswa extends BaseController
 {
     public function __construct()
     {
@@ -44,22 +43,11 @@ class Mahasiswa extends Controller
         }
 
         // findall unique data in table mahasiswa and put it in option variable
-        $option = $this->mhs->findAll();
-        $nama = array_column($option, 'nama_mhs');
-        $nama = array_unique($nama);
-        $nama = array_values($nama);
-
-        $nim = array_column($option, 'nim_mhs');
-        $nim = array_unique($nim);
-        $nim = array_values($nim);
-
-        $TmpLahir = array_column($option, 'TmpLahir_mhs');
-        $TmpLahir = array_unique($TmpLahir);
-        $TmpLahir = array_values($TmpLahir);
-
-        $hp = array_column($option, 'hp_mhs');
-        $hp = array_unique($hp);
-        $hp = array_values($hp);
+        // $option = $this->mhs->findAll();
+        // $nama = $this->mhs->findUnique($option, 'nama_mhs');
+        // $nim = $this->mhs->findUnique($option, 'nim_mhs');
+        // $TmpLahir = $this->mhs->findUnique($option, 'TmpLahir_mhs');
+        // $hp = $this->mhs->findUnique($option, 'hp_mhs');
 
         $data = [
             'title'     => 'Dashboard | Admin',
@@ -68,10 +56,10 @@ class Mahasiswa extends Controller
             'pager'     => $mhs->pager,
             'page' => $page,
             'keyword' => $keyword,
-            'nama' => $nama,
-            'nim' => $nim,
-            'TmpLahir' => $TmpLahir,
-            'hp' => $hp,
+            // 'nama' => $nama,
+            // 'nim' => $nim,
+            // 'TmpLahir' => $TmpLahir,
+            // 'hp' => $hp,
         ];
 
         return view('pages/viewdatamahasiswa', $data);
@@ -91,6 +79,15 @@ class Mahasiswa extends Controller
                     'max_length' => 'maksimum karakter untuk field Field Nama adalah 255 karakter'
                 ]
             ],
+            'jenkel' => [
+                'label' => 'Jenis Kelamin',
+                'rules' => 'required|alpha_space|max_length[255]',
+                'errors' => [
+                    'required' => 'Field Jenis Kelamin harus diisi',
+                    'alpha_space' => 'Field Jenis Kelamin hanya boleh berisi huruf dan spasi',
+                    'max_length' => 'maksimum karakter untuk field Field Jenis Kelamin adalah 255 karakter'
+                ]
+            ],
             'TmpLahir' => [
                 'label' => 'TmpLahir',
                 'rules' => 'required|alpha_space|max_length[255]',
@@ -105,6 +102,15 @@ class Mahasiswa extends Controller
                 'rules' => 'required',
                 'errors' => [
                     'required' => 'Tanggal Lahir harus diisi',
+                ]
+            ],
+            'agama' => [
+                'label' => 'agama',
+                'rules' => 'required|alpha_space|max_length[255]',
+                'errors' => [
+                    'required' => 'Field agama harus diisi',
+                    'alpha_space' => 'Field agama hanya boleh berisi huruf dan spasi',
+                    'max_length' => 'maksimum karakter untuk field Field agama adalah 255 karakter'
                 ]
             ],
             'alamat' => [
@@ -136,6 +142,14 @@ class Mahasiswa extends Controller
                     'max_length' => 'maksimum karakter untuk field Jurusan adalah 255 karakter'
                 ]
             ],
+            'pendidikan' => [
+                'label' => 'pendidikan',
+                'rules' => 'required|max_length[255]',
+                'errors' => [
+                    'required' => 'Pendidikan harus diisi',
+                    'max_length' => 'maksimum karakter untuk field Pendidikan adalah 255 karakter'
+                ]
+            ],
             'foto' => [
                 'label' => 'foto',
                 'rules' => 'permit_empty|uploaded[foto]|max_size[foto,1024]|is_image[foto]|mime_in[foto,image/jpg,image/jpeg,image/png]',
@@ -165,16 +179,19 @@ class Mahasiswa extends Controller
                     $foto = base_url() . '/' . 'images/mahasiswa/' . $fileName;
                 }
             } else {
-                $foto = null;
+                $foto = base_url() . '/' . 'images/mahasiswa/' . 'default-profile.jpg';
             }
 
             $data = [
                 'nim_mhs' => $this->mhs->autonumber($this->request->getVar('jurusan')), // Pake autonumber dari model buat ngenomorinnya
                 'nama_mhs' => $this->request->getVar('nama'),
+                'jenis_kelamin' => $this->request->getVar('jenkel'),
                 'TmpLahir_mhs' => $this->request->getVar('TmpLahir'),
                 'TglLahir_mhs' => $this->request->getVar('TglLahir'),
+                'agama_mhs' => $this->request->getVar('agama'),
                 'alamat_mhs' => $this->request->getVar('alamat'),
                 'hp_mhs' => $this->request->getVar('telepon'),
+                'pendidikan' => $this->request->getVar('pendidikan'),
                 'jurusan_mhs' => $this->request->getVar('jurusan'),
                 'foto' => $foto,
             ];
@@ -219,6 +236,15 @@ class Mahasiswa extends Controller
                     'max_length' => 'maksimum karakter untuk field Field Nama adalah 255 karakter'
                 ]
             ],
+            'jenkel_edit' => [
+                'label' => 'Jenis Kelamin',
+                'rules' => 'required|alpha_space|max_length[255]',
+                'errors' => [
+                    'required' => 'Field Jenis Kelamin harus diisi',
+                    'alpha_space' => 'Field Jenis Kelamin hanya boleh berisi huruf dan spasi',
+                    'max_length' => 'maksimum karakter untuk field Field Jenis Kelamin adalah 255 karakter'
+                ]
+            ],
             'TmpLahir_edit' => [
                 'label' => 'TmpLahir',
                 'rules' => 'required|alpha_space|max_length[255]',
@@ -233,6 +259,15 @@ class Mahasiswa extends Controller
                 'rules' => 'required',
                 'errors' => [
                     'required' => 'Tanggal Lahir harus diisi',
+                ]
+            ],
+            'agama_edit' => [
+                'label' => 'Agama',
+                'rules' => 'required|alpha_space|max_length[255]',
+                'errors' => [
+                    'required' => 'Field Agama harus diisi',
+                    'alpha_space' => 'Field Agama hanya boleh berisi huruf dan spasi',
+                    'max_length' => 'maksimum karakter untuk field Field Agama adalah 255 karakter'
                 ]
             ],
             'alamat_edit' => [
@@ -253,6 +288,14 @@ class Mahasiswa extends Controller
                     'max_length' => 'maksimum karakter untuk field Jurusan adalah 255 karakter'
                 ]
             ],
+            'pendidikan_edit' => [
+                'label' => 'pendidikan',
+                'rules' => 'required|max_length[255]',
+                'errors' => [
+                    'required' => 'Pendidikan harus diisi',
+                    'max_length' => 'maksimum karakter untuk field Pendidikan adalah 255 karakter'
+                ]
+            ],
             'foto_edit' => [
                 'label' => 'foto',
                 'rules' => 'permit_empty|uploaded[foto]|max_size[foto,1024]|is_image[foto]|mime_in[foto,image/jpg,image/jpeg,image/png]',
@@ -270,8 +313,6 @@ class Mahasiswa extends Controller
                 'body' => 'Gagal mengedit data',
             ];
 
-            $validation = \Config\Services::validation();
-
             session()->set('id', $this->request->getVar('id'));
             session()->set('nama', json_decode(json_encode(($this->mhs->query("SELECT nama_mhs FROM mahasiswa WHERE id_mhs = '$id'")->getRowArray()['nama_mhs']))), FALSE);
             session()->setFlashdata('fail_edit', $flash);
@@ -284,19 +325,22 @@ class Mahasiswa extends Controller
                 $fileName = $this->userModel->timestampFile($foto->getName());
                 if ($foto->move("images/mahasiswa", $fileName)) {
                     $foto = base_url() . '/' . 'images/mahasiswa/' . $fileName;
+
+                    $data['foto'] = $foto;
+                    $edit_foto = $this->mhs->update($id, $data);
                 }
-            } else {
-                $foto = null;
             }
 
             $data = [
                 'nama_mhs' => $this->request->getVar('nama_edit'),
+                'jenis_kelamin' => $this->request->getVar('jenkel_edit'),
                 'TmpLahir_mhs' => $this->request->getVar('TmpLahir_edit'),
                 'TglLahir_mhs' => $this->request->getVar('TglLahir_edit'),
+                'agama_mhs' => $this->request->getVar('agama_edit'),
                 'alamat_mhs' => $this->request->getVar('alamat_edit'),
                 'hp_mhs' => $this->request->getVar('telepon_edit'),
                 'jurusan_mhs' => $this->request->getVar('jurusan_edit'),
-                'foto' => $foto,
+                'pendidikan' => $this->request->getVar('pendidikan_edit'),
             ];
             // get the original value of jurusan_mhs and store it in $jurusan
             $jurusan_edit = $this->request->getVar('jurusan_edit');
@@ -310,7 +354,7 @@ class Mahasiswa extends Controller
             }
             $edit = $this->mhs->update($id, $data);
 
-            if ($edit) {
+            if ($edit || $edit_foto) {
                 session()->set('id', $this->request->getVar('id'));
                 session()->set('nim', (string) $data['nim_mhs']);
                 session()->set('nama', $this->request->getVar('nama_edit'));

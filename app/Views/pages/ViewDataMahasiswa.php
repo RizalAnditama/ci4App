@@ -46,21 +46,33 @@ $session = \Config\Services::session();
             <div class="input-group mb-3">
                 <input id="search" name="keyword" type="search" class="form-control" placeholder="Masukan kata kunci..." value="<?php echo session()->get('keyword') ?>" list="datalistOptions" aria-describedby="search-button" autofocus>
                 <datalist id="datalistOptions">
-                    <?php foreach ($nama as $row) : ?>
-                        <option value="<?= $row ?>">
-                        <?php endforeach ?>
-                        <?php foreach ($nim as $row) : ?>
-                        <option value="<?= $row ?>">
-                        <?php endforeach ?>
-                        <?php foreach ($TmpLahir as $row) : ?>
-                        <option value="<?= $row ?>">
-                        <?php endforeach ?>
-                        <?php foreach ($hp as $row) : ?>
-                        <option value="<?= $row ?>">
-                        <?php endforeach ?>
-                        <option value="MIPA">
-                        <option value="Sejarah">
-                        <option value="Sastra">
+                    <!-- <? //php foreach ($nama as $row) : 
+                            ?>
+                        <option value="<? //= $row 
+                                        ?>">
+                        <? //php endforeach 
+                        ?>
+                        <? //php foreach ($nim as $row) : 
+                        ?>
+                        <option value="<? //= $row 
+                                        ?>">
+                        <? //php endforeach 
+                        ?>
+                        <? //php foreach ($TmpLahir as $row) : 
+                        ?>
+                        <option value="<? //= $row 
+                                        ?>">
+                        <? //php endforeach 
+                        ?>
+                        <? //php foreach ($hp as $row) : 
+                        ?>
+                        <option value="<? //= $row 
+                                        ?>">
+                        <? //php endforeach 
+                        ?> -->
+                    <option value="MIPA">
+                    <option value="Sejarah">
+                    <option value="Sastra">
                 </datalist>
                 <button id="search-button" class="btn btn-outline-primary" type="submit" name="submit">Cari</button>
                 <?php if (session()->getFlashdata('home')) : ?>
@@ -129,12 +141,8 @@ $session = \Config\Services::session();
             </div>
         <?php endif; ?>
     </div>
-    <?php
-    // cek kalo databases ada isinya
-    // dd(session()->getFlashdata());
-    if (session()->getFlashdata('fail_search') === true) { ?>
-        echo session()->getFlashdata('fail_search');
-    <?php } else if (empty($mahasiswa)) { ?>
+
+    <?php if (empty($mahasiswa)) { ?>
         <div class="container">
             <div class="row">
                 <h3 class="text-center">Data <?php echo $keyword = (session()->get('keyword')) ? '"' . session()->get('keyword') . '"' : 'Mahasiswa'; ?> Kosong</h3>
@@ -146,14 +154,18 @@ $session = \Config\Services::session();
             <table class="table">
                 <thead>
                     <tr>
+                        <!-- <th scope="col"></th> -->
+                        <th scope="col"></th>
                         <th scope="col">No</th>
                         <th scope="col">NIM</th>
                         <th scope="col">Nama Mahasiswa</th>
+                        <th scope="col">Jenis Kelamin</th>
                         <th scope="col">Tempat<br>Tanggal Lahir</th>
+                        <th scope="col">Agama</th>
                         <th scope="col">Alamat</th>
-                        <th scope="col">Nomor HP</th>
+                        <th scope="col">No HP</th>
                         <th scope="col">Jurusan</th>
-                        <th scope="col"></th>
+                        <th scope="col">Pendidikan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -164,15 +176,8 @@ $session = \Config\Services::session();
 
                     foreach ($mahasiswa as  $row) :
                     ?>
-
                         <tr>
-                            <th><?= $no++; ?></th>
-                            <td><?= $row->nim_mhs ?></td>
-                            <td><?= $row->nama_mhs ?></td>
-                            <td><?= $row->TmpLahir_mhs . '<br>' . $row->TglLahir_mhs ?></td>
-                            <td><?= $row->alamat_mhs ?></td>
-                            <td><?= $row->hp_mhs ?></td>
-                            <td><?= $row->jurusan_mhs ?></td>
+                            <!-- <td><input type="checkbox" name="check<?= $row->id_mhs; ?>" id="check<?= $row->id_mhs; ?>"></td> -->
                             <td>
                                 <div class="dropstart">
                                     <a href="#" class="" data-bs-toggle="dropdown" aria-expanded="false" data-toggle="tooltip" data-placement="right" title="Action">
@@ -212,6 +217,16 @@ $session = \Config\Services::session();
                                     </ul>
                                 </div>
                             </td>
+                            <th><?= $no++; ?></th>
+                            <td><?= $row->nim_mhs ?></td>
+                            <td><?= $row->nama_mhs ?></td>
+                            <td><?= $jenkel = ($row->jenis_kelamin === 'l') ? 'Laki-laki' : 'Perempuan'; ?></td>
+                            <td><?= $row->TmpLahir_mhs . '<br>' . $row->TglLahir_mhs ?></td>
+                            <td><?= $row->agama_mhs ?></td>
+                            <td><?= $row->alamat_mhs ?></td>
+                            <td><?= $row->hp_mhs ?></td>
+                            <td><?= $row->jurusan_mhs ?></td>
+                            <td><?= $row->pendidikan ?></td>
                         </tr>
                 <?php endforeach;
                 } ?>
@@ -242,7 +257,18 @@ $session = \Config\Services::session();
                     <div class='invalid-feedback'>
                         <?= $error = $validation->getError('nama'); ?>
                     </div>
+                </div>
+                <div class="form-floating mb-3">
+                    <select class="form-control <?= ($validation->hasError('jenkel')) ? 'is-invalid' : ''; ?>" name="jenkel" id="jenkel" required>
+                        <option selected disabled value="">Pilih...</option>
+                        <option value="l" <?= (old('jenkel') === 'l') ? 'selected' : ''; ?>>laki-laki</option>
+                        <option value="p" <?= (old('jenkel') === 'p') ? 'selected' : '' ?>>Perempuan</option>
+                    </select>
+                    <label for="jenkel">Jenis Kelamin</label>
 
+                    <div class='invalid-feedback'>
+                        <?= $error = $validation->getError('jenkel'); ?>
+                    </div>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="text" name="TmpLahir" size="255" placeholder="TempatLahir" id="inputTempatLahir" class="form-control <?= ($validation->hasError('TmpLahir')) ? 'is-invalid' : ''; ?>" value="<?= old('TmpLahir'); ?>" required>
@@ -251,7 +277,6 @@ $session = \Config\Services::session();
                     <div class='invalid-feedback'>
                         <?= $error = $validation->getError('TmpLahir'); ?>
                     </div>
-
                 </div>
                 <div class="form-floating mb-3">
                     <input type="date" name="TglLahir" placeholder="TanggalLahir" id="inputTanggalLahir" class="form-control <?= ($validation->hasError('TglLahir')) ? 'is-invalid' : ''; ?>" value="<?= old('TglLahir'); ?>" required>
@@ -260,7 +285,21 @@ $session = \Config\Services::session();
                     <div class='invalid-feedback'>
                         <?= $error = $validation->getError('TglLahir'); ?>
                     </div>
+                </div>
+                <div class="form-floating mb-3">
+                    <select class="form-control <?= ($validation->hasError('agama')) ? 'is-invalid' : ''; ?>" name="agama" id="agama" required>
+                        <option selected disabled>Pilih...</option>
+                        <option value="Islam" <?= (old('agama') === 'Islam') ? 'selected' : ''; ?>>Islam</option>
+                        <option value="Kristen" <?= (old('agama') === 'Kristen') ? 'selected' : '' ?>>Kristen</option>
+                        <option value="Hindu" <?= (old('agama') === 'Hindu') ? 'selected' : '' ?>>Hindu</option>
+                        <option value="Buddha" <?= (old('agama') === 'Buddha') ? 'selected' : '' ?>>Buddha</option>
+                        <option value="Konghucu" <?= (old('agama') === 'Konghucu') ? 'selected' : '' ?>>Konghucu</option>
+                    </select>
+                    <label for="agama">Agama</label>
 
+                    <div class='invalid-feedback'>
+                        <?= $error = $validation->getError('agama'); ?>
+                    </div>
                 </div>
                 <div class="form-floating mb-3">
                     <input type="text" name="alamat" size="255" placeholder="Alamat" id="inputAlamat" class="form-control <?= ($validation->hasError('alamat')) ? 'is-invalid' : ''; ?>" value="<?= old('alamat'); ?>" required>
@@ -269,7 +308,6 @@ $session = \Config\Services::session();
                     <div class='invalid-feedback'>
                         <?= $error = $validation->getError('alamat'); ?>
                     </div>
-
                 </div>
                 <div class="form-floating mb-3">
                     <input type="tel" name="telepon" maxlength="13" placeholder="Telepon" id="inputTelepon" pattern="{0-9}+" class="form-control <?= ($validation->hasError('telepon')) ? 'is-invalid' : ''; ?>" value="<?= old('telepon'); ?>" required>
@@ -292,7 +330,21 @@ $session = \Config\Services::session();
                     <div class='invalid-feedback'>
                         <?= $error = $validation->getError('jurusan'); ?>
                     </div>
+                </div>
+                <div class="form-floating mb-3">
+                    <select class="form-control <?= ($validation->hasError('pendidikan')) ? 'is-invalid' : ''; ?>" name="pendidikan" id="pendidikan" required>
+                        <option selected disabled value="">Pilih...</option>
+                        <option value="SD" <?= (old('pendidikan') === 'SD') ? 'selected' : ''; ?>>SD</option>
+                        <option value="SMP" <?= (old('pendidikan') === 'SMP') ? 'selected' : '' ?>>SMP</option>
+                        <option value="SMA" <?= (old('pendidikan') === 'SMA') ? 'selected' : '' ?>>SMA</option>
+                        <option value="SMK" <?= (old('pendidikan') === 'SMK') ? 'selected' : '' ?>>SMK</option>
+                        <option value="S1" <?= (old('pendidikan') === 'S1') ? 'selected' : '' ?>>S1</option>
+                    </select>
+                    <label for="pendidikan">Pendidikan</label>
 
+                    <div class='invalid-feedback'>
+                        <?= $error = $validation->getError('jenkel'); ?>
+                    </div>
                 </div>
                 <div class="form-floating row mb-3">
                     <div class="custom-file">
@@ -357,6 +409,23 @@ foreach ($mahasiswa as  $row) :
                                         } ?>
                             </div>
                             <div class="form-floating mb-3">
+                                <select class="form-control <?php if (old('id') === $row->id_mhs) : ?><?= ($validation->hasError('jenkel_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" name="jenkel_edit" id="jenkel_edit" required>
+                                    <?php if ($validation->hasError('jenkel_edit')) { ?>
+                                        <option value="l" <?= (old('jenkel_edit') === 'l') ? 'selected' : ''; ?>>Laki-laki</option>
+                                        <option value="p" <?= (old('jenkel_edit') === 'p') ? 'selected' : '' ?>>Perempuan</option>
+                                    <?php } else { ?>
+                                        <option value="l" <?= ($row->jenis_kelamin === 'l') ? 'selected' : ''; ?>>laki-laki</option>
+                                        <option value="p" <?= ($row->jenis_kelamin === 'p') ? 'selected' : '' ?>>Perempuan</option>
+                                    <?php } ?>
+                                </select>
+                                <label for="jenkel_edit">Jenis Kelamin</label>
+                                <?php if (old('id') === $row->id_mhs) { ?>
+                                    <div class='invalid-feedback'>
+                                        <?= $error = $validation->getError('jenkel_edit'); ?>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                            <div class="form-floating mb-3">
                                 <input type="text" name="TmpLahir_edit" size="255" placeholder="TempatLahir" id="inputTempatLahir" class="form-control <?php if (old('id') === $row->id_mhs) : ?><?= ($validation->hasError('TmpLahir_edit')) ? 'is-invalid' : 'is-valid'; ?><?php endif; ?>" value="<?php echo old('id') === $row->id_mhs ? old('TmpLahir_edit') : $row->TmpLahir_mhs ?>" required>
                                 <label for="inputTempatLahir">Tempat Lahir</label>
 
@@ -379,6 +448,29 @@ foreach ($mahasiswa as  $row) :
                                     </div><?php
 
                                         } ?>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <select class="form-control <?php if (old('id') === $row->id_mhs) : ?><?= ($validation->hasError('agama_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" name="agama_edit" id="agama_edit" required>
+                                    <?php if ($validation->hasError('agama_edit')) { ?>
+                                        <option value="Islam" <?= (old('agama_edit') === 'Islam') ? 'selected' : ''; ?>>Islam</option>
+                                        <option value="Kristen" <?= (old('agama_edit') === 'Kristen') ? 'selected' : '' ?>>Kristen</option>
+                                        <option value="Hindu" <?= (old('agama_edit') === 'Hindu') ? 'selected' : '' ?>>Hindu</option>
+                                        <option value="Buddha" <?= (old('agama_edit') === 'Buddha') ? 'selected' : '' ?>>Buddha</option>
+                                        <option value="Konghucu" <?= (old('agama_edit') === 'Konghucu') ? 'selected' : '' ?>>Konghucu</option>
+                                    <?php } else { ?>
+                                        <option value="Islam" <?= ($row->agama_mhs === 'Islam') ? 'selected' : ''; ?>>Islam</option>
+                                        <option value="Kristen" <?= ($row->agama_mhs === 'Kristen') ? 'selected' : '' ?>>Kristen</option>
+                                        <option value="Hindu" <?= ($row->agama_mhs === 'Hindu') ? 'selected' : '' ?>>Hindu</option>
+                                        <option value="Buddha" <?= ($row->agama_mhs === 'Buddha') ? 'selected' : '' ?>>Buddha</option>
+                                        <option value="Konghucu" <?= ($row->agama_mhs === 'Konghucu') ? 'selected' : '' ?>>Konghucu</option>
+                                    <?php } ?>
+                                </select>
+                                <label for="agama_edit">Agama</label>
+                                <?php if (old('id') === $row->id_mhs) { ?>
+                                    <div class='invalid-feedback'>
+                                        <?= $error = $validation->getError('agama_edit'); ?>
+                                    </div>
+                                <?php } ?>
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="text" name="alamat_edit" size="255" placeholder="Alamat" id="inputAlamat" class="form-control <?php if (old('id') === $row->id_mhs) : ?><?= ($validation->hasError('alamat_edit')) ? 'is-invalid' : 'is-valid'; ?><?php endif; ?>" value="<?php echo old('id') === $row->id_mhs ? old('alamat_edit') : $row->alamat_mhs ?>" required>
@@ -407,9 +499,9 @@ foreach ($mahasiswa as  $row) :
                             <div class="form-floating mb-3">
                                 <select class="form-control <?php if (old('id') === $row->id_mhs) : ?><?= ($validation->hasError('jurusan_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" name="jurusan_edit" id="jurusan_edit" required>
                                     <?php if ($validation->hasError('jurusan_edit')) { ?>
-                                        <option value="sejarah" <?= (old('jurusan') === 'sejarah') ? 'selected' : ''; ?>>Sejarah</option>
-                                        <option value="mipa" <?= (old('jurusan') === 'mipa') ? 'selected' : '' ?>>Matematika & IPA</option>
-                                        <option value="sastra" <?= (old('jurusan') === 'sastra') ? 'selected' : ''; ?>>Sastra</option>
+                                        <option value="sejarah" <?= (old('jurusan_edit') === 'sejarah') ? 'selected' : ''; ?>>Sejarah</option>
+                                        <option value="mipa" <?= (old('jurusan_edit') === 'mipa') ? 'selected' : '' ?>>Matematika & IPA</option>
+                                        <option value="sastra" <?= (old('jurusan_edit') === 'sastra') ? 'selected' : ''; ?>>Sastra</option>
                                     <?php } else { ?>
                                         <option value="sejarah" <?= ($row->jurusan_mhs === 'Sejarah') ? 'selected' : ''; ?>>Sejarah</option>
                                         <option value="mipa" <?= ($row->jurusan_mhs === 'MIPA') ? 'selected' : '' ?>>Matematika & IPA</option>
@@ -421,9 +513,31 @@ foreach ($mahasiswa as  $row) :
                                 ?>
                                     <div class='invalid-feedback'>
                                         <?= $error = $validation->getError('jurusan_edit'); ?>
-                                    </div><?php
-
-                                        } ?>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <select class="form-control <?php if (old('id') === $row->id_mhs) : ?><?= ($validation->hasError('pendidikan_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" name="pendidikan_edit" id="pendidikan_edit" required>
+                                    <?php if ($validation->hasError('pendidikan_edit')) { ?>
+                                        <option value="SD" <?= (old('pendidikan_edit') === 'SD') ? 'selected' : ''; ?>>SD</option>
+                                        <option value="SMP" <?= (old('pendidikan_edit') === 'SMP') ? 'selected' : '' ?>>SMP</option>
+                                        <option value="SMA" <?= (old('pendidikan_edit') === 'SMA') ? 'selected' : '' ?>>SMA</option>
+                                        <option value="SMK" <?= (old('pendidikan_edit') === 'SMK') ? 'selected' : '' ?>>SMK</option>
+                                        <option value="S1" <?= (old('pendidikan_edit') === 'S1') ? 'selected' : '' ?>>S1</option>
+                                    <?php } else { ?>
+                                        <option value="SD" <?= ($row->pendidikan === 'SD') ? 'selected' : ''; ?>>SD</option>
+                                        <option value="SMP" <?= ($row->pendidikan === 'SMP') ? 'selected' : '' ?>>SMP</option>
+                                        <option value="SMA" <?= ($row->pendidikan === 'SMA') ? 'selected' : '' ?>>SMA</option>
+                                        <option value="SMK" <?= ($row->pendidikan === 'SMK') ? 'selected' : '' ?>>SMK</option>
+                                        <option value="S1" <?= ($row->pendidikan === 'S1') ? 'selected' : '' ?>>S1</option>
+                                    <?php } ?>
+                                </select>
+                                <label for="pendidikan_edit">Pendidikan</label>
+                                <?php if (old('id') === $row->id_mhs) { ?>
+                                    <div class='invalid-feedback'>
+                                        <?= $error = $validation->getError('pendidikan_edit'); ?>
+                                    </div>
+                                <?php } ?>
                             </div>
                             <div class=" form-floating mb-0">
                                 <input type="file" name="foto_edit" id="foto_edit" class="form-control">
@@ -462,8 +576,8 @@ foreach ($mahasiswa as  $row) :
                         <label for="inputNim">NIM</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" name="nama" placeholder="Nama" id="inputNama" class="form-control" value="<?= $row->nama_mhs; ?>" disabled>
-                        <label for="inputNama">Nama</label>
+                        <input type="text" name="jenkel" placeholder="Jenis Kelamin" id="inputJenkel" class="form-control" value="<?= $jenkel = ($row->jenis_kelamin === 'l') ? 'Laki-laki' : 'Perempuan'; ?>" disabled>
+                        <label for="inputJenkel">Jenis Kelamin</label>
                     </div>
                     <div class="form-floating mb-3">
                         <input type="text" name="TmpLahir" size="255" placeholder="TempatLahir" id="inputTempatLahir" class="form-control" value="<?= $row->TmpLahir_mhs; ?>" disabled>
@@ -474,6 +588,10 @@ foreach ($mahasiswa as  $row) :
                         <label for="inputTanggalLahir">Tanggal Lahir</label>
                     </div>
                     <div class="form-floating mb-3">
+                        <textarea type="text" name="agama" placeholder="agama" id="agama" class="form-control" disabled><?= $row->agama_mhs; ?></textarea>
+                        <label for="agama">Agama</label>
+                    </div>
+                    <div class="form-floating mb-3">
                         <textarea type="text" name="alamat" placeholder="Alamat" id="inputAlamat" class="form-control" disabled><?= $row->alamat_mhs; ?></textarea>
                         <label for="inputAlamat">Alamat</label>
                     </div>
@@ -481,9 +599,13 @@ foreach ($mahasiswa as  $row) :
                         <input type="tel" name="telepon" placeholder="Telepon" id="inputTelepon" class="form-control" value="<?= $row->hp_mhs; ?>" disabled>
                         <label for="inputTelepon">No. HP</label>
                     </div>
-                    <div class="form-floating mb-0">
+                    <div class="form-floating mb-3">
                         <input type="text" name="jurusan" placeholder="Jurusan" id="inputJurusan" class="form-control" value="<?= $jurusan = ($row->jurusan_mhs === 'Sejarah') ? 'Sejarah' : (($row->jurusan_mhs === 'MIPA') ? 'Matematika & IPA' : (($row->jurusan_mhs === 'Sastra') ? 'Sastra' : '')); ?>" disabled>
                         <label for="inputJurusan">Jurusan</label>
+                    </div>
+                    <div class="form-floating mb-0">
+                        <input type="text" name="pendidikan" placeholder="pendidikan" id="pendidikan" class="form-control" value="<?= $row->pendidikan ?>" disabled>
+                        <label for="pendidikan">Pendidikan</label>
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-evenly">
@@ -504,7 +626,7 @@ foreach ($mahasiswa as  $row) :
 
     <!-- Modal info -->
     <div class="modal fade" id="modalInfo<?php echo $row->id_mhs ?>" tabindex="-1" aria-labelledby="modalInfo" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalInfo">Info <?php echo $row->nama_mhs . ' ' .  '(' . $row->nim_mhs . ')' ?></h5>
@@ -513,9 +635,6 @@ foreach ($mahasiswa as  $row) :
                 <div class="modal-body">
                     <div class="row" id="primeInfo">
                         <div class="image col-6 d-flex justify-content-center">
-                            <?php
-                            $faker = \Faker\Factory::create('id_ID'); ?>
-                            <!-- <img class=" d-block m-auto" src="https://i.picsum.photos/id/815/200/300.jpg?hmac=Vd0SL31jtPA-FMvY___e5hp84IGLTUjtVJY4qUL6hOs" style="width: 200px;"> -->
                             <img class="d-block m-auto" src="<?php echo $row->foto; ?>" style="width: 200px;" alt="Foto <?php echo $row->nama_mhs . ' ' . '(' . $row->nim_mhs . ')' ?>">
                         </div>
                         <div class="primeContent col-6">
@@ -534,9 +653,19 @@ foreach ($mahasiswa as  $row) :
                                         <td><?= $row->nama_mhs ?></td>
                                     </tr>
                                     <tr>
+                                        <td>Jenis Kelamin</td>
+                                        <td>:</td>
+                                        <td><?= $jenkel = ($row->jenis_kelamin === 'l') ? 'Laki-laki' : 'Perempuan'; ?></td>
+                                    </tr>
+                                    <tr>
                                         <td>Tempat/Tanggal Lahir</td>
                                         <td>:</td>
                                         <td><?= $row->TmpLahir_mhs . '<br>' . $row->TglLahir_mhs ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Agama</td>
+                                        <td>:</td>
+                                        <td><?= $row->agama_mhs ?></td>
                                     </tr>
                                     <tr>
                                         <td>Alamat</td>
@@ -552,6 +681,11 @@ foreach ($mahasiswa as  $row) :
                                         <td>Jurusan</td>
                                         <td>:</td>
                                         <td><?= $row->jurusan_mhs ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pendidikan</td>
+                                        <td>:</td>
+                                        <td><?= $row->pendidikan ?></td>
                                     </tr>
                                     <tr>
                                         <td>Inputed at</td>
@@ -586,18 +720,18 @@ foreach ($mahasiswa as  $row) :
 
     // });
 
-    // Reset warna tombol saat klik close alerts
-    function resetColor() {
-        var element = document.getElementById("icon-pencil").style.color = "black";
-    }
+    // // Reset warna tombol saat klik close alerts
+    // function resetColor() {
+    //     var element = document.getElementById("icon-pencil").style.color = "black";
+    // }
 
-    // Focus Input saat modal kebuka
-    var myModal = document.getElementById('addNewDataModal')
-    var myInput = document.getElementById('inputNama')
+    // // Focus Input saat modal kebuka
+    // var myModal = document.getElementById('addNewDataModal')
+    // var myInput = document.getElementById('inputNama')
 
-    myModal.addEventListener('shown.bs.modal', function() {
-        myInput.focus();
-    })
+    // myModal.addEventListener('shown.bs.modal', function() {
+    //     myInput.focus();
+    // })
 
     // Nampilin gambar saat input gambar
     var reader = new FileReader();
@@ -616,17 +750,17 @@ foreach ($mahasiswa as  $row) :
     });
 
 
-    //  change color icon when clicked
-    // then revert it when clicked outside
-    $('.bi-three-dots-vertical').click(function() {
-        $(this).css('color', 'orange');
-    });
-    $(document).mouseup(function(e) {
-        var container = $(".dropstart");
-        if (!container.is(e.target) && container.has(e.target).length === 0) {
-            $('.bi-three-dots-vertical').css('color', 'black');
-        }
-    });
+    // //  change color icon when clicked
+    // // then revert it when clicked outside
+    // $('.bi-three-dots-vertical').click(function() {
+    //     $(this).css('color', 'orange');
+    // });
+    // $(document).mouseup(function(e) {
+    //     var container = $(".dropstart");
+    //     if (!container.is(e.target) && container.has(e.target).length === 0) {
+    //         $('.bi-three-dots-vertical').css('color', 'black');
+    //     }
+    // });
 
     // // Focus Input saat ngetik
     // function inputFocus() {
