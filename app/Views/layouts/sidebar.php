@@ -53,18 +53,18 @@ $current = basename(current_url());
     }
 </style>
 <!-- Sidebar -->
-<nav id="sidebarMenu" class="d-lg-block sidebar bg-white collapse show">
+<nav id="sidebarMenu" class="d-lg-block sidebar bg-white collapse">
     <div class="position-sticky">
         <div class="list-group list-group-flush mx-3 mt-4">
-            <a id="dashboard" href="<?php echo base_url('/dashboard') ?>" class="list-group-item list-group-item-action py-2 ripple <?php echo session()->getFlashdata('ye') ?><?= $active = ($baseurlmain === $current || ('admin' === $current) || ('member' === $current)) ? 'active' : ''; ?>" aria-current="true" onclick="dashboardActive()">
+            <a id="dashboard" href="<?php echo base_url('/dashboard') ?>" class="list-group-item list-group-item-action py-2 ripple <?php echo session()->getFlashdata('ye') ?><?= $active = ($baseurlmain === $current || ('admin' === $current) || ('member' === $current)) ? 'active disabled' : ''; ?>" aria-current="true" onclick="dashboardActive()">
                 <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Main dashboard</span>
             </a>
 
             <?php if (session()->get('role') === 'admin') : ?>
-                <a id="mahasiswa" href="<?= base_url('mahasiswa') ?>" class="list-group-item list-group-item-action py-2 ripple <?= $active = ($baseurlmhs === $current) ? 'active' : ''; ?>" onclick="mahasiswaActive()"><i class="fas fa-chart-bar fa-fw me-3"></i><span>Data Mahasiswa</span>
+                <a id="mahasiswa" href="<?= base_url('mahasiswa') ?>" class="list-group-item list-group-item-action py-2 ripple <?= $active = ($baseurlmhs === $current) ? 'active disabled' : ''; ?>" onclick="mahasiswaActive()"><i class="fas fa-chart-bar fa-fw me-3"></i><span>Data Mahasiswa</span>
                 </a>
 
-                <a id="user" href="#" class="list-group-item list-group-item-action py-2 ripple <?= $active = ($baseurluser === $current) ? 'active' : ''; ?>" onclick="userActive()"><i class="fas fa-users fa-fw me-3"></i><span>Users</span>
+                <a id="user" href="#" class="list-group-item list-group-item-action py-2 ripple <?= $active = ($baseurluser === $current) ? 'active disabled' : ''; ?>" onclick="userActive()"><i class="fas fa-users fa-fw me-3"></i><span>Users</span>
                 </a>
             <?php endif; ?>
 
