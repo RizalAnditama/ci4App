@@ -68,7 +68,7 @@ $current = basename(current_url());
                 </a>
             <?php endif; ?>
 
-            <a id="calendar" href="#" class="list-group-item list-group-item-action py-2 ripple"><i class="fas fa-calendar fa-fw me-3" onclick="calendarActive()"></i><span>Calendar</span>
+            <a id="calendar" href="#" class="list-group-item list-group-item-action py-2 ripple" onclick="calendarActive()"><i class="fas fa-calendar fa-fw me-3"></i><span>Calendar</span>
             </a>
         </div>
     </div>
