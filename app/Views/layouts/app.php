@@ -50,20 +50,20 @@ $check->checkCookies();
     <div class="container-fluid">
         <div class="row">
             <?php if (session()->get('role') == 'admin') { ?>
-                <div class="col-md-2 p-0">
+                <div class="col-lg-2 p-0">
                     <?= $this->include('layouts/sidebar') ?>
                 </div>
-                <div class="col-md-10 my-5 py-2" loading="lazy">
+                <div class="col-lg-10 my-5 py-2" loading="lazy">
                     <?= $this->renderSection('body') ?>
                 </div>
                 <div class=" p-0">
                     <?= $this->include('layouts/navbar') ?>
                 </div>
             <?php } else if (session()->get('role') == 'member') { ?>
-                <div class="col-md-2 p-0">
+                <div class="col-lg-2 p-0">
                     <?= $this->include('layouts/sidebar') ?>
                 </div>
-                <div class="col-md-10 my-5 py-2" loading="lazy">
+                <div class="col-lg-10 my-5 py-2" loading="lazy">
                     <?= $this->renderSection('body') ?>
                 </div>
                 <div class=" p-0">

@@ -41,7 +41,7 @@ $session = \Config\Services::session();
 </script>
 
 <div class="container my-4">
-    <div class="d-flex justify-content-between my-3">
+    <div class="d-md-flex justify-content-between my-3">
         <form action="" method="get">
             <div class="input-group mb-3">
                 <input id="search" name="keyword" type="search" class="form-control" placeholder="Masukan kata kunci..." value="<?php echo session()->get('keyword') ?>" list="datalistOptions" aria-describedby="search-button" autofocus>
