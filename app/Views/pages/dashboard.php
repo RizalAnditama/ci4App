@@ -1,8 +1,6 @@
 <?= $this->extend("layouts/app") ?>
 
 <?= $this->section("body") ?>
-<?php
-$milliseconds = round(microtime(true) * 1000) ?>
 <link rel="stylesheet" href="<?php echo base_url('templates') ?>/dashboard/dashboard.css">
 
 <div class="container-fluid">
@@ -155,6 +153,5 @@ $milliseconds = round(microtime(true) * 1000) ?>
 </div>
 
 <script src="<?= base_url('templates'); ?>/dashboard/dashboard.js"></script>
-<?php d(round(microtime(true) * 1000) - $milliseconds); ?>
 
 <?= $this->endSection() ?>

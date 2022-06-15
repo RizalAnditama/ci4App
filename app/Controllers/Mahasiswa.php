@@ -42,7 +42,7 @@ class Mahasiswa extends BaseController
             $mhs = $this->mhs;
         }
 
-        // findall unique data in table mahasiswa and put it in option variable
+        // //findall unique data in table mahasiswa and put it in option variable
         // $option = $this->mhs->findAll();
         // $nama = $this->mhs->findUnique($option, 'nama_mhs');
         // $nim = $this->mhs->findUnique($option, 'nim_mhs');

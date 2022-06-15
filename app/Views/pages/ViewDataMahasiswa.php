@@ -150,8 +150,8 @@ $session = \Config\Services::session();
             </div>
         </div>
     <?php } else { ?>
-        <div class="mb-3" style="overflow-x:auto;">
-            <table class="table">
+        <div class="mb-3 table-responsive">
+            <table class="table table-hover">
                 <thead>
                     <tr>
                         <!-- <th scope="col"></th> -->
@@ -160,12 +160,12 @@ $session = \Config\Services::session();
                         <th scope="col">NIM</th>
                         <th scope="col">Nama Mahasiswa</th>
                         <th scope="col">Jenis Kelamin</th>
-                        <th scope="col">Tempat<br>Tanggal Lahir</th>
-                        <th scope="col">Agama</th>
-                        <th scope="col">Alamat</th>
-                        <th scope="col">No HP</th>
                         <th scope="col">Jurusan</th>
+                        <th scope="col">No HP</th>
                         <th scope="col">Pendidikan</th>
+                        <th scope="col" style="min-width: 150px;">Tempat<br>Tanggal Lahir</th>
+                        <th scope="col">Agama</th>
+                        <th scope="col" style="min-width: 300px;">Alamat</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -176,12 +176,12 @@ $session = \Config\Services::session();
 
                     foreach ($mahasiswa as  $row) :
                     ?>
-                        <tr>
+                        <tr class="<?php echo (session()->getFlashdata('fail_edit')) ? (($session->get('id') === $row->id_mhs) ? 'table-danger' : '') : ((session()->getFlashdata('success_edit')) ? (($session->get('id') === $row->id_mhs) ? 'table-success' : '') : ''); ?>">
                             <!-- <td><input type="checkbox" name="check<?= $row->id_mhs; ?>" id="check<?= $row->id_mhs; ?>"></td> -->
-                            <td>
+                            <td id="action">
                                 <div class="dropstart">
                                     <a href="#" class="" data-bs-toggle="dropdown" aria-expanded="false" data-toggle="tooltip" data-placement="right" title="Action">
-                                        <i class="bi bi-three-dots-vertical col-6" style="color: <?php echo (session()->getFlashdata('fail_edit')) ? (($session->get('id') === $row->id_mhs) ? 'orange' : 'black') : ((session()->getFlashdata('success_edit')) ? (($session->get('id') === $row->id_mhs) ? 'green' : 'black') : 'black'); ?>;"></i>
+                                        <i class="bi bi-three-dots-vertical col-6" style="color:black"></i>
                                     </a>
                                     <ul class="dropdown-menu p-0">
                                         <!-- Tombol Edit, Hapus, dan Info -->
@@ -221,12 +221,12 @@ $session = \Config\Services::session();
                             <td><?= $row->nim_mhs ?></td>
                             <td><?= $row->nama_mhs ?></td>
                             <td><?= $jenkel = ($row->jenis_kelamin === 'l') ? 'Laki-laki' : 'Perempuan'; ?></td>
+                            <td><?= $row->jurusan_mhs ?></td>
+                            <td><?= $row->hp_mhs ?></td>
+                            <td class="text-center"><?= $row->pendidikan ?></td>
                             <td><?= $row->TmpLahir_mhs . '<br>' . $row->TglLahir_mhs ?></td>
                             <td><?= $row->agama_mhs ?></td>
                             <td><?= $row->alamat_mhs ?></td>
-                            <td><?= $row->hp_mhs ?></td>
-                            <td><?= $row->jurusan_mhs ?></td>
-                            <td><?= $row->pendidikan ?></td>
                         </tr>
                 <?php endforeach;
                 } ?>
@@ -359,7 +359,7 @@ $session = \Config\Services::session();
             </div>
             <div class="modal-footer">
                 <button type="submit" name="SimpanData" value="simpandata" id="SimpanData" class="btn btn-primary">Tambah</button>
-                <button type="button" name="tutup" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" name="tutup" class="btn btn-outline-dark" data-bs-dismiss="modal">Tutup</button>
                 <div class=" response-message ms-3">
                 </div>
             </div>
@@ -385,15 +385,15 @@ foreach ($mahasiswa as  $row) :
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <?= form_open_multipart('mahasiswa/UpdateData/');
+                    <?= form_open_multipart('mahasiswa/UpdateData');
                     echo csrf_field();
                     ?>
                     <div class="row">
                         <input type="number" hidden name="id" placeholder="id" id="inputId" class="form-control" value="<?php echo $row->id_mhs ?>">
-                        <div class="image col-6 d-flex justify-content-center">
+                        <div class="image col-md-6 d-flex justify-content-center">
                             <img class="d-block m-auto" src="<?php echo $row->foto; ?>" style="width: 200px;" alt="Foto <?php echo $row->nama_mhs . ' ' . '(' . $row->nim_mhs . ')' ?>">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 mt-md-3">
                             <div class="form-floating mb-0" hidden>
                                 <input type="hidden" name="nim_edit" maxlength="7" placeholder="nim" id="inputNim" class="form-control" value="<?php echo $row->nim_mhs; ?>" hidden>
                                 <label for="inputNim">NIM</label>
@@ -548,7 +548,7 @@ foreach ($mahasiswa as  $row) :
                 </div>
                 <div class="modal-footer">
                     <button type="submit" value="UpdateData" class="btn btn-primary">Update</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Cancel</button>
                 </div>
                 <?= form_close(); ?>
             </div>
@@ -559,7 +559,7 @@ foreach ($mahasiswa as  $row) :
     <!-- Hapus Data -->
     <div class="modal fade deleteModal" id="deleteModal<?= $row->id_mhs; ?>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-labelledby="formDeleteData" aria-hidden="true">
         <!-- Data Hapus Dialog -->
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="ModalLabel">Data <?php echo $row->nama_mhs . ' ' . '(' . $row->nim_mhs . ')' ?></h5>
@@ -568,44 +568,51 @@ foreach ($mahasiswa as  $row) :
                 <div class="modal-body">
                     <?php echo form_open('mahasiswa/hapus');
                     echo csrf_field(); ?>
-                    <div class="form-floating mb-0">
-                        <input type="number" name="id" placeholder="id" class="form-control" value="<?= $row->id_mhs; ?>" hidden>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" name="nim" placeholder="nim" id="inputNim" class="form-control" value="<?= $row->nim_mhs; ?>" disabled>
-                        <label for="inputNim">NIM</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" name="jenkel" placeholder="Jenis Kelamin" id="inputJenkel" class="form-control" value="<?= $jenkel = ($row->jenis_kelamin === 'l') ? 'Laki-laki' : 'Perempuan'; ?>" disabled>
-                        <label for="inputJenkel">Jenis Kelamin</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" name="TmpLahir" size="255" placeholder="TempatLahir" id="inputTempatLahir" class="form-control" value="<?= $row->TmpLahir_mhs; ?>" disabled>
-                        <label for="inputTempatLahir">Tempat Lahir</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="date" name="TglLahir" placeholder="TanggalLahir" id="inputTanggalLahir" class="form-control" value="<?= $row->TglLahir_mhs; ?>" disabled>
-                        <label for="inputTanggalLahir">Tanggal Lahir</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <textarea type="text" name="agama" placeholder="agama" id="agama" class="form-control" disabled><?= $row->agama_mhs; ?></textarea>
-                        <label for="agama">Agama</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <textarea type="text" name="alamat" placeholder="Alamat" id="inputAlamat" class="form-control" disabled><?= $row->alamat_mhs; ?></textarea>
-                        <label for="inputAlamat">Alamat</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="tel" name="telepon" placeholder="Telepon" id="inputTelepon" class="form-control" value="<?= $row->hp_mhs; ?>" disabled>
-                        <label for="inputTelepon">No. HP</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="text" name="jurusan" placeholder="Jurusan" id="inputJurusan" class="form-control" value="<?= $jurusan = ($row->jurusan_mhs === 'Sejarah') ? 'Sejarah' : (($row->jurusan_mhs === 'MIPA') ? 'Matematika & IPA' : (($row->jurusan_mhs === 'Sastra') ? 'Sastra' : '')); ?>" disabled>
-                        <label for="inputJurusan">Jurusan</label>
-                    </div>
-                    <div class="form-floating mb-0">
-                        <input type="text" name="pendidikan" placeholder="pendidikan" id="pendidikan" class="form-control" value="<?= $row->pendidikan ?>" disabled>
-                        <label for="pendidikan">Pendidikan</label>
+                    <div class="row">
+                        <div class="image col-md-6 d-flex justify-content-center">
+                            <img class="d-block m-auto" src="<?php echo $row->foto; ?>" style="width: 200px;" alt="Foto <?php echo $row->nama_mhs . ' ' . '(' . $row->nim_mhs . ')' ?>">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-0">
+                                <input type="number" name="id" placeholder="id" class="form-control" value="<?= $row->id_mhs; ?>" hidden>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" name="nim" placeholder="nim" id="inputNim" class="form-control" value="<?= $row->nim_mhs; ?>" disabled>
+                                <label for="inputNim">NIM</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" name="jenkel" placeholder="Jenis Kelamin" id="inputJenkel" class="form-control" value="<?= $jenkel = ($row->jenis_kelamin === 'l') ? 'Laki-laki' : 'Perempuan'; ?>" disabled>
+                                <label for="inputJenkel">Jenis Kelamin</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" name="TmpLahir" size="255" placeholder="TempatLahir" id="inputTempatLahir" class="form-control" value="<?= $row->TmpLahir_mhs; ?>" disabled>
+                                <label for="inputTempatLahir">Tempat Lahir</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="date" name="TglLahir" placeholder="TanggalLahir" id="inputTanggalLahir" class="form-control" value="<?= $row->TglLahir_mhs; ?>" disabled>
+                                <label for="inputTanggalLahir">Tanggal Lahir</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <textarea type="text" name="agama" placeholder="agama" id="agama" class="form-control" disabled><?= $row->agama_mhs; ?></textarea>
+                                <label for="agama">Agama</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <textarea type="text" name="alamat" placeholder="Alamat" id="inputAlamat" class="form-control" disabled><?= $row->alamat_mhs; ?></textarea>
+                                <label for="inputAlamat">Alamat</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="tel" name="telepon" placeholder="Telepon" id="inputTelepon" class="form-control" value="<?= $row->hp_mhs; ?>" disabled>
+                                <label for="inputTelepon">No. HP</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" name="jurusan" placeholder="Jurusan" id="inputJurusan" class="form-control" value="<?= $jurusan = ($row->jurusan_mhs === 'Sejarah') ? 'Sejarah' : (($row->jurusan_mhs === 'MIPA') ? 'Matematika & IPA' : (($row->jurusan_mhs === 'Sastra') ? 'Sastra' : '')); ?>" disabled>
+                                <label for="inputJurusan">Jurusan</label>
+                            </div>
+                            <div class="form-floating mb-0">
+                                <input type="text" name="pendidikan" placeholder="pendidikan" id="pendidikan" class="form-control" value="<?= $row->pendidikan ?>" disabled>
+                                <label for="pendidikan">Pendidikan</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-evenly">
@@ -616,7 +623,7 @@ foreach ($mahasiswa as  $row) :
                             <input type="hidden" name="_method" value="DELETE">
                             <a href="<?php echo base_url('mahasiswa/hapus/' . $row->id_mhs) ?>" type="submit" class="btn btn-danger">Hapus</a>
                         </form>
-                        <button class="btn btn-secondary" type="button" name="tutup" data-bs-dismiss="modal">Batal</button>
+                        <button class="btn btn-outline-dark" type="button" name="tutup" data-bs-dismiss="modal">Batal</button>
                     </div>
                 </div>
                 <?= form_close(); ?>
@@ -634,68 +641,57 @@ foreach ($mahasiswa as  $row) :
                 </div>
                 <div class="modal-body">
                     <div class="row" id="primeInfo">
-                        <div class="image col-6 d-flex justify-content-center">
+                        <div class="image col-md-6 d-flex justify-content-center">
                             <img class="d-block m-auto" src="<?php echo $row->foto; ?>" style="width: 200px;" alt="Foto <?php echo $row->nama_mhs . ' ' . '(' . $row->nim_mhs . ')' ?>">
                         </div>
-                        <div class="primeContent col-6">
+                        <div class="primeContent col-md-6">
                             <table class="table">
                                 <thead>
                                     <tr>
                                         <th>NIM</th>
-                                        <th>:</th>
-                                        <th><?= $row->nim_mhs ?></th>
+                                        <th>: <?= $row->nim_mhs ?></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>Nama</td>
-                                        <td>:</td>
-                                        <td><?= $row->nama_mhs ?></td>
+                                        <td>: <?= $row->nama_mhs ?></td>
                                     </tr>
                                     <tr>
                                         <td>Jenis Kelamin</td>
-                                        <td>:</td>
-                                        <td><?= $jenkel = ($row->jenis_kelamin === 'l') ? 'Laki-laki' : 'Perempuan'; ?></td>
+                                        <td>: <?= $jenkel = ($row->jenis_kelamin === 'l') ? 'Laki-laki' : 'Perempuan'; ?></td>
                                     </tr>
                                     <tr>
                                         <td>Tempat/Tanggal Lahir</td>
-                                        <td>:</td>
-                                        <td><?= $row->TmpLahir_mhs . '<br>' . $row->TglLahir_mhs ?></td>
+                                        <td>: <?= $row->TmpLahir_mhs . '<br>' . $row->TglLahir_mhs ?></td>
                                     </tr>
                                     <tr>
                                         <td>Agama</td>
-                                        <td>:</td>
-                                        <td><?= $row->agama_mhs ?></td>
+                                        <td>: <?= $row->agama_mhs ?></td>
                                     </tr>
                                     <tr>
                                         <td>Alamat</td>
-                                        <td>:</td>
-                                        <td><?= $row->alamat_mhs ?></td>
+                                        <td>: <?= $row->alamat_mhs ?></td>
                                     </tr>
                                     <tr>
                                         <td>No. HP</td>
-                                        <td>:</td>
-                                        <td><?= $row->hp_mhs ?></td>
+                                        <td>: <?= $row->hp_mhs ?></td>
                                     </tr>
                                     <tr>
                                         <td>Jurusan</td>
-                                        <td>:</td>
-                                        <td><?= $row->jurusan_mhs ?></td>
+                                        <td>: <?= $row->jurusan_mhs ?></td>
                                     </tr>
                                     <tr>
                                         <td>Pendidikan</td>
-                                        <td>:</td>
-                                        <td><?= $row->pendidikan ?></td>
+                                        <td>: <?= $row->pendidikan ?></td>
                                     </tr>
                                     <tr>
                                         <td>Inputed at</td>
-                                        <td>:</td>
-                                        <td><?= $row->created_at ?></td>
+                                        <td>: <?= $row->created_at ?></td>
                                     </tr>
                                     <tr>
                                         <td>Updated at</td>
-                                        <td>:</td>
-                                        <td><?= $row->updated_at ?></td>
+                                        <td>: <?= $row->updated_at ?></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -703,7 +699,7 @@ foreach ($mahasiswa as  $row) :
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Tutup</button>
                 </div>
             </div>
         </div>
