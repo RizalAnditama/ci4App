@@ -186,7 +186,7 @@ $session = \Config\Services::session();
                                     <ul class="dropdown-menu p-0">
                                         <!-- Tombol Edit, Hapus, dan Info -->
                                         <li>
-                                            <button class="w-75 btn btn-outline-success" id="editModalBtn" data-bs-toggle="modal" data-bs-target="#editDataModal<?php echo $row->id_mhs; ?>">
+                                            <button class="w-75 btn btn-outline-success" id="editModalBtn" data-bs-toggle="modal" data-bs-target="#editDataModal<?php echo $row->nim_mhs; ?>">
                                                 <div class="row">
                                                     <i id="icon-pencil" class="col-4 bi bi-pencil-square" style="cursor: pointer;text-decoration: none; color:green;"></i>
                                                     <span class="col-4 mx-auto">Edit</span>
@@ -195,7 +195,7 @@ $session = \Config\Services::session();
                                             </button>
                                         </li>
                                         <li>
-                                            <button class="w-75 btn btn-outline-info" id="btnInfo" data-bs-toggle="modal" data-bs-target="#modalInfo<?php echo $row->id_mhs; ?>" style="color: blue; cursor: pointer;text-decoration: none;">
+                                            <button class="w-75 btn btn-outline-info" id="btnInfo" data-bs-toggle="modal" data-bs-target="#modalInfo<?php echo $row->nim_mhs; ?>" style="color: blue; cursor: pointer;text-decoration: none;">
                                                 <div class="row">
                                                     <i class="col-4 bi bi-info-circle-fill"></i>
                                                     <span class="col-4 mx-auto">Info</span>
@@ -204,7 +204,7 @@ $session = \Config\Services::session();
                                             </button>
                                         </li>
                                         <li>
-                                            <button class="w-75 btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $row->id_mhs; ?>">
+                                            <button class="w-75 btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $row->nim_mhs; ?>">
                                                 <div class="row">
                                                     <i class="col-4 bi bi-trash-fill" style="color: red; cursor: pointer;text-decoration: none;"></i>
                                                     <?php $session->markAsTempdata('id', 2);
@@ -376,7 +376,7 @@ foreach ($mahasiswa as  $row) :
     $id_mhs++;
 ?>
 
-    <div class="modal fade" id="editDataModal<?php echo $row->id_mhs; ?>" tabindex="-1" aria-labelledby="EditDataModalLabel" tabindex="-1" aria-labelledby="formEditData" aria-hidden="true">
+    <div class="modal fade" id="editDataModal<?php echo $row->nim_mhs; ?>" tabindex="-1" aria-labelledby="EditDataModalLabel" tabindex="-1" aria-labelledby="formEditData" aria-hidden="true">
         <!-- Edit Data Modal Dialog -->
         <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content">
@@ -557,7 +557,7 @@ foreach ($mahasiswa as  $row) :
 
 
     <!-- Hapus Data -->
-    <div class="modal fade deleteModal" id="deleteModal<?= $row->id_mhs; ?>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-labelledby="formDeleteData" aria-hidden="true">
+    <div class="modal fade deleteModal" id="deleteModal<?= $row->nim_mhs; ?>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-labelledby="formDeleteData" aria-hidden="true">
         <!-- Data Hapus Dialog -->
         <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
@@ -632,7 +632,7 @@ foreach ($mahasiswa as  $row) :
     </div>
 
     <!-- Modal info -->
-    <div class="modal fade" id="modalInfo<?php echo $row->id_mhs ?>" tabindex="-1" aria-labelledby="modalInfo" aria-hidden="true">
+    <div class="modal fade" id="modalInfo<?php echo $row->nim_mhs ?>" tabindex="-1" aria-labelledby="modalInfo" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -646,54 +646,50 @@ foreach ($mahasiswa as  $row) :
                         </div>
                         <div class="primeContent col-md-6">
                             <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>NIM</th>
-                                        <th>: <?= $row->nim_mhs ?></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Nama</td>
-                                        <td>: <?= $row->nama_mhs ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jenis Kelamin</td>
-                                        <td>: <?= $jenkel = ($row->jenis_kelamin === 'l') ? 'Laki-laki' : 'Perempuan'; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tempat/Tanggal Lahir</td>
-                                        <td>: <?= $row->TmpLahir_mhs . '<br>' . $row->TglLahir_mhs ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Agama</td>
-                                        <td>: <?= $row->agama_mhs ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Alamat</td>
-                                        <td>: <?= $row->alamat_mhs ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>No. HP</td>
-                                        <td>: <?= $row->hp_mhs ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jurusan</td>
-                                        <td>: <?= $row->jurusan_mhs ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Pendidikan</td>
-                                        <td>: <?= $row->pendidikan ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Inputed at</td>
-                                        <td>: <?= $row->created_at ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Updated at</td>
-                                        <td>: <?= $row->updated_at ?></td>
-                                    </tr>
-                                </tbody>
+                                <tr>
+                                    <th>NIM</th>
+                                    <th><?= $row->nim_mhs ?></th>
+                                </tr>
+                                <tr>
+                                    <td>Nama</td>
+                                    <td><?= $row->nama_mhs ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Jenis Kelamin</td>
+                                    <td><?= $jenkel = ($row->jenis_kelamin === 'l') ? 'Laki-laki' : 'Perempuan'; ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Tempat/Tanggal Lahir</td>
+                                    <td><?= $row->TmpLahir_mhs . '<br>' . $row->TglLahir_mhs ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Agama</td>
+                                    <td><?= $row->agama_mhs ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Alamat</td>
+                                    <td><?= $row->alamat_mhs ?></td>
+                                </tr>
+                                <tr>
+                                    <td>No. HP</td>
+                                    <td><?= $row->hp_mhs ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Jurusan</td>
+                                    <td><?= $row->jurusan_mhs ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Pendidikan</td>
+                                    <td><?= $row->pendidikan ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Inputed at</td>
+                                    <td><?= $row->created_at ?></td>
+                                </tr>
+                                <tr>
+                                    <td>Updated at</td>
+                                    <td><?= $row->updated_at ?></td>
+                                </tr>
                             </table>
                         </div>
                     </div>
