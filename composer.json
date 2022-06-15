@@ -16,6 +16,7 @@
         "laminas/laminas-escaper": "^2.9",
         "michalsn/codeigniter4-uuid": "^1.0",
         "myth/auth": "^1.0",
+        "phpoffice/phpspreadsheet": "^1.23",
         "psr/log": "^1.1"
     },
     "require-dev": {
