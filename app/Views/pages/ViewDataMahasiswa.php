@@ -41,13 +41,25 @@ $session = \Config\Services::session();
 </script>
 
 <div class="container my-4">
-    <div class="d-md-flex justify-content-between my-3">
-        <form action="" method="get">
-            <div class="input-group mb-3">
-                <input id="search" name="keyword" type="search" class="form-control" placeholder="Masukan kata kunci..." value="<?php echo session()->get('keyword') ?>" list="datalistOptions" aria-describedby="search-button" autofocus>
-                <datalist id="datalistOptions">
-                    <!-- <? //php foreach ($nama as $row) : 
-                            ?>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
+        <h1 class="h2">Data Mahasiswa</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
+                <?= form_open_multipart('mahasiswa/exportExcel'); ?>
+                <button type="submit" class="btn btn-outline-secondary"><i class="bi bi-box-arrow-in-down"></i> Export</button>
+                <?= form_close() ?>
+                <?= form_open_multipart('mahasiswa/importExcel'); ?>
+                <button type="submit" class="btn btn-outline-secondary"><i class="bi bi-box-arrow-in-up"></i> Import</button>
+                <?= form_close() ?>
+            </div>
+        </div>
+    </div>
+    <form action="" method="get">
+        <div class="input-group mb-3">
+            <input id="search" name="keyword" type="search" class="form-control" placeholder="Masukan kata kunci..." value="<?php echo session()->get('keyword') ?>" list="datalistOptions" aria-describedby="search-button" autofocus>
+            <datalist id="datalistOptions">
+                <!-- <? //php foreach ($nama as $row) : 
+                        ?>
                         <option value="<? //= $row 
                                         ?>">
                         <? //php endforeach 
@@ -70,18 +82,17 @@ $session = \Config\Services::session();
                                         ?>">
                         <? //php endforeach 
                         ?> -->
-                    <option value="MIPA">
-                    <option value="Sejarah">
-                    <option value="Sastra">
-                </datalist>
-                <button id="search-button" class="btn btn-outline-primary" type="submit" name="submit">Cari</button>
-                <?php if (session()->getFlashdata('home')) : ?>
-                    <a class="btn btn-success" href="<?php echo base_url("mahasiswa") ?>">Home</a>
-                <?php endif; ?>
-            </div>
-        </form>
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewDataModal">Tambah Data</button>
-    </div>
+                <option value="MIPA">
+                <option value="Sejarah">
+                <option value="Sastra">
+            </datalist>
+            <button id="search-button" class="btn btn-outline-primary" type="submit" name="submit"><i class="bi bi-search"></i> Cari</button>
+            <?php if (session()->getFlashdata('home')) : ?>
+                <a class="btn btn-success" href="<?php echo base_url("mahasiswa") ?>">Home</a>
+            <?php endif; ?>
+        </div>
+    </form>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewDataModal"><i class="bi bi-plus-lg"></i> Tambah Data</button>
 
     <div class="success">
         <?php if ($session->getFlashdata('success_add')) : ?>

@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\Models\ModelMahasiswa;
 use App\Models\UserModel;
 
@@ -370,5 +372,163 @@ class Mahasiswa extends BaseController
         $mhs->delete($id);
         session()->setFlashdata('deleted', 'Data berhasil dihapus');
         return redirect()->to('mahasiswa')->withInput();
+    }
+
+    public function exportExcel()
+    {
+        $mhs = new ModelMahasiswa();
+        $dataMhs = $mhs->findAll();
+
+        $spreadsheet = new Spreadsheet();
+        // tulis header/nama kolom 
+        $sheet = $spreadsheet->getActiveSheet();
+        $spreadsheet->setActiveSheetIndex(0)
+            ->setCellValue('A1', 'No')
+            ->setCellValue('B1', 'NIM')
+            ->setCellValue('C1', 'Nama')
+            ->setCellValue('D1', 'Jurusan')
+            ->setCellValue('E1', 'Jenis Kelamin')
+            ->setCellValue('F1', 'Agama')
+            ->setCellValue('G1', 'Alamat')
+            ->setCellValue('H1', 'No. HP')
+            ->setCellValue('I1', 'Pendidikan')
+            ->setCellValue('J1', 'Tanggal Lahir')
+            ->setCellValue('K1', 'Tempat Lahir');
+
+        $column = 2;
+        // tulis data mhs ke cell
+        foreach ($dataMhs as $data) {
+            $spreadsheet->setActiveSheetIndex(0)
+                ->setCellValue('A' . $column, ($column - 1))
+                ->setCellValue('B' . $column, $data->nim_mhs)
+                ->setCellValue('C' . $column, $data->nama_mhs)
+                ->setCellValue('D' . $column, $data->jurusan_mhs)
+                ->setCellValue('E' . $column, ($data->jenis_kelamin === 'l') ? 'Laki-laki' : 'Perempuan')
+                ->setCellValue('F' . $column, $data->agama_mhs)
+                ->setCellValue('G' . $column, $data->alamat_mhs)
+                ->setCellValue('H' . $column, $data->hp_mhs)
+                ->setCellValue('I' . $column, $data->pendidikan)
+                ->setCellValue('J' . $column, $data->TglLahir_mhs)
+                ->setCellValue('K' . $column, $data->TmpLahir_mhs);
+            $column++;
+        }
+
+        // set title to bold
+        $sheet->getStyle('A1:K1')->getFont()->setBold(true);
+        // Set horizontal
+        $sheet->getStyle('A1:K1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getStyle('H1:K' . ($column - 1))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        // Fill title with background color
+        $spreadsheet
+            ->getActiveSheet()
+            ->getStyle('A1:K1')
+            ->getFill()
+            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()
+            ->setARGB('FAFA33');
+        // change number format
+        $spreadsheet->getActiveSheet()
+            ->getStyle('H2:H' . ($column - 1))
+            ->getNumberFormat()
+            ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER);
+        // Borders the table
+        $sheet->getStyle('A1:K' . ($column - 1))
+            ->getBorders()
+            ->getAllBorders()
+            ->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN)
+            ->getColor()
+            ->setARGB('000000');
+
+        // set auto size for column
+        $sheet->getColumnDimension('A')->setAutoSize(true);
+        $sheet->getColumnDimension('B')->setAutoSize(true);
+        $sheet->getColumnDimension('C')->setAutoSize(true);
+        $sheet->getColumnDimension('D')->setAutoSize(true);
+        $sheet->getColumnDimension('E')->setAutoSize(true);
+        $sheet->getColumnDimension('F')->setAutoSize(true);
+        $sheet->getColumnDimension('G')->setAutoSize(true);
+        $sheet->getColumnDimension('H')->setAutoSize(true);
+        $sheet->getColumnDimension('I')->setAutoSize(true);
+        $sheet->getColumnDimension('J')->setAutoSize(true);
+        $sheet->getColumnDimension('K')->setAutoSize(true);
+
+        // tulis dalam format .xlsx
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'Data Mahasiswa';
+
+        // Redirect hasil generate xlsx ke web client
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename=' . $fileName . '.xlsx');
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
+        exit();
+    }
+
+    /**
+     * Turns excel into values for databases
+     */
+    public function importExcel()
+    {
+        // Validation
+        $input = $this->validate([
+            'file' => 'uploaded[file]|max_size[file,1024]|ext_in[file,csv],'
+        ]);
+        if (!$input) { // Not valid
+            $data['validation'] = $this->validator;
+            return view('users/index', $data);
+        } else { // Valid
+            if ($file = $this->request->getFile('file')) {
+                if ($file->isValid() && !$file->hasMoved()) {
+                    // Get random file name
+                    $newName = $file->getRandomName();
+                    // Store file in public/csvfile/ folder
+                    $file->move('../public/csvfile', $newName);
+                    // Reading file
+                    $file = fopen("../public/csvfile/" . $newName, "r");
+                    $i = 0;
+                    $numberOfFields = 4; // Total number of fields
+                    $importData_arr = array();
+                    // Initialize $importData_arr Array
+                    while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE) {
+                        $num = count($filedata);
+                        // Skip first row & check number of fields
+                        if (
+                            $i > 0 && $num == $numberOfFields
+                        ) {
+                            // Key names are the insert table field names - name, email, city, and status
+                            $importData_arr[$i]['name'] = $filedata[0];
+                            $importData_arr[$i]['email'] = $filedata[1];
+                            $importData_arr[$i]['city'] = $filedata[2];
+                            $importData_arr[$i]['status'] = $filedata[3];
+                        }
+                        $i++;
+                    }
+                    fclose($file);
+                    // Insert data
+                    $count = 0;
+                    foreach ($importData_arr as $userdata) {
+                        $users = new ModelMahasiswa();
+                        // Check record
+                        $checkrecord = $users->where('email', $userdata['email'])->countAllResults();
+                        if ($checkrecord == 0) {
+                            ## Insert Record
+                            if ($users->insert($userdata)) {
+                                $count++;
+                            }
+                        }
+                    }
+                    // Set Session
+                    session()->setFlashdata('message', $count . ' Record inserted successfully!');
+                } else {
+                    // Set Session
+                    session()->setFlashdata('message', 'File not imported.');
+                }
+            } else {
+                // Set Session
+                session()->setFlashdata('message', 'File not imported.');
+            }
+        }
+        return redirect()->route('/');
     }
 }
