@@ -122,4 +122,17 @@ class ModelMahasiswa extends Model
         $name = array_unique($name);
         return array_values($name);
     }
+
+    /**
+     * Check if value is unique
+     */
+    public function isUnique(string $column_name, string $value)
+    {
+        $value = $this->db->table('mahasiswa')->where($column_name, $value)->get()->getRowArray();
+        if ($value) {
+            return $value;
+        }
+
+        return true;
+    }
 }
