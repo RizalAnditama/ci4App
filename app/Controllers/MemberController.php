@@ -19,18 +19,9 @@ class MemberController extends BaseController
     public function index()
     {
         $data = [
-            'title'     => 'Main Dashboard',
+            'title'     => 'Dashboard',
         ];
 
-        return view('pages/dashboard', $data);
-    }
-
-    public function dashboard()
-    {
-        $data = [
-            'title' => 'Main Dashboard',
-        ];
         return view('pages/dashboard', $data);
     }
 }
-// 

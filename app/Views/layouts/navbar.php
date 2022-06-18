@@ -77,9 +77,9 @@ $profile_pic = base_url() . '/' . $this->userModel->getProfilePic(session()->get
                     <img src="<?php echo $profile_pic; ?>" class="rounded-circle" height="22" alt="" loading="lazy">
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink" data-popper-placement="null" data-mdb-popper="none">
-                    <li><a class="dropdown-item  <?= $active = ($baseurlprof == $current) ? 'active disabled' : ''; ?>" href="<?php echo base_url('settings/profile') ?>">My profile</a></li>
-                    <li><a class="dropdown-item  <?= $active = ($baseurlsettings == $current) ? 'active disabled' : ''; ?>" href="<?php echo base_url('settings') ?>">Settings</a></li>
-                    <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</a></li>
+                    <li><a class="dropdown-item  <?= $active = ($baseurlprof == $current) ? 'active disabled' : ''; ?>" href="<?php echo base_url('settings/profile') ?>"><i class="bi bi-person-circle"></i> My profile</a></li>
+                    <li><a class="dropdown-item  <?= $active = ($baseurlsettings == $current) ? 'active disabled' : ''; ?>" href="<?php echo base_url('settings') ?>"><i class="bi bi-gear-fill"></i> Settings</a></li>
+                    <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
                 </ul>
             </li>
         </ul>

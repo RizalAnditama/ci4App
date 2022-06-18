@@ -21,17 +21,9 @@ class AdminController extends BaseController
     public function index()
     {
         $data = [
-            'title' => 'Admin Dashboard',
+            'title' => 'Dashboard',
         ];
 
-        return view('pages/dashboard', $data);
-    }
-
-    public function dashboard()
-    {
-        $data = [
-            'title' => 'Main Dashboard',
-        ];
         return view('pages/dashboard', $data);
     }
 }

@@ -6,6 +6,17 @@ use App\Controllers\BaseController;
 
 class Dashboard extends BaseController
 {
+    public function __construct()
+    {
+        if (session()->get('role') !== 'admin' || session()->get('role') !== 'member') {
+            $data = [
+                'title' => 'Error 403 | Access Forbiden'
+            ];
+            echo view('errors/http/403_access-denied', $data);
+            exit;
+        }
+    }
+
     public function index()
     {
         $data = [
