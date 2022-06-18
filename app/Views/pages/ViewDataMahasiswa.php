@@ -35,7 +35,7 @@ $session = \Config\Services::session();
             $('#addNewDataModal').modal('show');
         <?php endif; ?>
         <?php if ($session->getFlashdata('fail_edit')) : ?>
-            $('#editDataModal' + <?php echo $session->get('id'); ?>).modal('show');
+            $('#editDataModal' + <?= old('nim_edit'); ?>).modal('show');
         <?php endif; ?>
     });
 </script>
@@ -48,9 +48,7 @@ $session = \Config\Services::session();
                 <?= form_open_multipart('mahasiswa/exportExcel'); ?>
                 <button type="submit" class="btn btn-outline-secondary"><i class="bi bi-box-arrow-in-down"></i> Export</button>
                 <?= form_close() ?>
-                <?= form_open_multipart('mahasiswa/importExcel'); ?>
-                <button type="submit" class="btn btn-outline-secondary"><i class="bi bi-box-arrow-in-up"></i> Import</button>
-                <?= form_close() ?>
+                <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#importExcel"><i class="bi bi-box-arrow-in-up"></i> Import</button>
             </div>
         </div>
     </div>
@@ -102,7 +100,7 @@ $session = \Config\Services::session();
                 </svg>
                 <div class="text ms-3">
                     <strong><?= $session->getFlashdata('success_add'); ?></strong>
-                    <a class="mb-0 alert-link" data-bs-toggle="modal" data-bs-target="<?php echo ($session->getFlashdata('success_add')) ? '#editDataModal' . session()->getFlashdata('id') : '';  ?>" style="cursor: pointer;"><?= session()->get('nama') . ' ' . '(' . $session->getFlashdata('nim') . ')'; ?></a>
+                    <a class="mb-0 alert-link" data-bs-toggle="modal" data-bs-target="<?php echo ($session->getFlashdata('success_add')) ? '#editDataModal' . session()->getFlashdata('nim') : '';  ?>" style="cursor: pointer;"><?= session()->get('nama') . ' ' . '(' . session()->getFlashdata('nim') . ')'; ?></a>
                 </div>
                 <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -115,7 +113,7 @@ $session = \Config\Services::session();
                 <div class="text ms-3">
                     <strong><?= $session->getFlashdata('success_edit'); ?></strong>
                     <br>
-                    <a class="mb-0 alert-link" data-bs-toggle="modal" data-bs-target="<?php echo ($session->getFlashdata('success_edit') ? '#editDataModal' . $session->get('id') : '');  ?>" style="cursor: pointer; text-decoration: underline;"><?= session()->get('nama') . ' ' . '(' . session()->get('nim') . ')'; ?></a>
+                    <a class="mb-0 alert-link" data-bs-toggle="modal" data-bs-target="<?php echo ($session->getFlashdata('success_edit') ? '#editDataModal' . $session->get('nim') : '');  ?>" style="cursor: pointer; text-decoration: underline;"><?= session()->get('nama') . ' ' . '(' . session()->get('nim') . ')'; ?></a>
                 </div>
                 <button onclick="resetColor()" type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -130,9 +128,9 @@ $session = \Config\Services::session();
                 </svg>
                 <div class="ms-3">
                     <h4 class="alert-heading">Input tidak sesuai ketentuan</h4>
-                    <span>Gagal <?php echo $session->getFlashdata('fail_add') ? 'menambahkan data' : ($session->getFlashdata('fail_edit') ? 'mengedit' . ' data ' . '<a class="alert-link" data-bs-toggle="modal" data-bs-target="#editDataModal' . $session->get('id') . '" style="cursor: pointer;text-decoration: none;">' .  session()->get('nama') . ' ' . '(' . old('nim_edit') . ')' . '</a>' : 'menambahkan/mengedit data'); ?></span>
+                    <span>Gagal <?php echo $session->getFlashdata('fail_add') ? 'menambahkan data' : ($session->getFlashdata('fail_edit') ? 'mengedit' . ' data ' . '<a class="alert-link" data-bs-toggle="modal" data-bs-target="#editDataModal' . old('nim_edit') . '" style="cursor: pointer;text-decoration: none;">' .  session()->get('nama') . ' ' . '(' . old('nim_edit') . ')' . '</a>' : 'menambahkan/mengedit data'); ?></span>
                     <br>
-                    <a class="mb-0 alert-link" data-bs-toggle="modal" data-bs-target="<?php echo $session->getFlashdata('fail_add') ? '#addNewDataModal' : ($session->getFlashdata('fail_edit') ? '#editDataModal' . $session->get('id') : ' ');  ?>" style="cursor: pointer; text-decoration: underline;">Coba Lagi</a>
+                    <a class="mb-0 alert-link" data-bs-toggle="modal" data-bs-target="<?php echo $session->getFlashdata('fail_add') ? '#addNewDataModal' : ($session->getFlashdata('fail_edit') ? '#editDataModal' . old('nim_edit') : ' ');  ?>" style="cursor: pointer; text-decoration: underline;">Coba Lagi</a>
                 </div>
             </div>
         <?php endif;
@@ -167,7 +165,7 @@ $session = \Config\Services::session();
                     <tr>
                         <!-- <th scope="col"></th> -->
                         <th scope="col"></th>
-                        <th scope="col">No</th>
+                        <th scope="col" class="noselect">No</th>
                         <th scope="col">NIM</th>
                         <th scope="col">Nama Mahasiswa</th>
                         <th scope="col">Jenis Kelamin</th>
@@ -191,9 +189,9 @@ $session = \Config\Services::session();
                             <!-- <td><input type="checkbox" name="check<?= $row->id_mhs; ?>" id="check<?= $row->id_mhs; ?>"></td> -->
                             <td id="action">
                                 <div class="dropstart">
-                                    <a href="#" class="" data-bs-toggle="dropdown" aria-expanded="false" data-toggle="tooltip" data-placement="right" title="Action">
+                                    <span class="" data-bs-toggle="dropdown" aria-expanded="false" data-toggle="tooltip" data-placement="right" title="Action" style="cursor: pointer;">
                                         <i class="bi bi-three-dots-vertical col-6" style="color:black"></i>
-                                    </a>
+                                    </span>
                                     <ul class="dropdown-menu p-0">
                                         <!-- Tombol Edit, Hapus, dan Info -->
                                         <li>
@@ -228,7 +226,7 @@ $session = \Config\Services::session();
                                     </ul>
                                 </div>
                             </td>
-                            <th><?= $no++; ?></th>
+                            <th class="noselect"><?= $no++; ?></th>
                             <td><?= $row->nim_mhs ?></td>
                             <td><?= $row->nama_mhs ?></td>
                             <td><?= $jenkel = ($row->jenis_kelamin === 'l') ? 'Laki-laki' : 'Perempuan'; ?></td>
@@ -258,6 +256,15 @@ $session = \Config\Services::session();
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+
+                <div class="d-flex aligns-items-center justify-content-center mb-3 py-3 border-bottom">
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importExcel"><i class="bi bi-file-earmark-spreadsheet-fill"></i> Insert with excel</button>
+                </div>
+                <div class='invalid-feedback'>
+                    <?= $error = $validation->getError('excel'); ?>
+                </div>
+                <span class="d-flex aligns-items-center justify-content-center my-3">Atau dengan cara manual</span>
+
                 <?php
                 echo form_open_multipart('mahasiswa/SimpanData');
                 echo csrf_field(); ?>
@@ -360,7 +367,7 @@ $session = \Config\Services::session();
                 <div class="form-floating row mb-3">
                     <div class="custom-file">
                         <label for="foto" class="col-form-label custom-file-label">Pilih foto mahasiswa...</label>
-                        <input id="foto" name="foto" type="file" class="custom-file-input  form-control is-<?= ($validation->getError('foto')) ? 'invalid' : '' ?>" value="<?php old('foto'); ?>">
+                        <input id="foto" name="foto" type="file" class="custom-file-input  form-control is-<?= ($validation->getError('foto')) ? 'invalid' : '' ?>" value="<?php old('foto'); ?>" accept=".jpg, .jpeg, .png">
                         <img id="blah" src="#" alt="Foto Mahasiswa" style="max-width: 100px;">
                         <div class='invalid-feedback'>
                             <?= $error = $validation->getError('foto'); ?>
@@ -410,17 +417,17 @@ foreach ($mahasiswa as  $row) :
                                 <label for="inputNim">NIM</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" name="nama_edit" size="255" placeholder="Nama" id="inputNama" class="form-control <?php if (old('id') === $row->id_mhs) : ?><?= ($validation->hasError('nama_edit')) ? 'is-invalid' : 'is-valid'; ?><?php endif; ?>" value="<?php echo old('id') === $row->id_mhs ? old('nama_edit') : $row->nama_mhs ?>" required>
+                                <input type="text" name="nama_edit" size="255" placeholder="Nama" id="inputNama" class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= ($validation->hasError('nama_edit')) ? 'is-invalid' : 'is-valid'; ?><?php endif; ?>" value="<?php echo (old('nim_edit') === $row->nim_mhs) ? old('nama_edit') : $row->nama_mhs ?>" required>
                                 <label for="inputNama">Nama</label>
 
-                                <?php if (old('id') === $row->id_mhs) { ?>
+                                <?php if (old('nim_edit') === $row->nim_mhs) { ?>
                                     <div class='invalid-feedback'>
                                         <?= $error = $validation->getError('nama_edit'); ?>
                                     </div><?php
                                         } ?>
                             </div>
                             <div class="form-floating mb-3">
-                                <select class="form-control <?php if (old('id') === $row->id_mhs) : ?><?= ($validation->hasError('jenkel_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" name="jenkel_edit" id="jenkel_edit" required>
+                                <select class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= ($validation->hasError('jenkel_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" name="jenkel_edit" id="jenkel_edit" required>
                                     <?php if ($validation->hasError('jenkel_edit')) { ?>
                                         <option value="l" <?= (old('jenkel_edit') === 'l') ? 'selected' : ''; ?>>Laki-laki</option>
                                         <option value="p" <?= (old('jenkel_edit') === 'p') ? 'selected' : '' ?>>Perempuan</option>
@@ -430,17 +437,17 @@ foreach ($mahasiswa as  $row) :
                                     <?php } ?>
                                 </select>
                                 <label for="jenkel_edit">Jenis Kelamin</label>
-                                <?php if (old('id') === $row->id_mhs) { ?>
+                                <?php if (old('nim_edit') === $row->nim_mhs) { ?>
                                     <div class='invalid-feedback'>
                                         <?= $error = $validation->getError('jenkel_edit'); ?>
                                     </div>
                                 <?php } ?>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" name="TmpLahir_edit" size="255" placeholder="TempatLahir" id="inputTempatLahir" class="form-control <?php if (old('id') === $row->id_mhs) : ?><?= ($validation->hasError('TmpLahir_edit')) ? 'is-invalid' : 'is-valid'; ?><?php endif; ?>" value="<?php echo old('id') === $row->id_mhs ? old('TmpLahir_edit') : $row->TmpLahir_mhs ?>" required>
+                                <input type="text" name="TmpLahir_edit" size="255" placeholder="TempatLahir" id="inputTempatLahir" class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= ($validation->hasError('TmpLahir_edit')) ? 'is-invalid' : 'is-valid'; ?><?php endif; ?>" value="<?php echo (old('nim_edit') === $row->nim_mhs) ? old('TmpLahir_edit') : $row->TmpLahir_mhs ?>" required>
                                 <label for="inputTempatLahir">Tempat Lahir</label>
 
-                                <?php if (old('id') === $row->id_mhs) {
+                                <?php if (old('nim_edit') === $row->nim_mhs) {
                                 ?>
                                     <div class='invalid-feedback'>
                                         <?= $error = $validation->getError('TmpLahir_edit'); ?>
@@ -449,10 +456,10 @@ foreach ($mahasiswa as  $row) :
                                         } ?>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="date" name="TglLahir_edit" placeholder="TanggalLahir" id="inputTanggalLahir" class="form-control <?php if (old('id') === $row->id_mhs) : ?><?= ($validation->hasError('TglLahir_edit')) ? 'is-invalid' : 'is-valid'; ?><?php endif; ?>" value="<?php echo old('id') === $row->id_mhs ? old('TglLahir_edit') : $row->TglLahir_mhs ?>" required>
+                                <input type="date" name="TglLahir_edit" placeholder="TanggalLahir" id="inputTanggalLahir" class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= ($validation->hasError('TglLahir_edit')) ? 'is-invalid' : 'is-valid'; ?><?php endif; ?>" value="<?php echo (old('nim_edit') === $row->nim_mhs) ? old('TglLahir_edit') : $row->TglLahir_mhs ?>" required>
                                 <label for="inputTanggalLahir">Tanggal Lahir</label>
 
-                                <?php if (old('id') === $row->id_mhs) {
+                                <?php if (old('nim_edit') === $row->nim_mhs) {
                                 ?>
                                     <div class='invalid-feedback'>
                                         <?= $error = $validation->getError('TglLahir_edit'); ?>
@@ -461,7 +468,7 @@ foreach ($mahasiswa as  $row) :
                                         } ?>
                             </div>
                             <div class="form-floating mb-3">
-                                <select class="form-control <?php if (old('id') === $row->id_mhs) : ?><?= ($validation->hasError('agama_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" name="agama_edit" id="agama_edit" required>
+                                <select class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= ($validation->hasError('agama_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" name="agama_edit" id="agama_edit" required>
                                     <?php if ($validation->hasError('agama_edit')) { ?>
                                         <option value="Islam" <?= (old('agama_edit') === 'Islam') ? 'selected' : ''; ?>>Islam</option>
                                         <option value="Kristen" <?= (old('agama_edit') === 'Kristen') ? 'selected' : '' ?>>Kristen</option>
@@ -477,17 +484,17 @@ foreach ($mahasiswa as  $row) :
                                     <?php } ?>
                                 </select>
                                 <label for="agama_edit">Agama</label>
-                                <?php if (old('id') === $row->id_mhs) { ?>
+                                <?php if (old('nim_edit') === $row->nim_mhs) { ?>
                                     <div class='invalid-feedback'>
                                         <?= $error = $validation->getError('agama_edit'); ?>
                                     </div>
                                 <?php } ?>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" name="alamat_edit" size="255" placeholder="Alamat" id="inputAlamat" class="form-control <?php if (old('id') === $row->id_mhs) : ?><?= ($validation->hasError('alamat_edit')) ? 'is-invalid' : 'is-valid'; ?><?php endif; ?>" value="<?php echo old('id') === $row->id_mhs ? old('alamat_edit') : $row->alamat_mhs ?>" required>
+                                <input type="text" name="alamat_edit" size="255" placeholder="Alamat" id="inputAlamat" class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= ($validation->hasError('alamat_edit')) ? 'is-invalid' : 'is-valid'; ?><?php endif; ?>" value="<?php echo (old('nim_edit') === $row->nim_mhs) ? old('alamat_edit') : $row->alamat_mhs ?>" required>
                                 <label for="inputAlamat">Alamat</label>
 
-                                <?php if (old('id') === $row->id_mhs) {
+                                <?php if (old('nim_edit') === $row->nim_mhs) {
                                 ?>
                                     <div class='invalid-feedback'>
                                         <?= $error = $validation->getError('alamat_edit'); ?>
@@ -496,10 +503,10 @@ foreach ($mahasiswa as  $row) :
                                         } ?>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="number" name="telepon_edit" maxlength="13" placeholder="Telepon" id="inputTelepon" pattern="{0-9}+" class="form-control <?php if (old('id') === $row->id_mhs) : ?><?= ($validation->hasError('telepon_edit')) ? 'is-invalid' : 'is-valid'; ?><?php endif; ?>" value="<?php echo old('id') === $row->id_mhs ? old('telepon_edit') : $row->hp_mhs ?>" required>
+                                <input type="number" name="telepon_edit" maxlength="13" placeholder="Telepon" id="inputTelepon" pattern="{0-9}+" class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= ($validation->hasError('telepon_edit')) ? 'is-invalid' : 'is-valid'; ?><?php endif; ?>" value="<?php echo (old('nim_edit') === $row->nim_mhs) ? old('telepon_edit') : $row->hp_mhs ?>" required>
                                 <label for="inputTelepon">HP/Telepon</label>
 
-                                <?php if (old('id') === $row->id_mhs) {
+                                <?php if (old('nim_edit') === $row->nim_mhs) {
                                     if ($validation->getError('telepon_edit')) { ?>
                                         <div class='invalid-feedback'>
                                             <?= $error = $validation->getError('telepon_edit'); ?>
@@ -508,7 +515,7 @@ foreach ($mahasiswa as  $row) :
                                         } ?>
                             </div>
                             <div class="form-floating mb-3">
-                                <select class="form-control <?php if (old('id') === $row->id_mhs) : ?><?= ($validation->hasError('jurusan_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" name="jurusan_edit" id="jurusan_edit" required>
+                                <select class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= ($validation->hasError('jurusan_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" name="jurusan_edit" id="jurusan_edit" required>
                                     <?php if ($validation->hasError('jurusan_edit')) { ?>
                                         <option value="sejarah" <?= (old('jurusan_edit') === 'sejarah') ? 'selected' : ''; ?>>Sejarah</option>
                                         <option value="mipa" <?= (old('jurusan_edit') === 'mipa') ? 'selected' : '' ?>>Matematika & IPA</option>
@@ -520,7 +527,7 @@ foreach ($mahasiswa as  $row) :
                                     <?php } ?>
                                 </select>
                                 <label for="inputJurusan">Jurusan</label>
-                                <?php if (old('id') === $row->id_mhs) {
+                                <?php if (old('nim_edit') === $row->nim_mhs) {
                                 ?>
                                     <div class='invalid-feedback'>
                                         <?= $error = $validation->getError('jurusan_edit'); ?>
@@ -528,7 +535,7 @@ foreach ($mahasiswa as  $row) :
                                 <?php } ?>
                             </div>
                             <div class="form-floating mb-3">
-                                <select class="form-control <?php if (old('id') === $row->id_mhs) : ?><?= ($validation->hasError('pendidikan_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" name="pendidikan_edit" id="pendidikan_edit" required>
+                                <select class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= ($validation->hasError('pendidikan_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" name="pendidikan_edit" id="pendidikan_edit" required>
                                     <?php if ($validation->hasError('pendidikan_edit')) { ?>
                                         <option value="SD" <?= (old('pendidikan_edit') === 'SD') ? 'selected' : ''; ?>>SD</option>
                                         <option value="SMP" <?= (old('pendidikan_edit') === 'SMP') ? 'selected' : '' ?>>SMP</option>
@@ -544,14 +551,14 @@ foreach ($mahasiswa as  $row) :
                                     <?php } ?>
                                 </select>
                                 <label for="pendidikan_edit">Pendidikan</label>
-                                <?php if (old('id') === $row->id_mhs) { ?>
+                                <?php if (old('nim_edit') === $row->nim_mhs) { ?>
                                     <div class='invalid-feedback'>
                                         <?= $error = $validation->getError('pendidikan_edit'); ?>
                                     </div>
                                 <?php } ?>
                             </div>
                             <div class=" form-floating mb-0">
-                                <input type="file" name="foto_edit" id="foto_edit" class="form-control">
+                                <input type="file" name="foto_edit" id="foto_edit" class="form-control" accept=".jpg, .jpeg, .png">
                                 <label for="foto_edit">Edit Foto</label>
                             </div>
                         </div>
@@ -713,67 +720,136 @@ foreach ($mahasiswa as  $row) :
     </div>
 <?php endforeach; ?>
 
-<script type="text/javascript">
-    // $(document).ready(function() {
+<!-- Import Excel Modal -->
+<div class="modal fade" id="importExcel" tabindex="-1" aria-labelledby="importExcelLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="importExcelLabel">Insert data via Spreadsheet</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5>PASTIKAN ISI DATA EXCEL MENGIKUTI KAIDAH BERIKUT</h5>
+                <div class="mb-3 table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>NIM</th>
+                                <th>Nama</th>
+                                <th>Jurusan</th>
+                                <th>Jenis Kelamin</th>
+                                <th>Agama</th>
+                                <th>Alamat</th>
+                                <th>No. HP</th>
+                                <th>Pendidikan</th>
+                                <th>Tanggal Lahir</th>
+                                <th>Tempat Lahir</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Angka</td>
+                                <td>Angka
+                                    (Ga penting)</td>
+                                <td>Huruf</td>
+                                <td>Pilihan
+                                    ('mipa', 'sejarah', 'sastra')</td>
+                                <td>Pilihan
+                                    ('l', 'p')</td>
+                                <td>Pilihan
+                                    ('Islam', 'Kristen', 'Hindu', 'Buddha', 'Konghucu')</td>
+                                <td>Huruf</td>
+                                <td>Angka</td>
+                                <td>Pilihan
+                                    ('SD', 'SMP', 'SMA', 'SMK', 'S1')</td>
+                                <td>Tanggal
+                                    (MM-DD-YYYY)</td>
+                                <td>Huruf</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>*Hanya menerima extensi .xls dan .xlsx</p>
+                <?= form_open_multipart('mahasiswa/fun'); ?>
+                <div class="form-floating mb-0">
+                    <input type="file" name="excel" class="form-control" id="excel" required accept=".xls, .xlsx">
+                    <label for="excel">Excel file</label>
+                </div>
+                <div class='invalid-feedback'>
+                    <?= $error = $validation->getError('excel'); ?>
+                </div>
+                <div class="modal-footer">
+                    <?= csrf_field(); ?>
+                    <button type="submit" class="btn btn-success"><i class="bi bi-box-arrow-in-up"></i> Import</button>
+                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
+                    <?= form_close() ?>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    //     // Buat buka modal lewar url (Gangerti cara makenya)
-    //     if (window.location.href.indexOf('#editDataModal' + $id) != -1) {
-    //         $('#editDataModal' + $id).modal('show');
-    //     }
+    <script type="text/javascript">
+        // $(document).ready(function() {
 
-    // });
+        //     // Buat buka modal lewar url (Gangerti cara makenya)
+        //     if (window.location.href.indexOf('#editDataModal' + $id) != -1) {
+        //         $('#editDataModal' + $id).modal('show');
+        //     }
 
-    // // Reset warna tombol saat klik close alerts
-    // function resetColor() {
-    //     var element = document.getElementById("icon-pencil").style.color = "black";
-    // }
+        // });
 
-    // // Focus Input saat modal kebuka
-    // var myModal = document.getElementById('addNewDataModal')
-    // var myInput = document.getElementById('inputNama')
+        // // Reset warna tombol saat klik close alerts
+        // function resetColor() {
+        //     var element = document.getElementById("icon-pencil").style.color = "black";
+        // }
 
-    // myModal.addEventListener('shown.bs.modal', function() {
-    //     myInput.focus();
-    // })
+        // // Focus Input saat modal kebuka
+        // var myModal = document.getElementById('addNewDataModal')
+        // var myInput = document.getElementById('inputNama')
 
-    // Nampilin gambar saat input gambar
-    var reader = new FileReader();
-    reader.onload = function(e) {
-        $('#blah').attr('src', e.target.result);
-    }
+        // myModal.addEventListener('shown.bs.modal', function() {
+        //     myInput.focus();
+        // })
 
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            reader.readAsDataURL(input.files[0]);
+        // Nampilin gambar saat input gambar
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#blah').attr('src', e.target.result);
         }
-    }
 
-    $("#foto").change(function() {
-        readURL(this);
-    });
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
 
-
-    // //  change color icon when clicked
-    // // then revert it when clicked outside
-    // $('.bi-three-dots-vertical').click(function() {
-    //     $(this).css('color', 'orange');
-    // });
-    // $(document).mouseup(function(e) {
-    //     var container = $(".dropstart");
-    //     if (!container.is(e.target) && container.has(e.target).length === 0) {
-    //         $('.bi-three-dots-vertical').css('color', 'black');
-    //     }
-    // });
-
-    // // Focus Input saat ngetik
-    // function inputFocus() {
-    //     document.getElementById("search").focus();
-    // }
-</script>
+        $("#foto").change(function() {
+            readURL(this);
+        });
 
 
-<?php
-// d(round(microtime(true) * 1000) - $milliseconds);
-?>
+        // //  change color icon when clicked
+        // // then revert it when clicked outside
+        // $('.bi-three-dots-vertical').click(function() {
+        //     $(this).css('color', 'orange');
+        // });
+        // $(document).mouseup(function(e) {
+        //     var container = $(".dropstart");
+        //     if (!container.is(e.target) && container.has(e.target).length === 0) {
+        //         $('.bi-three-dots-vertical').css('color', 'black');
+        //     }
+        // });
 
-<?= $this->endSection() ?>
+        // // Focus Input saat ngetik
+        // function inputFocus() {
+        //     document.getElementById("search").focus();
+        // }
+    </script>
+
+
+    <?php
+    // d(round(microtime(true) * 1000) - $milliseconds);
+    ?>
+
+    <?= $this->endSection() ?>

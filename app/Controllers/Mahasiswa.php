@@ -11,6 +11,7 @@ class Mahasiswa extends BaseController
 {
     public function __construct()
     {
+        helper('form');
         $this->userModel = new UserModel();
         $this->mhs = new ModelMahasiswa();
         if (session()->get('role') != "admin") {
@@ -371,7 +372,7 @@ class Mahasiswa extends BaseController
         $mhs = new ModelMahasiswa();
         $mhs->delete($id);
         session()->setFlashdata('deleted', 'Data berhasil dihapus');
-        return redirect()->to('mahasiswa')->withInput();
+        return redirect()->back()->withInput();
     }
 
     public function exportExcel()
@@ -416,6 +417,7 @@ class Mahasiswa extends BaseController
         // set title to bold
         $sheet->getStyle('A1:K1')->getFont()->setBold(true);
         // Set horizontal
+        $sheet->getStyle('A1:A' . ($column - 1))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle('A1:K1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle('H1:K' . ($column - 1))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         // Fill title with background color
@@ -431,6 +433,10 @@ class Mahasiswa extends BaseController
             ->getStyle('H2:H' . ($column - 1))
             ->getNumberFormat()
             ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER);
+        $spreadsheet->getActiveSheet()
+            ->getStyle('J2:J' . ($column - 1))
+            ->getNumberFormat()
+            ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_DATE_DDMMYYYY);
         // Borders the table
         $sheet->getStyle('A1:K' . ($column - 1))
             ->getBorders()
@@ -465,70 +471,128 @@ class Mahasiswa extends BaseController
         exit();
     }
 
-    /**
+    /** 
      * Turns excel into values for databases
      */
     public function importExcel()
     {
-        // Validation
-        $input = $this->validate([
-            'file' => 'uploaded[file]|max_size[file,1024]|ext_in[file,csv],'
-        ]);
-        if (!$input) { // Not valid
-            $data['validation'] = $this->validator;
-            return view('users/index', $data);
-        } else { // Valid
-            if ($file = $this->request->getFile('file')) {
-                if ($file->isValid() && !$file->hasMoved()) {
-                    // Get random file name
-                    $newName = $file->getRandomName();
-                    // Store file in public/csvfile/ folder
-                    $file->move('../public/csvfile', $newName);
-                    // Reading file
-                    $file = fopen("../public/csvfile/" . $newName, "r");
-                    $i = 0;
-                    $numberOfFields = 4; // Total number of fields
-                    $importData_arr = array();
-                    // Initialize $importData_arr Array
-                    while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE) {
-                        $num = count($filedata);
-                        // Skip first row & check number of fields
-                        if (
-                            $i > 0 && $num == $numberOfFields
-                        ) {
-                            // Key names are the insert table field names - name, email, city, and status
-                            $importData_arr[$i]['name'] = $filedata[0];
-                            $importData_arr[$i]['email'] = $filedata[1];
-                            $importData_arr[$i]['city'] = $filedata[2];
-                            $importData_arr[$i]['status'] = $filedata[3];
-                        }
-                        $i++;
-                    }
-                    fclose($file);
-                    // Insert data
-                    $count = 0;
-                    foreach ($importData_arr as $userdata) {
-                        $users = new ModelMahasiswa();
-                        // Check record
-                        $checkrecord = $users->where('email', $userdata['email'])->countAllResults();
-                        if ($checkrecord == 0) {
-                            ## Insert Record
-                            if ($users->insert($userdata)) {
-                                $count++;
-                            }
-                        }
-                    }
-                    // Set Session
-                    session()->setFlashdata('message', $count . ' Record inserted successfully!');
-                } else {
-                    // Set Session
-                    session()->setFlashdata('message', 'File not imported.');
-                }
-            } else {
-                // Set Session
-                session()->setFlashdata('message', 'File not imported.');
+    }
+
+    public function fun()
+    {
+        $this->mhs = new ModelMahasiswa();
+        $file = $this->request->getFile('excel');
+
+        if (!$this->validate([
+            'excel' => [
+                'label' => 'excel',
+                'rules' => 'uploaded[excel]|max_size[excel,2048]|mime_in[excel,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet]',
+                'errors' => [
+                    'uploaded' => 'File excel wajib diisi',
+                    'max_size' => 'Ukuran file excel maksimal 2 MB',
+                    'mime_in' => 'File excel harus berformat .xlsx atau .xls'
+                ],
+            ],
+        ])) {
+            $flash = [
+                'head' => 'File excel tidak sesuai ketentuan',
+                'body' => 'Gagal menambah data',
+            ];
+            session()->setFlashdata('fail_add', $flash);
+            return redirect()->back()->withInput();
+        }
+
+        $ext = $file->guessExtension();
+        if ($ext == 'xlsx') {
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        } else {
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+        }
+
+        $spreadsheet = $reader->load($file->getTempName());
+        $sheet = $spreadsheet->getActiveSheet()->toArray();
+
+        foreach ($sheet as $x => $excel) {
+            if ($x == 0) continue;
+
+            $nim = $this->mhs->isUnique('nim_mhs', $excel[1]);
+            if ($nim !== false) {
+                continue;
+            }
+            if ($excel[1] == $nim['nim_mhs']) continue;
+
+            if (
+                $excel[3] !== 'sejarah' || $excel[3] !== 'mipa'
+                || $excel[3] !== 'sastra'
+            ) {
+                $flash = [
+                    'head' => 'Jurusan tidak sesuai ketentuan',
+                    'body' => 'Gagal menambah data',
+                ];
+                session()->setFlashdata('fail_add', $flash);
+                return redirect()->back();
+            }
+
+            if (
+                $excel[3] !== 'l'
+                || $excel[3] !== 'p'
+            ) {
+                $flash = [
+                    'head' => 'Jenis kelamin tidak sesuai ketentuan',
+                    'body' => 'Gagal menambah data',
+                ];
+                session()->setFlashdata('fail_add', $flash);
+                return redirect()->back();
+            }
+
+            if (
+                $excel[3] !== 'Islam'
+                || $excel[3] !== 'Kristen'
+                || $excel[3] !== 'Hindu'
+                || $excel[3] !== 'Buddha'
+                || $excel[3] !== 'Konghucu'
+            ) {
+                $flash = [
+                    'head' => 'Agama tidak sesuai ketentuan',
+                    'body' => 'Gagal menambah data',
+                ];
+                session()->setFlashdata('fail_add', $flash);
+                return redirect()->back();
+            }
+
+            if (
+                $excel[3] !== 'SD'
+                || $excel[3] !== 'SMP'
+                || $excel[3] !== 'SMA'
+                || $excel[3] !== 'SMK'
+                || $excel[3] !== 'S1'
+            ) {
+                $flash = [
+                    'head' => 'Pendidikan tidak sesuai ketentuan',
+                    'body' => 'Gagal menambah data',
+                ];
+                session()->setFlashdata('fail_add', $flash);
+                return redirect()->back();
             }
         }
-        return redirect()->route('/');
+        $data = [
+            'nim_mhs' => $this->mhs->autonumber($excel[3]),
+            'nama_mhs' => $excel[2],
+            'jurusan_mhs' => $excel[3],
+            'jenis_kelamin' => $excel[4],
+            'agama_mhs' => $excel[5],
+            'alamat_mhs' => $excel[6],
+            'hp_mhs' => $excel[7],
+            'pendidikan' => $excel[8],
+            'TglLahir_mhs' => $excel[9],
+            'TmpLahir_mhs' => $excel[10],
+            'foto' => base_url() . '/' . 'images/mahasiswa/' . 'default-profile.jpg',
+        ];
+        $id = $this->mhs->insert($data);
+
+        session()->set('nama', $data['nama_mhs']);
+        session()->setFlashdata('success_add', 'Data Berhasil Diinput');
+
+        return redirect()->back()->withInput();
     }
 }
