@@ -7,7 +7,11 @@ $baseurlsettings = basename(base_url('settings'));
 $current = basename(current_url());
 
 $this->userModel = new UserModel();
-$profile_pic = base_url() . '/' . $this->userModel->getProfilePic(session()->get('id_user'));
+if ($this->userModel->getProfilePic(session()->get('id_user')) == '') {
+    $profile_pic = base_url() . '/' . 'images/mahasiswa/' . 'default-profile.jpg';
+} else {
+    $profile_pic = base_url() . '/' . $this->userModel->getProfilePic(session()->get('id_user'));
+}
 ?>
 
 <script>
@@ -74,7 +78,7 @@ $profile_pic = base_url() . '/' . $this->userModel->getProfilePic(session()->get
             <!-- Profile -->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle hidden-arrow d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
-                    <img src="<?php echo $profile_pic; ?>" class="rounded-circle" height="22" alt="" loading="lazy">
+                    <img src="<?= $profile_pic ?>" class="rounded-circle" height="22" alt="" loading="lazy">
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink" data-popper-placement="null" data-mdb-popper="none">
                     <li><a class="dropdown-item  <?= $active = ($baseurlprof == $current) ? 'active disabled' : ''; ?>" href="<?php echo base_url('settings/profile') ?>"><i class="bi bi-person-circle"></i> My profile</a></li>

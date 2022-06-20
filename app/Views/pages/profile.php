@@ -6,6 +6,13 @@
 
     use App\Models\UserModel;
 
+    $this->userModel = new UserModel();
+    if ($this->userModel->getProfilePic(session()->get('id_user')) == '') {
+        $profile_pic = base_url() . '/' . 'images/mahasiswa/' . 'default-profile.jpg';
+    } else {
+        $profile_pic = base_url() . '/' . $this->userModel->getProfilePic(session()->get('id_user'));
+    }
+
     if (null != session()->getFlashdata('errors')) : ?>
         $(document).ready(function() {
             $('#editProfile').modal('show');
