@@ -20,7 +20,7 @@ $session = \Config\Services::session();
             $('#addNewDataModal').modal('show');
         <?php endif; ?>
         <?php if ($session->getFlashdata('fail_edit')) : ?>
-            $('#editDataModal' + <?= old('nim_edit'); ?>).modal('show');
+            $('#editDataModal' + '<?= old('nim_edit'); ?>').modal('show');
         <?php endif; ?>
     });
 </script>
@@ -39,7 +39,7 @@ $session = \Config\Services::session();
     </div>
     <form action="" method="get">
         <div class="input-group mb-3">
-            <input id="search" name="keyword" type="search" class="form-control" placeholder="Masukan kata kunci..." value="<?php echo session()->get('keyword') ?>" list="datalistOptions" aria-describedby="search-button" autofocus>
+            <input id="search" name="keyword" type="search" class="form-control" placeholder="Masukan kata kunci..." value="<?= session()->get('keyword') ?>" list="datalistOptions" aria-describedby="search-button" autofocus>
             <datalist id="datalistOptions">
                 <!-- <? //php foreach ($nama as $row) : 
                         ?>
@@ -71,7 +71,7 @@ $session = \Config\Services::session();
             </datalist>
             <button id="search-button" class="btn btn-outline-primary" type="submit" name="submit"><i class="bi bi-search"></i> Cari</button>
             <?php if (session()->getFlashdata('home')) : ?>
-                <a class="btn btn-success" href="<?php echo base_url("mahasiswa") ?>">Home</a>
+                <a class="btn btn-success" href="<?= base_url("mahasiswa") ?>">Home</a>
             <?php endif; ?>
         </div>
     </form>
@@ -85,7 +85,7 @@ $session = \Config\Services::session();
                 </svg>
                 <div class="text ms-3">
                     <strong><?= $session->getFlashdata('success_add'); ?></strong>
-                    <a class="mb-0 alert-link" data-bs-toggle="modal" data-bs-target="<?php echo ($session->getFlashdata('success_add')) ? '#editDataModal' . session()->getFlashdata('nim') : '';  ?>" style="cursor: pointer;"><?= session()->get('nama') . ' ' . '(' . session()->getFlashdata('nim') . ')'; ?></a>
+                    <a class="mb-0 alert-link" data-bs-toggle="modal" data-bs-target="<?= ($session->getFlashdata('success_add')) ? '#editDataModal' . session()->getFlashdata('nim') : '';  ?>" style="cursor: pointer;"><?= session()->get('nama') . ' ' . '(' . session()->getFlashdata('nim') . ')'; ?></a>
                 </div>
                 <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -98,7 +98,7 @@ $session = \Config\Services::session();
                 <div class="text ms-3">
                     <strong><?= $session->getFlashdata('success_edit'); ?></strong>
                     <br>
-                    <a class="mb-0 alert-link" data-bs-toggle="modal" data-bs-target="<?php echo ($session->getFlashdata('success_edit') ? '#editDataModal' . $session->get('nim') : '');  ?>" style="cursor: pointer; text-decoration: underline;"><?= session()->get('nama') . ' ' . '(' . session()->get('nim') . ')'; ?></a>
+                    <a class="mb-0 alert-link" data-bs-toggle="modal" data-bs-target="<?= ($session->getFlashdata('success_edit') ? '#editDataModal' . $session->get('nim') : '');  ?>" style="cursor: pointer; text-decoration: underline;"><?= session()->get('nama') . ' ' . '(' . session()->get('nim') . ')'; ?></a>
                 </div>
                 <button onclick="resetColor()" type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -113,9 +113,9 @@ $session = \Config\Services::session();
                 </svg>
                 <div class="ms-3">
                     <h4 class="alert-heading">Input tidak sesuai ketentuan</h4>
-                    <span>Gagal <?php echo $session->getFlashdata('fail_add') ? 'menambahkan data' : ($session->getFlashdata('fail_edit') ? 'mengedit' . ' data ' . '<a class="alert-link" data-bs-toggle="modal" data-bs-target="#editDataModal' . old('nim_edit') . '" style="cursor: pointer;text-decoration: none;">' .  session()->get('nama') . ' ' . '(' . old('nim_edit') . ')' . '</a>' : 'menambahkan/mengedit data'); ?></span>
+                    <span>Gagal <?= $session->getFlashdata('fail_add') ? 'menambahkan data' : ($session->getFlashdata('fail_edit') ? 'mengedit' . ' data ' . '<a class="alert-link" data-bs-toggle="modal" data-bs-target="#editDataModal' . old('nim_edit') . '" style="cursor: pointer;text-decoration: none;">' .  session()->get('nama') . ' ' . '(' . old('nim_edit') . ')' . '</a>' : 'menambahkan/mengedit data'); ?></span>
                     <br>
-                    <a class="mb-0 alert-link" data-bs-toggle="modal" data-bs-target="<?php echo $session->getFlashdata('fail_add') ? '#addNewDataModal' : ($session->getFlashdata('fail_edit') ? '#editDataModal' . old('nim_edit') : ' ');  ?>" style="cursor: pointer; text-decoration: underline;">Coba Lagi</a>
+                    <a class="mb-0 alert-link" data-bs-toggle="modal" data-bs-target="<?= $session->getFlashdata('fail_add') ? '#addNewDataModal' : ($session->getFlashdata('fail_edit') ? '#editDataModal' . old('nim_edit') : ' ');  ?>" style="cursor: pointer; text-decoration: underline;">Coba Lagi</a>
                 </div>
             </div>
         <?php endif ?>
@@ -138,7 +138,7 @@ $session = \Config\Services::session();
     <?php if (empty($mahasiswa)) { ?>
         <div class="container">
             <div class="row">
-                <h3 class="text-center">Data <?php echo $keyword = (session()->get('keyword')) ? '"' . session()->get('keyword') . '"' : 'Mahasiswa'; ?> Kosong</h3>
+                <h3 class="text-center">Data <?= $keyword = (session()->get('keyword')) ? '"' . session()->get('keyword') . '"' : 'Mahasiswa'; ?> Kosong</h3>
                 <a class="text-center" data-bs-toggle="modal" data-bs-target="#addNewDataModal" style="cursor: pointer;text-decoration: none; color:aqubluea"><i class="bi bi-cloud-arrow-up-fill"></i> Silahkan tambah data <i class="bi bi-cloud-arrow-up-fill"></i></a>
             </div>
         </div>
@@ -169,7 +169,7 @@ $session = \Config\Services::session();
 
                     foreach ($mahasiswa as  $row) :
                     ?>
-                        <tr class="<?php echo (session()->getFlashdata('fail_edit')) ? (($session->get('id') === $row->id_mhs) ? 'table-danger' : '') : ((session()->getFlashdata('success_edit')) ? (($session->get('id') === $row->id_mhs) ? 'table-success' : '') : ''); ?>">
+                        <tr class="<?= (session()->getFlashdata('fail_edit')) ? (($session->get('id') === $row->id_mhs) ? 'table-danger' : '') : ((session()->getFlashdata('success_edit')) ? (($session->get('id') === $row->id_mhs) ? 'table-success' : '') : ''); ?>">
                             <!-- <td><input type="checkbox" name="check<?= $row->id_mhs; ?>" id="check<?= $row->id_mhs; ?>"></td> -->
                             <td id="action">
                                 <div class="dropstart">
@@ -179,7 +179,7 @@ $session = \Config\Services::session();
                                     <ul class="dropdown-menu p-0">
                                         <!-- Tombol Edit, Hapus, dan Info -->
                                         <li>
-                                            <button class="w-75 btn btn-outline-success" id="editModalBtn" data-bs-toggle="modal" data-bs-target="#editDataModal<?php echo $row->nim_mhs; ?>">
+                                            <button class="w-75 btn btn-outline-success" id="editModalBtn" data-bs-toggle="modal" data-bs-target="#editDataModal<?= $row->nim_mhs; ?>">
                                                 <div class="row">
                                                     <i id="icon-pencil" class="col-4 bi bi-pencil-square" style="cursor: pointer;text-decoration: none; color:green;"></i>
                                                     <span class="col-4 mx-auto">Edit</span>
@@ -188,7 +188,7 @@ $session = \Config\Services::session();
                                             </button>
                                         </li>
                                         <li>
-                                            <button class="w-75 btn btn-outline-info" id="btnInfo" data-bs-toggle="modal" data-bs-target="#modalInfo<?php echo $row->nim_mhs; ?>" style="color: blue; cursor: pointer;text-decoration: none;">
+                                            <button class="w-75 btn btn-outline-info" id="btnInfo" data-bs-toggle="modal" data-bs-target="#modalInfo<?= $row->nim_mhs; ?>" style="color: blue; cursor: pointer;text-decoration: none;">
                                                 <div class="row">
                                                     <i class="col-4 bi bi-info-circle-fill"></i>
                                                     <span class="col-4 mx-auto">Info</span>
@@ -197,7 +197,7 @@ $session = \Config\Services::session();
                                             </button>
                                         </li>
                                         <li>
-                                            <button class="w-75 btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $row->nim_mhs; ?>">
+                                            <button class="w-75 btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $row->nim_mhs; ?>">
                                                 <div class="row">
                                                     <i class="col-4 bi bi-trash-fill" style="color: red; cursor: pointer;text-decoration: none;"></i>
                                                     <?php $session->markAsTempdata('id', 2);
@@ -401,12 +401,12 @@ foreach ($mahasiswa as  $row) :
     $id_mhs++;
 ?>
 
-    <div class="modal fade" id="editDataModal<?php echo $row->nim_mhs; ?>" tabindex="-1" aria-labelledby="EditDataModalLabel" tabindex="-1" aria-labelledby="formEditData" aria-hidden="true">
+    <div class="modal fade" id="editDataModal<?= $row->nim_mhs; ?>" tabindex="-1" aria-labelledby="EditDataModalLabel" tabindex="-1" aria-labelledby="formEditData" aria-hidden="true">
         <!-- Edit Data Modal Dialog -->
         <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ModalLabel">Edit Data <?php echo $row->nama_mhs . ' ' .  '(' . $row->nim_mhs . ')' ?></h5>
+                    <h5 class="modal-title" id="ModalLabel">Edit Data <?= $row->nama_mhs . ' ' .  '(' . $row->nim_mhs . ')' ?></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -414,17 +414,16 @@ foreach ($mahasiswa as  $row) :
                     echo csrf_field();
                     ?>
                     <div class="row">
-                        <input type="number" hidden name="id" placeholder="id" id="inputId" class="form-control" value="<?php echo $row->id_mhs ?>">
                         <div class="image col-md-6 d-flex justify-content-center">
-                            <img class="d-block m-auto" src="<?php echo $row->foto; ?>" style="width: 200px;" alt="Foto <?php echo $row->nama_mhs . ' ' . '(' . $row->nim_mhs . ')' ?>">
+                            <img class="d-block m-auto" src="<?= $row->foto; ?>" style="width: 200px;" alt="Foto <?= $row->nama_mhs . ' ' . '(' . $row->nim_mhs . ')' ?>">
                         </div>
                         <div class="col-md-6 mt-md-3">
                             <div class="form-floating mb-0" hidden>
-                                <input type="hidden" name="nim_edit" maxlength="7" placeholder="nim" id="inputNim" class="form-control" value="<?php echo $row->nim_mhs; ?>" hidden>
+                                <input type="hidden" name="nim_edit" maxlength="7" placeholder="nim" id="inputNim" class="form-control" value="<?= $row->nim_mhs; ?>" hidden>
                                 <label for="inputNim">NIM</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" name="nama_edit" size="255" placeholder="Nama" id="inputNama" class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= $err = (session()->get('fail_edit')) ? (($validation->hasError('nama_edit')) ? 'is-invalid' : '') : ''; ?><?php endif; ?>" value="<?php echo (old('nim_edit') === $row->nim_mhs) ? old('nama_edit') : $row->nama_mhs ?>" required>
+                                <input type="text" name="nama_edit" size="255" placeholder="Nama" id="inputNama" class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= $err = (session()->get('fail_edit')) ? (($validation->hasError('nama_edit')) ? 'is-invalid' : '') : ''; ?><?php endif; ?>" value="<?= (old('nim_edit') === $row->nim_mhs) ? old('nama_edit') : $row->nama_mhs ?>" required>
                                 <label for="inputNama">Nama</label>
 
                                 <?php if (old('nim_edit') === $row->nim_mhs) { ?>
@@ -451,7 +450,7 @@ foreach ($mahasiswa as  $row) :
                                 <?php } ?>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" name="TmpLahir_edit" size="255" placeholder="TempatLahir" id="inputTempatLahir" class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= $err = (session()->get('fail_edit')) ? (($validation->hasError('TmpLahir_edit')) ? 'is-invalid' : '') : ''; ?><?php endif; ?>" value="<?php echo (old('nim_edit') === $row->nim_mhs) ? old('TmpLahir_edit') : $row->TmpLahir_mhs ?>" required>
+                                <input type="text" name="TmpLahir_edit" size="255" placeholder="TempatLahir" id="inputTempatLahir" class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= $err = (session()->get('fail_edit')) ? (($validation->hasError('TmpLahir_edit')) ? 'is-invalid' : '') : ''; ?><?php endif; ?>" value="<?= (old('nim_edit') === $row->nim_mhs) ? old('TmpLahir_edit') : $row->TmpLahir_mhs ?>" required>
                                 <label for="inputTempatLahir">Tempat Lahir</label>
 
                                 <?php if (old('nim_edit') === $row->nim_mhs) {
@@ -463,7 +462,7 @@ foreach ($mahasiswa as  $row) :
                                         } ?>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="date" name="TglLahir_edit" placeholder="TanggalLahir" id="inputTanggalLahir" class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= $err = (session()->get('fail_edit')) ? (($validation->hasError('TglLahir_edit')) ? 'is-invalid' : '') : ''; ?><?php endif; ?>" value="<?php echo (old('nim_edit') === $row->nim_mhs) ? old('TglLahir_edit') : $row->TglLahir_mhs ?>" required>
+                                <input type="date" name="TglLahir_edit" placeholder="TanggalLahir" id="inputTanggalLahir" class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= $err = (session()->get('fail_edit')) ? (($validation->hasError('TglLahir_edit')) ? 'is-invalid' : '') : ''; ?><?php endif; ?>" value="<?= (old('nim_edit') === $row->nim_mhs) ? old('TglLahir_edit') : $row->TglLahir_mhs ?>" required>
                                 <label for="inputTanggalLahir">Tanggal Lahir</label>
 
                                 <?php if (old('nim_edit') === $row->nim_mhs) {
@@ -498,7 +497,7 @@ foreach ($mahasiswa as  $row) :
                                 <?php } ?>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" name="alamat_edit" size="255" placeholder="Alamat" id="inputAlamat" class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= $err = (session()->get('fail_edit')) ? (($validation->hasError('alamat_edit')) ? 'is-invalid' : '') : ''; ?><?php endif; ?>" value="<?php echo (old('nim_edit') === $row->nim_mhs) ? old('alamat_edit') : $row->alamat_mhs ?>" required>
+                                <input type="text" name="alamat_edit" size="255" placeholder="Alamat" id="inputAlamat" class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= $err = (session()->get('fail_edit')) ? (($validation->hasError('alamat_edit')) ? 'is-invalid' : '') : ''; ?><?php endif; ?>" value="<?= (old('nim_edit') === $row->nim_mhs) ? old('alamat_edit') : $row->alamat_mhs ?>" required>
                                 <label for="inputAlamat">Alamat</label>
 
                                 <?php if (old('nim_edit') === $row->nim_mhs) {
@@ -510,7 +509,7 @@ foreach ($mahasiswa as  $row) :
                                         } ?>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="number" name="telepon_edit" maxlength="13" placeholder="Telepon" id="inputTelepon" pattern="{0-9}+" class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= $err = (session()->get('fail_edit')) ? (($validation->hasError('telepon_edit')) ? 'is-invalid' : '') : ''; ?><?php endif; ?>" value="<?php echo (old('nim_edit') === $row->nim_mhs) ? old('telepon_edit') : $row->hp_mhs ?>" required>
+                                <input type="number" name="telepon_edit" maxlength="13" placeholder="Telepon" id="inputTelepon" pattern="{0-9}+" class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= $err = (session()->get('fail_edit')) ? (($validation->hasError('telepon_edit')) ? 'is-invalid' : '') : ''; ?><?php endif; ?>" value="<?= (old('nim_edit') === $row->nim_mhs) ? old('telepon_edit') : $row->hp_mhs ?>" required>
                                 <label for="inputTelepon">HP/Telepon</label>
 
                                 <?php if (old('nim_edit') === $row->nim_mhs) {
@@ -588,20 +587,17 @@ foreach ($mahasiswa as  $row) :
         <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ModalLabel">Data <?php echo $row->nama_mhs . ' ' . '(' . $row->nim_mhs . ')' ?></h5>
+                    <h5 class="modal-title" id="ModalLabel">Data <?= $row->nama_mhs . ' ' . '(' . $row->nim_mhs . ')' ?></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <?php echo form_open('mahasiswa/hapus');
+                    <?= form_open('mahasiswa/hapus');
                     echo csrf_field(); ?>
                     <div class="row">
                         <div class="image col-md-6 d-flex justify-content-center">
-                            <img class="d-block m-auto" src="<?php echo $row->foto; ?>" style="width: 200px;" alt="Foto <?php echo $row->nama_mhs . ' ' . '(' . $row->nim_mhs . ')' ?>">
+                            <img class="d-block m-auto" src="<?= $row->foto; ?>" style="width: 200px;" alt="Foto <?= $row->nama_mhs . ' ' . '(' . $row->nim_mhs . ')' ?>">
                         </div>
                         <div class="col-md-6">
-                            <div class="form-floating mb-0">
-                                <input type="number" name="id" placeholder="id" class="form-control" value="<?= $row->id_mhs; ?>" hidden>
-                            </div>
                             <div class="form-floating mb-3">
                                 <input type="text" name="nim" placeholder="nim" id="inputNim" class="form-control" value="<?= $row->nim_mhs; ?>" disabled>
                                 <label for="inputNim">NIM</label>
@@ -642,12 +638,12 @@ foreach ($mahasiswa as  $row) :
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-evenly">
-                    <h5 class="text-center">Yakin hapus data <?php echo $row->nama_mhs . ' ' . '(' . $row->nim_mhs . ')' ?> ?</h5>
+                    <h5 class="text-center">Yakin hapus data <?= $row->nama_mhs . ' ' . '(' . $row->nim_mhs . ')' ?> ?</h5>
                     <div class="d-inline">
                         <form action="" method="post" class="d-inline text-center">
                             <?= csrf_field(); ?>
                             <input type="hidden" name="_method" value="DELETE">
-                            <a href="<?php echo base_url('mahasiswa/hapus/' . $row->id_mhs) ?>" type="submit" class="btn btn-danger">Hapus</a>
+                            <a href="<?= base_url('mahasiswa/hapus/' . $row->id_mhs) ?>" type="submit" class="btn btn-danger">Hapus</a>
                         </form>
                         <button class="btn btn-outline-dark" type="button" name="tutup" data-bs-dismiss="modal">Batal</button>
                     </div>
@@ -658,17 +654,17 @@ foreach ($mahasiswa as  $row) :
     </div>
 
     <!-- Modal info -->
-    <div class="modal fade" id="modalInfo<?php echo $row->nim_mhs ?>" tabindex="-1" aria-labelledby="modalInfo" aria-hidden="true">
+    <div class="modal fade" id="modalInfo<?= $row->nim_mhs ?>" tabindex="-1" aria-labelledby="modalInfo" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalInfo">Info <?php echo $row->nama_mhs . ' ' .  '(' . $row->nim_mhs . ')' ?></h5>
+                    <h5 class="modal-title" id="modalInfo">Info <?= $row->nama_mhs . ' ' .  '(' . $row->nim_mhs . ')' ?></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row" id="primeInfo">
                         <div class="image col-md-6 d-flex justify-content-center">
-                            <img class="d-block m-auto" src="<?php echo $row->foto; ?>" style="width: 200px;" alt="Foto <?php echo $row->nama_mhs . ' ' . '(' . $row->nim_mhs . ')' ?>">
+                            <img class="d-block m-auto" src="<?= $row->foto; ?>" style="width: 200px;" alt="Foto <?= $row->nama_mhs . ' ' . '(' . $row->nim_mhs . ')' ?>">
                         </div>
                         <div class="primeContent col-md-6">
                             <table class="table">
