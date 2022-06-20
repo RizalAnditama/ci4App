@@ -54,7 +54,6 @@ class Mahasiswa extends BaseController
 
         $data = [
             'title'     => 'Dashboard | Admin',
-            'validation' => \Config\Services::validation(),
             'mahasiswa' => json_decode(json_encode($paginate), FALSE), //Ngubah data dari modelmahasiswa(array) ke string
             'pager'     => $mhs->pager,
             'page' => $page,
@@ -62,7 +61,26 @@ class Mahasiswa extends BaseController
             // 'nama' => $nama,
             // 'nim' => $nim,
             // 'TmpLahir' => $TmpLahir,
-            // 'hp' => $hp,
+            // 'hp' => $hp,'nama' => $this->request->getVar('nama'),
+            'nama' => null,
+            'jenkel' => null,
+            'TmpLahir' => null,
+            'TglLahir' => null,
+            'agama' => null,
+            'alamat' => null,
+            'telepon' => null,
+            'jurusan' => null,
+            'pendidikan' => null,
+            'nim_edit' => null,
+            'nama_edit' => null,
+            'jenkel_edit' => null,
+            'TmpLahir_edit' => null,
+            'TglLahir_edit' => null,
+            'agama_edit' => null,
+            'alamat_edit' => null,
+            'telepon_edit' => null,
+            'jurusan_edit' => null,
+            'pendidikan_edit' => null,
         ];
 
         return view('pages/viewdatamahasiswa', $data);
@@ -168,13 +186,40 @@ class Mahasiswa extends BaseController
                 'head' => 'Input tidak sesuai ketentuan',
                 'body' => 'Gagal menambah data',
             ];
+            $paginate = $this->mhs->paginate(5, 'mahasiswa');
+            $page = $this->request->getVar('page_mahasiswa') ? $this->request->getVar('page_mahasiswa') : 1;
+            $data = [
+                'title' => 'Dashboard | Admin',
+                'mahasiswa' => json_decode(json_encode($paginate), FALSE),
+                'page' => $page,
+                'validation' => \Config\Services::validation(),
+                'pager'     => $this->mhs->pager,
+                'nama' => $this->request->getVar('nama'),
+                'jenkel' => $this->request->getVar('jenkel'),
+                'TmpLahir' => $this->request->getVar('TmpLahir'),
+                'TglLahir' => $this->request->getVar('TglLahir'),
+                'agama' => $this->request->getVar('agama'),
+                'alamat' => $this->request->getVar('alamat'),
+                'telepon' => $this->request->getVar('telepon'),
+                'jurusan' => $this->request->getVar('jurusan'),
+                'pendidikan' => $this->request->getVar('pendidikan'),
+                'nim_edit' => '',
+                'nama_edit' => '',
+                'jenkel_edit' => '',
+                'TmpLahir_edit' => '',
+                'TglLahir_edit' => '',
+                'agama_edit' => '',
+                'alamat_edit' => '',
+                'telepon_edit' => '',
+                'jurusan_edit' => '',
+                'pendidikan_edit' => '',
+            ];
 
             session()->set('id', $this->request->getVar('id'));
             session()->setFlashdata('fail_add', $flash);
-            return redirect()->back()->withInput();
+            return view('pages/viewdatamahasiswa', $data);
             // return redirect()->to('mahasiswa')->withInput()->with('validation', $validation);
         } else {
-            $this->mhs = new ModelMahasiswa();
             $foto = $this->request->getFile('foto');
             if ($foto->getSize() > 0) {
                 $fileName = $this->userModel->timestampFile($foto->getName());
@@ -206,7 +251,7 @@ class Mahasiswa extends BaseController
             session()->set('nama', $this->request->getVar('nama'));
             session()->setFlashdata('success_add', 'Data Berhasil Diinput');
 
-            return redirect()->back()->with('id', $id)->with('nim', $nim);
+            return redirect()->to('mahasiswa')->with('id', $id)->with('nim', $nim);
         }
     }
 
@@ -310,16 +355,46 @@ class Mahasiswa extends BaseController
                 ]
             ],
         ])) {
-            $id = $this->request->getVar('id');
             $flash = [
                 'head' => 'Input tidak sesuai ketentuan',
                 'body' => 'Gagal mengedit data',
             ];
+            $paginate = $this->mhs->paginate(5, 'mahasiswa');
+            $page = $this->request->getVar('page_mahasiswa') ? $this->request->getVar('page_mahasiswa') : 1;
 
-            session()->set('id', $this->request->getVar('id'));
-            session()->set('nama', json_decode(json_encode(($this->mhs->query("SELECT nama_mhs FROM mahasiswa WHERE id_mhs = '$id'")->getRowArray()['nama_mhs']))), FALSE);
+            session()->set('nim', $this->request->getVar('nim_edit'));
+            $nim = $this->request->getVar('nim_edit');
+            session()->set('nama', json_decode(json_encode(($this->mhs->query("SELECT nama_mhs FROM mahasiswa WHERE nim_mhs = '$nim'")->getRowArray()['nama_mhs']))), FALSE);
             session()->setFlashdata('fail_edit', $flash);
-            return redirect()->back()->withInput();
+            $data = [
+                'title' => 'Dashboard | Admin',
+                'mahasiswa' => json_decode(json_encode($paginate), FALSE),
+                'page' => $page,
+                'validation' => \Config\Services::validation(),
+                'pager'     => $this->mhs->pager,
+                'nim_edit' => $this->request->getVar('nim_edit'),
+                'nama_edit' => $this->request->getVar('nama_edit'),
+                'jenkel_edit' => $this->request->getVar('jenkel_edit'),
+                'TmpLahir_edit' => $this->request->getVar('TmpLahir_edit'),
+                'TglLahir_edit' => $this->request->getVar('TglLahir_edit'),
+                'agama_edit' => $this->request->getVar('agama_edit'),
+                'alamat_edit' => $this->request->getVar('alamat_edit'),
+                'telepon_edit' => $this->request->getVar('telepon_edit'),
+                'jurusan_edit' => $this->request->getVar('jurusan_edit'),
+                'pendidikan_edit' => $this->request->getVar('pendidikan_edit'),
+                'nim' => '',
+                'nama' => '',
+                'jenkel' => '',
+                'TmpLahir' => '',
+                'TglLahir' => '',
+                'agama' => '',
+                'alamat' => '',
+                'telepon' => '',
+                'jurusan' => '',
+                'pendidikan' => '',
+            ];
+
+            return view('pages/viewdatamahasiswa', $data);
         } else {
             $id = $this->request->getVar('id');
 
@@ -362,7 +437,7 @@ class Mahasiswa extends BaseController
                 session()->set('nim', (string) $data['nim_mhs']);
                 session()->set('nama', $this->request->getVar('nama_edit'));
                 session()->setFlashdata('success_edit', 'Data Berhasil Diedit');
-                return redirect()->back();
+                return redirect()->to('mahasiswa');
             }
         }
     }

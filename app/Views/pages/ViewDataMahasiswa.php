@@ -11,22 +11,6 @@ use CodeIgniter\Filters\CSRF;
 $session = \Config\Services::session();
 //? Tempat testing dan debug
 // $milliseconds = round(microtime(true) * 1000);
-
-// $bruh = [
-//     'ur mom' => 'fat',
-//     'lol' => 'bruh'
-// ];
-
-// //* testing time needed for fetching the array
-// $before = microtime(true);
-
-// for ($i = 0; $i < 100000; $i++) {
-//     serialize($mahasiswa);
-// }
-// $after = microtime(true);
-// d($mahasiswa);
-// dd(($after - $before) / $i . " sec/serialize\n");
-// 
 ?>
 
 <script type="text/javascript">
@@ -35,7 +19,7 @@ $session = \Config\Services::session();
             $('#addNewDataModal').modal('show');
         <?php endif; ?>
         <?php if ($session->getFlashdata('fail_edit')) : ?>
-            $('#editDataModal' + <?= old('nim_edit'); ?>).modal('show');
+            $('#editDataModal' + <?= $nim_edit; ?>).modal('show');
         <?php endif; ?>
     });
 </script>
@@ -121,20 +105,19 @@ $session = \Config\Services::session();
     </div>
 
     <div class="fail">
-        <?php if ($validation->getErrors()) : ?>
+        <?php if (session()->get('fail_add') !== null || session()->get('fail_edit') !== null) : ?>
             <div class="alert alert-danger d-flex align-items-center" role="alert">
                 <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
                     <use xlink:href="#exclamation-triangle-fill" />
                 </svg>
                 <div class="ms-3">
                     <h4 class="alert-heading">Input tidak sesuai ketentuan</h4>
-                    <span>Gagal <?php echo $session->getFlashdata('fail_add') ? 'menambahkan data' : ($session->getFlashdata('fail_edit') ? 'mengedit' . ' data ' . '<a class="alert-link" data-bs-toggle="modal" data-bs-target="#editDataModal' . old('nim_edit') . '" style="cursor: pointer;text-decoration: none;">' .  session()->get('nama') . ' ' . '(' . old('nim_edit') . ')' . '</a>' : 'menambahkan/mengedit data'); ?></span>
+                    <span>Gagal <?php echo $session->getFlashdata('fail_add') ? 'menambahkan data ' . $nama : ($session->getFlashdata('fail_edit') ? 'mengedit' . ' data ' . '<a class="alert-link" data-bs-toggle="modal" data-bs-target="#editDataModal' . $nim_edit . '" style="cursor: pointer;text-decoration: none;">' .  session()->get('nama') . ' ' . '(' . $nim_edit . ')' . '</a>' : 'menambahkan/mengedit data'); ?></span>
                     <br>
-                    <a class="mb-0 alert-link" data-bs-toggle="modal" data-bs-target="<?php echo $session->getFlashdata('fail_add') ? '#addNewDataModal' : ($session->getFlashdata('fail_edit') ? '#editDataModal' . old('nim_edit') : ' ');  ?>" style="cursor: pointer; text-decoration: underline;">Coba Lagi</a>
+                    <a class="mb-0 alert-link" data-bs-toggle="modal" data-bs-target="<?php echo $session->getFlashdata('fail_add') ? '#addNewDataModal' : ($session->getFlashdata('fail_edit') ? '#editDataModal' . $nim_edit : ' ');  ?>" style="cursor: pointer; text-decoration: underline;">Coba Lagi</a>
                 </div>
             </div>
-        <?php endif;
-        ?>
+        <?php endif ?>
     </div>
 
     <div class="info">
@@ -260,118 +243,141 @@ $session = \Config\Services::session();
                 <div class="d-flex aligns-items-center justify-content-center mb-3 py-3 border-bottom">
                     <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importExcel"><i class="bi bi-file-earmark-spreadsheet-fill"></i> Insert with excel</button>
                 </div>
-                <div class='invalid-feedback'>
-                    <?= $error = $validation->getError('excel'); ?>
-                </div>
+                <?php if (session()->get('fail_add') !== null) : ?>
+                    <div class='invalid-feedback'>
+                        <?= $error = $validation->getError('excel'); ?>
+                    </div>
+                <?php endif; ?>
                 <span class="d-flex aligns-items-center justify-content-center my-3">Atau dengan cara manual</span>
 
                 <?php
                 echo form_open_multipart('mahasiswa/SimpanData');
                 echo csrf_field(); ?>
                 <div class="form-floating mb-3">
-                    <input type="text" name="nama" size="255" placeholder="Nama" id="inputNama" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" value="<?= old('nama'); ?>" required>
+                    <input type="text" name="nama" size="255" placeholder="Nama" id="inputNama" class="form-control <?= $err = (session()->get('fail_add')) ? (($validation->hasError('nama')) ? 'is-invalid' : '') : ''; ?>" value="<?= $nama ?? ''; ?>" required>
                     <label for="inputNama">Nama</label>
 
-                    <div class='invalid-feedback'>
-                        <?= $error = $validation->getError('nama'); ?>
-                    </div>
+                    <?php if (session()->get('fail_add') !== null) : ?>
+                        <div class='invalid-feedback'>
+                            <?= $error = $validation->getError('nama'); ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="form-floating mb-3">
-                    <select class="form-control <?= ($validation->hasError('jenkel')) ? 'is-invalid' : ''; ?>" name="jenkel" id="jenkel" required>
+                    <select class="form-control <?= $err = (session()->get('fail_add')) ? (($validation->hasError('jenkel')) ? 'is-invalid' : '') : ''; ?>" name="jenkel" id="jenkel" required>
                         <option selected disabled value="">Pilih...</option>
-                        <option value="l" <?= (old('jenkel') === 'l') ? 'selected' : ''; ?>>laki-laki</option>
-                        <option value="p" <?= (old('jenkel') === 'p') ? 'selected' : '' ?>>Perempuan</option>
+                        <option value="l" <?= ($jenkel === 'l') ? 'selected' : ''; ?>>laki-laki</option>
+                        <option value="p" <?= ($jenkel === 'p') ? 'selected' : '' ?>>Perempuan</option>
                     </select>
                     <label for="jenkel">Jenis Kelamin</label>
 
-                    <div class='invalid-feedback'>
-                        <?= $error = $validation->getError('jenkel'); ?>
-                    </div>
+                    <?php if (session()->get('fail_add') !== null) : ?>
+                        <div class='invalid-feedback'>
+                            <?= $error = $validation->getError('jenkel'); ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" name="TmpLahir" size="255" placeholder="TempatLahir" id="inputTempatLahir" class="form-control <?= ($validation->hasError('TmpLahir')) ? 'is-invalid' : ''; ?>" value="<?= old('TmpLahir'); ?>" required>
+                    <input type="text" name="TmpLahir" size="255" placeholder="TempatLahir" id="inputTempatLahir" class="form-control <?= $err = (session()->get('fail_add')) ? (($validation->hasError('TmpLahir')) ? 'is-invalid' : '') : ''; ?>" value="<?= $TmpLahir; ?>" required>
                     <label for="inputTempatLahir">Tempat Lahir</label>
 
-                    <div class='invalid-feedback'>
-                        <?= $error = $validation->getError('TmpLahir'); ?>
-                    </div>
+                    <?php if (session()->get('fail_add') !== null) : ?>
+                        <div class='invalid-feedback'>
+                            <?= $error = $validation->getError('TmpLahir'); ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="date" name="TglLahir" placeholder="TanggalLahir" id="inputTanggalLahir" class="form-control <?= ($validation->hasError('TglLahir')) ? 'is-invalid' : ''; ?>" value="<?= old('TglLahir'); ?>" required>
+                    <input type="date" name="TglLahir" placeholder="TanggalLahir" id="inputTanggalLahir" class="form-control <?= $err = (session()->get('fail_add')) ? (($validation->hasError('TglLahir')) ? 'is-invalid' : '') : ''; ?>" value="<?= $TglLahir; ?>" required>
                     <label for="inputTanggalLahir">Tanggal Lahir</label>
 
-                    <div class='invalid-feedback'>
-                        <?= $error = $validation->getError('TglLahir'); ?>
-                    </div>
+                    <?php if (session()->get('fail_add') !== null) : ?>
+                        <div class='invalid-feedback'>
+                            <?= $error = $validation->getError('TglLahir'); ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="form-floating mb-3">
-                    <select class="form-control <?= ($validation->hasError('agama')) ? 'is-invalid' : ''; ?>" name="agama" id="agama" required>
+                    <select class="form-control <?= $err = (session()->get('fail_add')) ? (($validation->hasError('agama')) ? 'is-invalid' : '') : ''; ?>" name="agama" id="agama" required>
                         <option selected disabled>Pilih...</option>
-                        <option value="Islam" <?= (old('agama') === 'Islam') ? 'selected' : ''; ?>>Islam</option>
-                        <option value="Kristen" <?= (old('agama') === 'Kristen') ? 'selected' : '' ?>>Kristen</option>
-                        <option value="Hindu" <?= (old('agama') === 'Hindu') ? 'selected' : '' ?>>Hindu</option>
-                        <option value="Buddha" <?= (old('agama') === 'Buddha') ? 'selected' : '' ?>>Buddha</option>
-                        <option value="Konghucu" <?= (old('agama') === 'Konghucu') ? 'selected' : '' ?>>Konghucu</option>
+                        <option value="Islam" <?= ($agama === 'Islam') ? 'selected' : ''; ?>>Islam</option>
+                        <option value="Kristen" <?= ($agama === 'Kristen') ? 'selected' : '' ?>>Kristen</option>
+                        <option value="Hindu" <?= ($agama === 'Hindu') ? 'selected' : '' ?>>Hindu</option>
+                        <option value="Buddha" <?= ($agama === 'Buddha') ? 'selected' : '' ?>>Buddha</option>
+                        <option value="Konghucu" <?= ($agama === 'Konghucu') ? 'selected' : '' ?>>Konghucu</option>
                     </select>
                     <label for="agama">Agama</label>
 
-                    <div class='invalid-feedback'>
-                        <?= $error = $validation->getError('agama'); ?>
-                    </div>
+                    <?php if (session()->get('fail_add') !== null) : ?>
+                        <div class='invalid-feedback'>
+                            <?= $error = $validation->getError('agama'); ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" name="alamat" size="255" placeholder="Alamat" id="inputAlamat" class="form-control <?= ($validation->hasError('alamat')) ? 'is-invalid' : ''; ?>" value="<?= old('alamat'); ?>" required>
+                    <input type="text" name="alamat" size="255" placeholder="Alamat" id="inputAlamat" class="form-control <?= $err = (session()->get('fail_add')) ? (($validation->hasError('alamat')) ? 'is-invalid' : '') : ''; ?>" value="<?= $alamat; ?>" required>
                     <label for="inputAlamat">Alamat</label>
 
-                    <div class='invalid-feedback'>
-                        <?= $error = $validation->getError('alamat'); ?>
-                    </div>
+                    <?php if (session()->get('fail_add') !== null) : ?>
+                        <div class='invalid-feedback'>
+                            <?= $error = $validation->getError('alamat'); ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="number" name="telepon" maxlength="13" placeholder="Telepon" id="inputTelepon" pattern="{0-9}+" class="form-control <?= ($validation->hasError('telepon')) ? 'is-invalid' : ''; ?>" value="<?= old('telepon'); ?>" required>
+                    <input type="number" name="telepon" maxlength="13" placeholder="Telepon" id="inputTelepon" pattern="{0-9}+" class="form-control <?= $err = (session()->get('fail_add')) ? (($validation->hasError('telepon')) ? 'is-invalid' : '') : ''; ?>" value="<?= $telepon; ?>" required>
                     <label for="inputTelepon">HP/Telepon</label>
 
-                    <div class='invalid-feedback'>
-                        <?= $error = $validation->getError('telepon'); ?>
-                    </div>
+                    <?php if (session()->get('fail_add') !== null) : ?>
+                        <div class='invalid-feedback'>
+                            <?= $error = $validation->getError('telepon'); ?>
+                        </div>
+                    <?php endif; ?>
 
                 </div>
                 <div class="form-floating mb-3">
-                    <select class="form-control <?= ($validation->hasError('jurusan')) ? 'is-invalid' : ''; ?>" name="jurusan" id="jurusan" required>
+                    <select class="form-control <?= $err = (session()->get('fail_add')) ? (($validation->hasError('jurusan')) ? 'is-invalid' : '') : ''; ?>" name="jurusan" id="jurusan" required>
                         <option selected disabled value="">Pilih...</option>
-                        <option value="sejarah" <?= (old('jurusan') === 'sejarah') ? 'selected' : ''; ?>>Sejarah</option>
-                        <option value="mipa" <?= (old('jurusan') === 'mipa') ? 'selected' : '' ?>>Matematika & IPA</option>
-                        <option value="sastra" <?= (old('jurusan') === 'sastra') ? 'selected' : ''; ?>>Sastra</option>
+                        <option value="sejarah" <?= ($jurusan === 'sejarah') ? 'selected' : ''; ?>>Sejarah</option>
+                        <option value="mipa" <?= ($jurusan === 'mipa') ? 'selected' : '' ?>>Matematika & IPA</option>
+                        <option value="sastra" <?= ($jurusan === 'sastra') ? 'selected' : ''; ?>>Sastra</option>
                     </select>
                     <label for="inputJurusan">Jurusan</label>
 
-                    <div class='invalid-feedback'>
-                        <?= $error = $validation->getError('jurusan'); ?>
-                    </div>
+                    <?php if (session()->get('fail_add') !== null) : ?>
+                        <div class='invalid-feedback'>
+                            <?= $error = $validation->getError('jurusan'); ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="form-floating mb-3">
-                    <select class="form-control <?= ($validation->hasError('pendidikan')) ? 'is-invalid' : ''; ?>" name="pendidikan" id="pendidikan" required>
+                    <select class="form-control <?= $err = (session()->get('fail_add')) ? (($validation->hasError('pendidikan')) ? 'is-invalid' : '') : ''; ?>" name="pendidikan" id="pendidikan" required>
                         <option selected disabled value="">Pilih...</option>
-                        <option value="SD" <?= (old('pendidikan') === 'SD') ? 'selected' : ''; ?>>SD</option>
-                        <option value="SMP" <?= (old('pendidikan') === 'SMP') ? 'selected' : '' ?>>SMP</option>
-                        <option value="SMA" <?= (old('pendidikan') === 'SMA') ? 'selected' : '' ?>>SMA</option>
-                        <option value="SMK" <?= (old('pendidikan') === 'SMK') ? 'selected' : '' ?>>SMK</option>
-                        <option value="S1" <?= (old('pendidikan') === 'S1') ? 'selected' : '' ?>>S1</option>
+                        <option value="SD" <?= ($pendidikan === 'SD') ? 'selected' : ''; ?>>SD</option>
+                        <option value="SMP" <?= ($pendidikan === 'SMP') ? 'selected' : '' ?>>SMP</option>
+                        <option value="SMA" <?= ($pendidikan === 'SMA') ? 'selected' : '' ?>>SMA</option>
+                        <option value="SMK" <?= ($pendidikan === 'SMK') ? 'selected' : '' ?>>SMK</option>
+                        <option value="S1" <?= ($pendidikan === 'S1') ? 'selected' : '' ?>>S1</option>
                     </select>
                     <label for="pendidikan">Pendidikan</label>
 
-                    <div class='invalid-feedback'>
-                        <?= $error = $validation->getError('jenkel'); ?>
-                    </div>
+                    <?php if (session()->get('fail_add') !== null) : ?>
+                        <div class='invalid-feedback'>
+                            <?= $error = $validation->getError('jenkel'); ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="form-floating row mb-3">
                     <div class="custom-file">
                         <label for="foto" class="col-form-label custom-file-label">Pilih foto mahasiswa...</label>
-                        <input id="foto" name="foto" type="file" class="custom-file-input  form-control is-<?= ($validation->getError('foto')) ? 'invalid' : '' ?>" value="<?php old('foto'); ?>" accept=".jpg, .jpeg, .png">
+                        <input id="foto" name="foto" type="file" class="custom-file-input  form-control <?= $err = (session()->get('fail_add')) ? (($validation->hasError('foto')) ? 'is-invalid' : '') : ''; ?>" accept=".jpg, .jpeg, .png">
                         <img id="blah" src="#" alt="Foto Mahasiswa" style="max-width: 100px;">
-                        <div class='invalid-feedback'>
-                            <?= $error = $validation->getError('foto'); ?>
-                        </div>
+
+                        <?php if (session()->get('fail_add') !== null) : ?>
+                            <div class='invalid-feedback'>
+                                <?= $error = $validation->getError('foto'); ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -417,37 +423,37 @@ foreach ($mahasiswa as  $row) :
                                 <label for="inputNim">NIM</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" name="nama_edit" size="255" placeholder="Nama" id="inputNama" class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= ($validation->hasError('nama_edit')) ? 'is-invalid' : 'is-valid'; ?><?php endif; ?>" value="<?php echo (old('nim_edit') === $row->nim_mhs) ? old('nama_edit') : $row->nama_mhs ?>" required>
+                                <input type="text" name="nama_edit" size="255" placeholder="Nama" id="inputNama" class="form-control <?php if ($nim_edit === $row->nim_mhs) : ?><?= $err = (session()->get('fail_edit')) ? (($validation->hasError('nama_edit')) ? 'is-invalid' : '') : ''; ?><?php endif; ?>" value="<?php echo ($nim_edit === $row->nim_mhs) ? $nama_edit : $row->nama_mhs ?>" required>
                                 <label for="inputNama">Nama</label>
 
-                                <?php if (old('nim_edit') === $row->nim_mhs) { ?>
+                                <?php if ($nim_edit === $row->nim_mhs) { ?>
                                     <div class='invalid-feedback'>
                                         <?= $error = $validation->getError('nama_edit'); ?>
                                     </div><?php
                                         } ?>
                             </div>
                             <div class="form-floating mb-3">
-                                <select class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= ($validation->hasError('jenkel_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" name="jenkel_edit" id="jenkel_edit" required>
-                                    <?php if ($validation->hasError('jenkel_edit')) { ?>
-                                        <option value="l" <?= (old('jenkel_edit') === 'l') ? 'selected' : ''; ?>>Laki-laki</option>
-                                        <option value="p" <?= (old('jenkel_edit') === 'p') ? 'selected' : '' ?>>Perempuan</option>
+                                <select class="form-control <?php if ($nim_edit === $row->nim_mhs) : ?><?= $err = (session()->get('fail_edit')) ? (($validation->hasError('jenkel_edit')) ? 'is-invalid' : '') : ''; ?><?php endif; ?>" name="jenkel_edit" id="jenkel_edit" required>
+                                    <?php if (session()->get('fail_edit') && $validation->hasError('pendidikan_edit')) { ?>
+                                        <option value="l" <?= ($jenkel_edit === 'l') ? 'selected' : ''; ?>>Laki-laki</option>
+                                        <option value="p" <?= ($jenkel_edit === 'p') ? 'selected' : '' ?>>Perempuan</option>
                                     <?php } else { ?>
                                         <option value="l" <?= ($row->jenis_kelamin === 'l') ? 'selected' : ''; ?>>laki-laki</option>
                                         <option value="p" <?= ($row->jenis_kelamin === 'p') ? 'selected' : '' ?>>Perempuan</option>
                                     <?php } ?>
                                 </select>
                                 <label for="jenkel_edit">Jenis Kelamin</label>
-                                <?php if (old('nim_edit') === $row->nim_mhs) { ?>
+                                <?php if ($nim_edit === $row->nim_mhs) { ?>
                                     <div class='invalid-feedback'>
                                         <?= $error = $validation->getError('jenkel_edit'); ?>
                                     </div>
                                 <?php } ?>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" name="TmpLahir_edit" size="255" placeholder="TempatLahir" id="inputTempatLahir" class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= ($validation->hasError('TmpLahir_edit')) ? 'is-invalid' : 'is-valid'; ?><?php endif; ?>" value="<?php echo (old('nim_edit') === $row->nim_mhs) ? old('TmpLahir_edit') : $row->TmpLahir_mhs ?>" required>
+                                <input type="text" name="TmpLahir_edit" size="255" placeholder="TempatLahir" id="inputTempatLahir" class="form-control <?php if ($nim_edit === $row->nim_mhs) : ?><?= $err = (session()->get('fail_edit')) ? (($validation->hasError('TmpLahir_edit')) ? 'is-invalid' : '') : ''; ?><?php endif; ?>" value="<?php echo ($nim_edit === $row->nim_mhs) ? $TmpLahir_edit : $row->TmpLahir_mhs ?>" required>
                                 <label for="inputTempatLahir">Tempat Lahir</label>
 
-                                <?php if (old('nim_edit') === $row->nim_mhs) {
+                                <?php if ($nim_edit === $row->nim_mhs) {
                                 ?>
                                     <div class='invalid-feedback'>
                                         <?= $error = $validation->getError('TmpLahir_edit'); ?>
@@ -456,10 +462,10 @@ foreach ($mahasiswa as  $row) :
                                         } ?>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="date" name="TglLahir_edit" placeholder="TanggalLahir" id="inputTanggalLahir" class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= ($validation->hasError('TglLahir_edit')) ? 'is-invalid' : 'is-valid'; ?><?php endif; ?>" value="<?php echo (old('nim_edit') === $row->nim_mhs) ? old('TglLahir_edit') : $row->TglLahir_mhs ?>" required>
+                                <input type="date" name="TglLahir_edit" placeholder="TanggalLahir" id="inputTanggalLahir" class="form-control <?php if ($nim_edit === $row->nim_mhs) : ?><?= $err = (session()->get('fail_edit')) ? (($validation->hasError('TglLahir_edit')) ? 'is-invalid' : '') : ''; ?><?php endif; ?>" value="<?php echo ($nim_edit === $row->nim_mhs) ? $TglLahir_edit : $row->TglLahir_mhs ?>" required>
                                 <label for="inputTanggalLahir">Tanggal Lahir</label>
 
-                                <?php if (old('nim_edit') === $row->nim_mhs) {
+                                <?php if ($nim_edit === $row->nim_mhs) {
                                 ?>
                                     <div class='invalid-feedback'>
                                         <?= $error = $validation->getError('TglLahir_edit'); ?>
@@ -468,13 +474,13 @@ foreach ($mahasiswa as  $row) :
                                         } ?>
                             </div>
                             <div class="form-floating mb-3">
-                                <select class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= ($validation->hasError('agama_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" name="agama_edit" id="agama_edit" required>
-                                    <?php if ($validation->hasError('agama_edit')) { ?>
-                                        <option value="Islam" <?= (old('agama_edit') === 'Islam') ? 'selected' : ''; ?>>Islam</option>
-                                        <option value="Kristen" <?= (old('agama_edit') === 'Kristen') ? 'selected' : '' ?>>Kristen</option>
-                                        <option value="Hindu" <?= (old('agama_edit') === 'Hindu') ? 'selected' : '' ?>>Hindu</option>
-                                        <option value="Buddha" <?= (old('agama_edit') === 'Buddha') ? 'selected' : '' ?>>Buddha</option>
-                                        <option value="Konghucu" <?= (old('agama_edit') === 'Konghucu') ? 'selected' : '' ?>>Konghucu</option>
+                                <select class="form-control <?php if ($nim_edit === $row->nim_mhs) : ?><?= $err = (session()->get('fail_edit')) ? (($validation->hasError('agama_edit')) ? 'is-invalid' : '') : ''; ?><?php endif; ?>" name="agama_edit" id="agama_edit" required>
+                                    <?php if (session()->get('fail_edit') && $validation->hasError('pendidikan_edit')) { ?>
+                                        <option value="Islam" <?= ($agama_edit === 'Islam') ? 'selected' : ''; ?>>Islam</option>
+                                        <option value="Kristen" <?= ($agama_edit === 'Kristen') ? 'selected' : '' ?>>Kristen</option>
+                                        <option value="Hindu" <?= ($agama_edit === 'Hindu') ? 'selected' : '' ?>>Hindu</option>
+                                        <option value="Buddha" <?= ($agama_edit === 'Buddha') ? 'selected' : '' ?>>Buddha</option>
+                                        <option value="Konghucu" <?= ($agama_edit === 'Konghucu') ? 'selected' : '' ?>>Konghucu</option>
                                     <?php } else { ?>
                                         <option value="Islam" <?= ($row->agama_mhs === 'Islam') ? 'selected' : ''; ?>>Islam</option>
                                         <option value="Kristen" <?= ($row->agama_mhs === 'Kristen') ? 'selected' : '' ?>>Kristen</option>
@@ -484,17 +490,17 @@ foreach ($mahasiswa as  $row) :
                                     <?php } ?>
                                 </select>
                                 <label for="agama_edit">Agama</label>
-                                <?php if (old('nim_edit') === $row->nim_mhs) { ?>
+                                <?php if ($nim_edit === $row->nim_mhs) { ?>
                                     <div class='invalid-feedback'>
                                         <?= $error = $validation->getError('agama_edit'); ?>
                                     </div>
                                 <?php } ?>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" name="alamat_edit" size="255" placeholder="Alamat" id="inputAlamat" class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= ($validation->hasError('alamat_edit')) ? 'is-invalid' : 'is-valid'; ?><?php endif; ?>" value="<?php echo (old('nim_edit') === $row->nim_mhs) ? old('alamat_edit') : $row->alamat_mhs ?>" required>
+                                <input type="text" name="alamat_edit" size="255" placeholder="Alamat" id="inputAlamat" class="form-control <?php if ($nim_edit === $row->nim_mhs) : ?><?= $err = (session()->get('fail_edit')) ? (($validation->hasError('alamat_edit')) ? 'is-invalid' : '') : ''; ?><?php endif; ?>" value="<?php echo ($nim_edit === $row->nim_mhs) ? $alamat_edit : $row->alamat_mhs ?>" required>
                                 <label for="inputAlamat">Alamat</label>
 
-                                <?php if (old('nim_edit') === $row->nim_mhs) {
+                                <?php if ($nim_edit === $row->nim_mhs) {
                                 ?>
                                     <div class='invalid-feedback'>
                                         <?= $error = $validation->getError('alamat_edit'); ?>
@@ -503,10 +509,10 @@ foreach ($mahasiswa as  $row) :
                                         } ?>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="number" name="telepon_edit" maxlength="13" placeholder="Telepon" id="inputTelepon" pattern="{0-9}+" class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= ($validation->hasError('telepon_edit')) ? 'is-invalid' : 'is-valid'; ?><?php endif; ?>" value="<?php echo (old('nim_edit') === $row->nim_mhs) ? old('telepon_edit') : $row->hp_mhs ?>" required>
+                                <input type="number" name="telepon_edit" maxlength="13" placeholder="Telepon" id="inputTelepon" pattern="{0-9}+" class="form-control <?php if ($nim_edit === $row->nim_mhs) : ?><?= $err = (session()->get('fail_edit')) ? (($validation->hasError('telepon_edit')) ? 'is-invalid' : '') : ''; ?><?php endif; ?>" value="<?php echo ($nim_edit === $row->nim_mhs) ? $telepon_edit : $row->hp_mhs ?>" required>
                                 <label for="inputTelepon">HP/Telepon</label>
 
-                                <?php if (old('nim_edit') === $row->nim_mhs) {
+                                <?php if ($nim_edit === $row->nim_mhs) {
                                     if ($validation->getError('telepon_edit')) { ?>
                                         <div class='invalid-feedback'>
                                             <?= $error = $validation->getError('telepon_edit'); ?>
@@ -515,11 +521,11 @@ foreach ($mahasiswa as  $row) :
                                         } ?>
                             </div>
                             <div class="form-floating mb-3">
-                                <select class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= ($validation->hasError('jurusan_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" name="jurusan_edit" id="jurusan_edit" required>
-                                    <?php if ($validation->hasError('jurusan_edit')) { ?>
-                                        <option value="sejarah" <?= (old('jurusan_edit') === 'sejarah') ? 'selected' : ''; ?>>Sejarah</option>
-                                        <option value="mipa" <?= (old('jurusan_edit') === 'mipa') ? 'selected' : '' ?>>Matematika & IPA</option>
-                                        <option value="sastra" <?= (old('jurusan_edit') === 'sastra') ? 'selected' : ''; ?>>Sastra</option>
+                                <select class="form-control <?php if ($nim_edit === $row->nim_mhs) : ?><?= $err = (session()->get('fail_edit')) ? (($validation->hasError('jurusan_edit')) ? 'is-invalid' : '') : ''; ?><?php endif; ?>" name="jurusan_edit" id="jurusan_edit" required>
+                                    <?php if (session()->get('fail_edit') && $validation->hasError('pendidikan_edit')) { ?>
+                                        <option value="sejarah" <?= ($jurusan_edit === 'sejarah') ? 'selected' : ''; ?>>Sejarah</option>
+                                        <option value="mipa" <?= ($jurusan_edit === 'mipa') ? 'selected' : '' ?>>Matematika & IPA</option>
+                                        <option value="sastra" <?= ($jurusan_edit === 'sastra') ? 'selected' : ''; ?>>Sastra</option>
                                     <?php } else { ?>
                                         <option value="sejarah" <?= ($row->jurusan_mhs === 'Sejarah') ? 'selected' : ''; ?>>Sejarah</option>
                                         <option value="mipa" <?= ($row->jurusan_mhs === 'MIPA') ? 'selected' : '' ?>>Matematika & IPA</option>
@@ -527,7 +533,7 @@ foreach ($mahasiswa as  $row) :
                                     <?php } ?>
                                 </select>
                                 <label for="inputJurusan">Jurusan</label>
-                                <?php if (old('nim_edit') === $row->nim_mhs) {
+                                <?php if ($nim_edit === $row->nim_mhs) {
                                 ?>
                                     <div class='invalid-feedback'>
                                         <?= $error = $validation->getError('jurusan_edit'); ?>
@@ -535,14 +541,15 @@ foreach ($mahasiswa as  $row) :
                                 <?php } ?>
                             </div>
                             <div class="form-floating mb-3">
-                                <select class="form-control <?php if (old('nim_edit') === $row->nim_mhs) : ?><?= ($validation->hasError('pendidikan_edit')) ? 'is-invalid' : ''; ?><?php endif; ?>" name="pendidikan_edit" id="pendidikan_edit" required>
-                                    <?php if ($validation->hasError('pendidikan_edit')) { ?>
-                                        <option value="SD" <?= (old('pendidikan_edit') === 'SD') ? 'selected' : ''; ?>>SD</option>
-                                        <option value="SMP" <?= (old('pendidikan_edit') === 'SMP') ? 'selected' : '' ?>>SMP</option>
-                                        <option value="SMA" <?= (old('pendidikan_edit') === 'SMA') ? 'selected' : '' ?>>SMA</option>
-                                        <option value="SMK" <?= (old('pendidikan_edit') === 'SMK') ? 'selected' : '' ?>>SMK</option>
-                                        <option value="S1" <?= (old('pendidikan_edit') === 'S1') ? 'selected' : '' ?>>S1</option>
-                                    <?php } else { ?>
+                                <select class="form-control <?php if ($nim_edit === $row->nim_mhs) : ?><?= $err = (session()->get('fail_edit')) ? (($validation->hasError('pendidikan_edit')) ? 'is-invalid' : '') : ''; ?><?php endif; ?>" name="pendidikan_edit" id="pendidikan_edit" required>
+                                    <?php if (session()->get('fail_edit') && $validation->hasError('pendidikan_edit')) { ?>
+                                        <option value="SD" <?= ($pendidikan_edit === 'SD') ? 'selected' : ''; ?>>SD</option>
+                                        <option value="SMP" <?= ($pendidikan_edit === 'SMP') ? 'selected' : '' ?>>SMP</option>
+                                        <option value="SMA" <?= ($pendidikan_edit === 'SMA') ? 'selected' : '' ?>>SMA</option>
+                                        <option value="SMK" <?= ($pendidikan_edit === 'SMK') ? 'selected' : '' ?>>SMK</option>
+                                        <option value="S1" <?= ($pendidikan_edit === 'S1') ? 'selected' : '' ?>>S1</option>
+                                    <?php
+                                    } else { ?>
                                         <option value="SD" <?= ($row->pendidikan === 'SD') ? 'selected' : ''; ?>>SD</option>
                                         <option value="SMP" <?= ($row->pendidikan === 'SMP') ? 'selected' : '' ?>>SMP</option>
                                         <option value="SMA" <?= ($row->pendidikan === 'SMA') ? 'selected' : '' ?>>SMA</option>
@@ -551,7 +558,7 @@ foreach ($mahasiswa as  $row) :
                                     <?php } ?>
                                 </select>
                                 <label for="pendidikan_edit">Pendidikan</label>
-                                <?php if (old('nim_edit') === $row->nim_mhs) { ?>
+                                <?php if ($nim_edit === $row->nim_mhs) { ?>
                                     <div class='invalid-feedback'>
                                         <?= $error = $validation->getError('pendidikan_edit'); ?>
                                     </div>
@@ -776,9 +783,11 @@ foreach ($mahasiswa as  $row) :
                     <input type="file" name="excel" class="form-control" id="excel" required accept=".xls, .xlsx">
                     <label for="excel">Excel file</label>
                 </div>
-                <div class='invalid-feedback'>
-                    <?= $error = $validation->getError('excel'); ?>
-                </div>
+                <?php if (session()->get('fail_add')) { ?>
+                    <div class='invalid-feedback'>
+                        <?= $error = $validation->getError('excel'); ?>
+                    </div>
+                <?php } ?>
                 <div class="modal-footer">
                     <?= csrf_field(); ?>
                     <button type="submit" class="btn btn-success"><i class="bi bi-box-arrow-in-up"></i> Import</button>
