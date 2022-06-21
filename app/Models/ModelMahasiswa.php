@@ -72,18 +72,18 @@ class ModelMahasiswa extends Model
                 $kode = sprintf("%04s", $tmp);
             }
         } else {
-            $kode = "0001";
+            $kode = '0001';
         }
 
         if ($jurusan == 'sejarah') {
-            return "MHS" . "SEJ" . $kode;
+            return 'MHS' . 'SEJ' . $kode;
         } else if ($jurusan == 'mipa') {
-            return "MHS" . "MIP" . $kode;
+            return 'MHS' . 'MIP' . $kode;
         } else if ($jurusan == 'sastra') {
-            return "MHS" . "SAS" . $kode;
+            return 'MHS' . 'SAS' . $kode;
         } else {
             // Akan menampilkan error jika kode jurusan tidak sesuai
-            return "MHS" . "ERR" . $kode;
+            return 'MHS' . 'ERR' . $kode;
         }
     }
 
@@ -103,11 +103,11 @@ class ModelMahasiswa extends Model
     {
         $kode = substr($nim, 6, 4);
         if ($jurusan == 'sejarah') {
-            $nim = substr_replace($nim, "SEJ", 3) . $kode;
+            $nim = substr_replace($nim, 'SEJ', 3) . $kode;
         } elseif ($jurusan == 'mipa') {
-            $nim = substr_replace($nim, "MIP", 3) . $kode;
+            $nim = substr_replace($nim, 'MIP', 3) . $kode;
         } elseif ($jurusan == 'sastra') {
-            $nim = substr_replace($nim, "SAS", 3) . $kode;
+            $nim = substr_replace($nim, 'SAS', 3) . $kode;
         }
 
         return $nim;

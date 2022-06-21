@@ -56,7 +56,7 @@ class UserController extends BaseController
                 $user = 'required|min_length[6]|max_length[50]|valid_email|is_exist[email]';
                 $err = [
                     'required' => 'Field Email harus diisi',
-                    'valid_email' => 'Email harus valid "(Memakai @ dan .com)"',
+                    'valid_email' => 'Email harus valid (Memakai @ dan .com)',
                     'is_exist' => 'Email tidak terdaftar',
                     'min_length' => 'Minimum karakter untuk Field Email adalah 6 karakter',
                     'max_length' => 'Maksimum karakter untuk Field Email adalah 50 karakter'
@@ -145,9 +145,9 @@ class UserController extends BaseController
 
                 $model->update($user['id'], ['status' => 'active']);
                 // Redirecting to dashboard after login
-                if ($user['role'] == "admin") {
+                if ($user['role'] == 'admin') {
                     return redirect()->to(base_url('admin'));
-                } elseif ($user['role'] == "member") {
+                } elseif ($user['role'] == 'member') {
                     return redirect()->to(base_url('member'));
                 }
             }
@@ -186,7 +186,7 @@ class UserController extends BaseController
             $errors = [
                 'email' => [
                     'required' => 'Field Email harus diisi',
-                    'valid_email' => 'Email harus valid "(Memakai @ dan .com)"',
+                    'valid_email' => 'Email harus valid (Memakai @ dan .com)',
                 ],
             ];
 
@@ -394,7 +394,7 @@ class UserController extends BaseController
                     'errors' => [
                         'required' => 'Field Email harus diisi',
                         'is_unique' => 'Email sudah dipakai',
-                        'valid_email' => 'Email harus valid "(Memakai @ dan .com)"',
+                        'valid_email' => 'Email harus valid (Memakai @ dan .com)',
                         'min_length' => 'Minimum karakter untuk Field Email adalah 3 karakter',
                         'max_length' => 'Maksimum karakter untuk Field Email adalah 50 karakter'
                     ]

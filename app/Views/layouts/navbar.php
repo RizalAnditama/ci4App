@@ -34,7 +34,7 @@ if ($this->userModel->getProfilePic(session()->get('id_user')) == '') {
     })
 </script>
 
-<nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+<nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top noselect">
     <!-- Container wrapper -->
     <div class="container-fluid">
         <!-- Toggle button -->

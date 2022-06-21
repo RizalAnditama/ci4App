@@ -47,20 +47,20 @@ $routes->group('', ['filter' => 'noauth'], function ($routes) {
 });
 
 // Admin routes
-$routes->group("admin", ["filter" => "auth"], function ($routes) {
-    $routes->get("/", "AdminController::index");
+$routes->group('admin', ['filter' => 'auth'], function ($routes) {
+    $routes->get('/', 'AdminController::index');
     $routes->group('mahasiswa', function ($routes) {
         $routes->post('SimpanData', 'Mahasiswa::SimpanData');
         $routes->add('edit/(:any)', 'Mahasiswa::edit/$1');
         $routes->get('hapus/(:segment)', 'Mahasiswa::hapus/$1');
         $routes->post('fun', 'Mahasiswa::fun');
     });
-    $routes->match(["get", "post"], 'test', 'Test::index');
+    $routes->match(['get', 'post'], 'test', 'Test::index');
 });
 
 // Member routes
-$routes->group("member", ["filter" => "auth"], function ($routes) {
-    $routes->get("/", "MemberController::index");
+$routes->group('member', ['filter' => 'auth'], function ($routes) {
+    $routes->get('/', 'MemberController::index');
 }); 
 
 // Settings routes

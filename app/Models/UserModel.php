@@ -16,18 +16,18 @@ class UserModel extends Model
     protected $protectFields        = true;
     protected $allowedFields        = [
         'uuid',
-        "username",
-        "email",
-        "phone_no",
-        "password",
-        "name",
-        "role",
-        "profile_pic",
-        "created_at",
-        "updated_at",
-        "token",
-        "token_expire",
-        "status",
+        'username',
+        'email',
+        'phone_no',
+        'password',
+        'name',
+        'role',
+        'profile_pic',
+        'created_at',
+        'updated_at',
+        'token',
+        'token_expire',
+        'status',
     ];
 
     // Dates
@@ -45,9 +45,9 @@ class UserModel extends Model
 
     // Callbacks
     protected $allowCallbacks       = true;
-    protected $beforeInsert         = ["beforeInsert"];
+    protected $beforeInsert         = ['beforeInsert'];
     protected $afterInsert          = [];
-    protected $beforeUpdate         = ["beforeUpdate"];
+    protected $beforeUpdate         = ['beforeUpdate'];
     protected $afterUpdate          = [];
     protected $beforeFind           = [];
     protected $afterFind            = [];
@@ -160,7 +160,7 @@ class UserModel extends Model
      */
     public function getAllUuid()
     {
-        $query = $this->db->query("SELECT uuid FROM users");
+        $query = $this->db->query('SELECT uuid FROM users');
         $result = $query->getResult();
         return $result;
     }

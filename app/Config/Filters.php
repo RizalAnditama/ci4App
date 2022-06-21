@@ -26,8 +26,8 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
-        "auth"          => Auth::class,
-        "noauth"        => Noauth::class,
+        'auth'          => Auth::class,
+        'noauth'        => Noauth::class,
         // Untuk Myth Auth
         // 'login'      => \Myth\Auth\Filters\LoginFilter::class, //tambahkan ini
         // 'role'       => \Myth\Auth\Filters\RoleFilter::class, //tambahkan ini

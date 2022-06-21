@@ -14,7 +14,7 @@ class Mahasiswa extends BaseController
         helper('form');
         $this->userModel = new UserModel();
         $this->mhs = new ModelMahasiswa();
-        if (session()->get('role') != "admin") {
+        if (session()->get('role') != 'admin') {
             $data = [
                 'title' => 'Error 403 | Access Forbiden'
             ];
@@ -25,7 +25,6 @@ class Mahasiswa extends BaseController
 
     public function index()
     {
-        session();
         helper('form');
 
         $this->mhs = new ModelMahasiswa();
@@ -36,7 +35,7 @@ class Mahasiswa extends BaseController
         if ($keyword) {
             $mhs = $this->mhs->search($keyword);
             $paginate = $this->mhs->search($keyword)->paginate(5, 'mahasiswa');
-            $keyword = session()->set('keyword', $keyword);
+            $keyword = session()->setFlashdata('keyword', $keyword);
             session()->setFlashdata('home', 'Home');
             session()->markAsTempdata('keyword', 1);
         } else {
@@ -172,7 +171,7 @@ class Mahasiswa extends BaseController
                 'body' => 'Gagal menambah data',
             ];
 
-            session()->set('id', $this->request->getVar('id'));
+            session()->setFlashdata('nim', $this->mhs->autonumber($this->request->getVar('jurusan')));
             session()->setFlashdata('fail_add', $flash);
             return redirect()->back()->withInput();
             // return redirect()->to('mahasiswa')->withInput()->with('validation', $validation);
@@ -181,7 +180,7 @@ class Mahasiswa extends BaseController
             $foto = $this->request->getFile('foto');
             if ($foto->getSize() > 0) {
                 $fileName = $this->userModel->timestampFile($foto->getName());
-                if ($foto->move("images/mahasiswa", $fileName)) {
+                if ($foto->move('images/mahasiswa', $fileName)) {
                     $foto = base_url() . '/' . 'images/mahasiswa/' . $fileName;
                 }
             } else {
@@ -206,7 +205,7 @@ class Mahasiswa extends BaseController
             $nim = $this->mhs->autonumber($this->request->getVar('jurusan'));
             $id = $this->mhs->insert($data);
 
-            session()->set('nama', $this->request->getVar('nama'));
+            session()->setFlashdata('nama', $this->request->getVar('nama'));
             session()->setFlashdata('success_add', 'Data Berhasil Diinput');
 
             return redirect()->back()->with('id', $id)->with('nim', $nim);
@@ -215,7 +214,7 @@ class Mahasiswa extends BaseController
 
     public function UpdateData()
     {
-        $nim = session()->set('nim');
+        $nim = session()->setFlashdata('nim');
         if ($nim == $this->request->getVar('nim_edit')) {
             $hp_unik = 'required|numeric|is_unique[mahasiswa.hp_mhs]|min_length[7]|max_length[15]';
         } else {
@@ -319,9 +318,12 @@ class Mahasiswa extends BaseController
                 'body' => 'Gagal mengedit data',
             ];
 
-            session()->set('id', $this->request->getVar('id'));
-            session()->set('nama', json_decode(json_encode(($this->mhs->query("SELECT nama_mhs FROM mahasiswa WHERE id_mhs = '$id'")->getRowArray()['nama_mhs']))), FALSE);
+            session()->setFlashdata('id', $this->request->getVar('id'));
+            session()->setFlashdata('nim', $this->request->getVar('nim'));
+            session()->setFlashdata('nama', json_decode(json_encode(($this->mhs->query("SELECT nama_mhs FROM mahasiswa WHERE id_mhs = '$id'")->getRowArray()['nama_mhs']))), FALSE);
             session()->setFlashdata('fail_edit', $flash);
+            dd(session()->getFlashdata('nim'));
+
             return redirect()->back()->withInput();
         } else {
             $id = $this->request->getVar('id');
@@ -329,7 +331,7 @@ class Mahasiswa extends BaseController
             $foto = $this->request->getFile('foto_edit');
             if ($foto->getSize() > 0) {
                 $fileName = $this->userModel->timestampFile($foto->getName());
-                if ($foto->move("images/mahasiswa", $fileName)) {
+                if ($foto->move('images/mahasiswa', $fileName)) {
                     $foto = base_url() . '/' . 'images/mahasiswa/' . $fileName;
 
                     $data['foto'] = $foto;
@@ -361,9 +363,9 @@ class Mahasiswa extends BaseController
             $edit = $this->mhs->update($id, $data);
 
             if ($edit || $edit_foto) {
-                session()->set('id', $this->request->getVar('id'));
-                session()->set('nim', (string) $data['nim_mhs']);
-                session()->set('nama', $this->request->getVar('nama_edit'));
+                session()->setFlashdata('id', $this->request->getVar('id'));
+                session()->setFlashdata('nim', (string) $data['nim_mhs']);
+                session()->setFlashdata('nama', $this->request->getVar('nama_edit'));
                 session()->setFlashdata('success_edit', 'Data Berhasil Diedit');
                 return redirect()->back();
             }
@@ -449,17 +451,12 @@ class Mahasiswa extends BaseController
             ->setARGB('000000');
 
         // set auto size for column
-        $sheet->getColumnDimension('A')->setAutoSize(true);
-        $sheet->getColumnDimension('B')->setAutoSize(true);
-        $sheet->getColumnDimension('C')->setAutoSize(true);
-        $sheet->getColumnDimension('D')->setAutoSize(true);
-        $sheet->getColumnDimension('E')->setAutoSize(true);
-        $sheet->getColumnDimension('F')->setAutoSize(true);
-        $sheet->getColumnDimension('G')->setAutoSize(true);
-        $sheet->getColumnDimension('H')->setAutoSize(true);
-        $sheet->getColumnDimension('I')->setAutoSize(true);
-        $sheet->getColumnDimension('J')->setAutoSize(true);
-        $sheet->getColumnDimension('K')->setAutoSize(true);
+        $start = ord('A');
+        $stop = 11;
+        for ($ch = $start; $ch < $start + $stop; $ch++) {
+            $s =  chr($ch) . PHP_EOL;
+            $sheet->getColumnDimension($s)->setAutoSize(true);
+        }
 
         // tulis dalam format .xlsx
         $writer = new Xlsx($spreadsheet);
@@ -593,7 +590,7 @@ class Mahasiswa extends BaseController
         ];
         $id = $this->mhs->insert($data);
 
-        session()->set('nama', $data['nama_mhs']);
+        session()->setFlashdata('nama', $data['nama_mhs']);
         session()->setFlashdata('success_add', 'Data Berhasil Diinput');
 
         return redirect()->back()->withInput();

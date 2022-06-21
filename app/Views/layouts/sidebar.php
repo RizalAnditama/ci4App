@@ -53,7 +53,7 @@ $current = basename(current_url());
     }
 </style>
 <!-- Sidebar -->
-<nav id="sidebarMenu" class="d-lg-block sidebar bg-white collapse">
+<nav id="sidebarMenu" class="d-lg-block sidebar bg-white collapse noselect">
     <div class="position-sticky">
         <div class="list-group list-group-flush mx-3 mt-4">
             <a id="dashboard" href="<?= $dashboard = (session()->get('role') === 'admin') ? 'admin' : 'member'; ?>" class="list-group-item list-group-item-action py-2 ripple <?php echo session()->getFlashdata('ye') ?><?= $active = ($baseurlmain === $current || ('admin' === $current) || ('member' === $current)) ? 'active disabled' : ''; ?>" aria-current="true" onclick="dashboardActive()">

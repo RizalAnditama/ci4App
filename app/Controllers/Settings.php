@@ -154,7 +154,7 @@ class Settings extends BaseController
                 $file = $this->request->getFile('profile_pic');
                 if ($file->getSize() > 0) {
                     $profile_pic = $this->userModel->timestampFile($file->getName());
-                    if ($file->move("images/profile", $profile_pic)) {
+                    if ($file->move('images/profile', $profile_pic)) {
                         $user['profile_pic'] = 'images/profile/' . $profile_pic;
                     }
                 }
@@ -165,7 +165,7 @@ class Settings extends BaseController
                 if ($this->userModel->update(['id' => session()->get('id_user')], $user)) {
                     session()->setFlashdata('success', 'Profile berhasil diubah');
                 } else {
-                    session()->setFlashdata("error", "Failed to save data");
+                    session()->setFlashdata('error', 'Failed to save data');
                 }
                 return redirect()->back();
             } else {

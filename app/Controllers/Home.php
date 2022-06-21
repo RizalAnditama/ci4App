@@ -6,7 +6,7 @@ class Home extends BaseController
 {
     public function index()
     {
-        if (session()->get('role') == "admin") {
+        if (session()->get('role') == 'admin') {
             return redirect()->to(base_url('mahasiswa'));
         } else {
             $data = [

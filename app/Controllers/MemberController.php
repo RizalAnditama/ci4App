@@ -8,7 +8,7 @@ class MemberController extends BaseController
 {
     public function __construct()
     {
-        if (session()->get('role') != "member") {
+        if (session()->get('role') != 'member') {
             $data = [
                 'title' => 'Error 403 | Access Forbiden'
             ];
