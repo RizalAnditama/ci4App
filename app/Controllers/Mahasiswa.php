@@ -380,6 +380,9 @@ class Mahasiswa extends BaseController
         return redirect()->back()->withInput();
     }
 
+    /**
+     * Export data from database to excel
+     */
     public function exportExcel()
     {
         $mhs = new ModelMahasiswa();
@@ -475,10 +478,6 @@ class Mahasiswa extends BaseController
      * Turns excel into values for databases
      */
     public function importExcel()
-    {
-    }
-
-    public function fun()
     {
         $this->mhs = new ModelMahasiswa();
         $file = $this->request->getFile('excel');

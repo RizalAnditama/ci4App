@@ -776,7 +776,7 @@ foreach ($mahasiswa as  $row) :
                     </table>
                 </div>
                 <p>*Hanya menerima extensi .xls dan .xlsx</p>
-                <?= form_open_multipart('mahasiswa/fun'); ?>
+                <?= form_open_multipart('mahasiswa/importExcel'); ?>
                 <div class="form-floating mb-0">
                     <input type="file" name="excel" class="form-control" id="excel" required accept=".xls, .xlsx">
                     <label for="excel">Excel file</label>
