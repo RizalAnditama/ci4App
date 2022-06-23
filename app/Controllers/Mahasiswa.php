@@ -453,13 +453,17 @@ class Mahasiswa extends BaseController
             ->getColor()
             ->setARGB('000000');
 
-        // set auto size for column
-        $start = ord('A');
-        $stop = 11;
-        for ($ch = $start; $ch < $start + $stop; $ch++) {
-            $s =  chr($ch) . PHP_EOL;
-            $sheet->getColumnDimension($s)->setAutoSize(true);
-        }
+        $sheet->getColumnDimension('A')->setAutoSize(true);
+        $sheet->getColumnDimension('B')->setAutoSize(true);
+        $sheet->getColumnDimension('C')->setAutoSize(true);
+        $sheet->getColumnDimension('D')->setAutoSize(true);
+        $sheet->getColumnDimension('E')->setAutoSize(true);
+        $sheet->getColumnDimension('F')->setAutoSize(true);
+        $sheet->getColumnDimension('G')->setAutoSize(true);
+        $sheet->getColumnDimension('H')->setAutoSize(true);
+        $sheet->getColumnDimension('I')->setAutoSize(true);
+        $sheet->getColumnDimension('J')->setAutoSize(true);
+        $sheet->getColumnDimension('K')->setAutoSize(true);
 
         // tulis dalam format .xlsx
         $writer = new Xlsx($spreadsheet);
@@ -511,85 +515,29 @@ class Mahasiswa extends BaseController
         $spreadsheet = $reader->load($file->getTempName());
         $sheet = $spreadsheet->getActiveSheet()->toArray();
 
+        $items = [];
         foreach ($sheet as $x => $excel) {
             if ($x == 0) continue;
+            $data = [
+                'nim_mhs' => $this->mhs->autonumber($excel[3]),
+                'nama_mhs' => $excel[2],
+                'jurusan_mhs' => $excel[3],
+                'jenis_kelamin' => $excel[4],
+                'agama_mhs' => $excel[5],
+                'alamat_mhs' => $excel[6],
+                'hp_mhs' => $excel[7],
+                'pendidikan' => $excel[8],
+                'TglLahir_mhs' => $excel[9],
+                'TmpLahir_mhs' => $excel[10],
+                'foto' => base_url() . '/' . 'images/mahasiswa/' . 'default-profile.jpg',
+            ];
 
-            $nim = $this->mhs->isUnique('nim_mhs', $excel[1]);
-            if ($nim !== false) {
-                continue;
-            }
-            if ($excel[1] == $nim['nim_mhs']) continue;
-
-            if (
-                $excel[3] !== 'sejarah' || $excel[3] !== 'mipa'
-                || $excel[3] !== 'sastra'
-            ) {
-                $flash = [
-                    'head' => 'Jurusan tidak sesuai ketentuan',
-                    'body' => 'Gagal menambah data',
-                ];
-                session()->setFlashdata('fail_add', $flash);
-                return redirect()->back();
-            }
-
-            if (
-                $excel[3] !== 'l'
-                || $excel[3] !== 'p'
-            ) {
-                $flash = [
-                    'head' => 'Jenis kelamin tidak sesuai ketentuan',
-                    'body' => 'Gagal menambah data',
-                ];
-                session()->setFlashdata('fail_add', $flash);
-                return redirect()->back();
-            }
-
-            if (
-                $excel[3] !== 'Islam'
-                || $excel[3] !== 'Kristen'
-                || $excel[3] !== 'Hindu'
-                || $excel[3] !== 'Buddha'
-                || $excel[3] !== 'Konghucu'
-            ) {
-                $flash = [
-                    'head' => 'Agama tidak sesuai ketentuan',
-                    'body' => 'Gagal menambah data',
-                ];
-                session()->setFlashdata('fail_add', $flash);
-                return redirect()->back();
-            }
-
-            if (
-                $excel[3] !== 'SD'
-                || $excel[3] !== 'SMP'
-                || $excel[3] !== 'SMA'
-                || $excel[3] !== 'SMK'
-                || $excel[3] !== 'S1'
-            ) {
-                $flash = [
-                    'head' => 'Pendidikan tidak sesuai ketentuan',
-                    'body' => 'Gagal menambah data',
-                ];
-                session()->setFlashdata('fail_add', $flash);
-                return redirect()->back();
-            }
+            $items[] = $data;
+            $this->mhs->insert($data);
         }
-        $data = [
-            'nim_mhs' => $this->mhs->autonumber($excel[3]),
-            'nama_mhs' => $excel[2],
-            'jurusan_mhs' => $excel[3],
-            'jenis_kelamin' => $excel[4],
-            'agama_mhs' => $excel[5],
-            'alamat_mhs' => $excel[6],
-            'hp_mhs' => $excel[7],
-            'pendidikan' => $excel[8],
-            'TglLahir_mhs' => $excel[9],
-            'TmpLahir_mhs' => $excel[10],
-            'foto' => base_url() . '/' . 'images/mahasiswa/' . 'default-profile.jpg',
-        ];
-        $id = $this->mhs->insert($data);
 
-        session()->setFlashdata('nama', $data['nama_mhs']);
+        session()->setFlashdata('excel', 'Data Excel berhasil diinput');
+        session()->setFlashdata('infoExcel', $items);
         session()->setFlashdata('success_add', 'Data Berhasil Diinput');
 
         return redirect()->back()->withInput();
