@@ -21,6 +21,7 @@ class Mahasiswa extends Seeder
             $jenkel = ($faker->randomElements(['l', 'p']));
             $agama = ($faker->randomElements(['islam', 'kristen', 'konghucu', 'hindu', 'buddha']));
             $pend = ($faker->randomElements(['sd', 'smp', 'sma', 'smk', 's1']));
+            $hp = str_replace('+', '0', $faker->e164PhoneNumber);
 
             $data = [
                 'nim_mhs' => $nim,
@@ -30,7 +31,7 @@ class Mahasiswa extends Seeder
                 'TglLahir_mhs' => $tglLahir,
                 'agama_mhs' => $agama,
                 'alamat_mhs' => $faker->address,
-                'hp_mhs' => $faker->e164PhoneNumber,
+                'hp_mhs' => $hp,
                 'jurusan_mhs' => $jurusan,
                 'pendidikan' => $pend,
                 'foto' => $foto,
