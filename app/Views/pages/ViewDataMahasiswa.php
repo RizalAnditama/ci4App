@@ -84,8 +84,12 @@ $session = \Config\Services::session();
                     <use xlink:href="#check-circle-fill" />
                 </svg>
                 <div class="text ms-3">
-                    <strong><?= $session->getFlashdata('success_add'); ?></strong>
-                    <a class="mb-0 alert-link" data-bs-toggle="modal" data-bs-target="<?= ($session->getFlashdata('success_add')) ? '#editDataModal' . session()->getFlashdata('nim') : '';  ?>" style="cursor: pointer;"><?= session()->getFlashdata('nama') . ' ' . '(' . session()->getFlashdata('nim') . ')'; ?></a>
+                    <strong><?= (session()->getFlashdata('excel')) ? session()->getFlashdata('excel') : session()->getFlashdata('success_add'); ?></strong>
+                    <?php if (session()->getFlashdata('excel') !== null) : ?>
+                        <a class="mb-0 alert-link" data-bs-toggle="modal" data-bs-target="#infoExcel" style="cursor: pointer;">Lihat data</a>
+                    <?php else : ?>
+                        <a class="mb-0 alert-link" data-bs-toggle="modal" data-bs-target="<?= ($session->getFlashdata('success_add')) ? '#editDataModal' . session()->getFlashdata('nim') : '';  ?>" style="cursor: pointer;"><?= session()->getFlashdata('nama') . ' ' . '(' . session()->getFlashdata('nim') . ')'; ?></a>
+                    <?php endif ?>
                 </div>
                 <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -795,68 +799,126 @@ foreach ($mahasiswa as  $row) :
             </div>
         </div>
     </div>
+</div>
 
-    <script type="text/javascript">
-        // $(document).ready(function() {
+<!-- Info Excel Modal -->
+<div class="modal fade" id="infoExcel" tabindex="-1" aria-labelledby="infoExcelLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="infoExcelLabel">Info isi excel</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3 table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <th scope="col" class="noselect">No</th>
+                            <th scope="col">NIM</th>
+                            <th scope="col">Nama Mahasiswa</th>
+                            <th scope="col">Jenis Kelamin</th>
+                            <th scope="col">Jurusan</th>
+                            <th scope="col">No HP</th>
+                            <th scope="col">Pendidikan</th>
+                            <th scope="col" style="min-width: 150px;">Tempat<br>Tanggal Lahir</th>
+                            <th scope="col">Agama</th>
+                            <th scope="col" style="min-width: 300px;">Alamat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if (session()->getFlashdata('infoExcel') !== null) : ?>
+                                <?php
+                                $items = session()->getFlashdata('infoExcel');
+                                $no = 1;
+                                ?>
+                                <?php foreach ($items as $row) : ?>
+                                    <tr>
+                                    <tr>
+                                        <th class="noselect"><?= $no++; ?></th>
+                                        <td><?= $row['nim_mhs'] ?></td>
+                                        <td><?= $row['nama_mhs'] ?></td>
+                                        <td><?= $jenkel = ($row['jenis_kelamin'] === 'l') ? 'Laki-laki' : 'Perempuan'; ?></td>
+                                        <td><?= $row['jurusan_mhs'] ?></td>
+                                        <td><?= $row['hp_mhs'] ?></td>
+                                        <td class="text-center"><?= $row['pendidikan'] ?></td>
+                                        <td><?= $row['TmpLahir_mhs'] . '<br>' . $row['TglLahir_mhs'] ?></td>
+                                        <td><?= $row['agama_mhs'] ?></td>
+                                        <td><?= $row['alamat_mhs'] ?></td>
+                                    <?php endforeach ?>
+                                    </tr>
+                                <?php endif ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-        //     // Buat buka modal lewar url (Gangerti cara makenya)
-        //     if (window.location.href.indexOf('#editDataModal' + $id) != -1) {
-        //         $('#editDataModal' + $id).modal('show');
-        //     }
+<script type="text/javascript">
+    // $(document).ready(function() {
 
-        // });
+    //     // Buat buka modal lewar url (Gangerti cara makenya)
+    //     if (window.location.href.indexOf('#editDataModal' + $id) != -1) {
+    //         $('#editDataModal' + $id).modal('show');
+    //     }
 
-        // // Reset warna tombol saat klik close alerts
-        // function resetColor() {
-        //     var element = document.getElementById("icon-pencil").style.color = "black";
-        // }
+    // });
 
-        // // Focus Input saat modal kebuka
-        // var myModal = document.getElementById('addNewDataModal')
-        // var myInput = document.getElementById('inputNama')
+    // // Reset warna tombol saat klik close alerts
+    // function resetColor() {
+    //     var element = document.getElementById("icon-pencil").style.color = "black";
+    // }
 
-        // myModal.addEventListener('shown.bs.modal', function() {
-        //     myInput.focus();
-        // })
+    // // Focus Input saat modal kebuka
+    // var myModal = document.getElementById('addNewDataModal')
+    // var myInput = document.getElementById('inputNama')
 
-        // Nampilin gambar saat input gambar
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            $('#blah').attr('src', e.target.result);
+    // myModal.addEventListener('shown.bs.modal', function() {
+    //     myInput.focus();
+    // })
+
+    // Nampilin gambar saat input gambar
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        $('#blah').attr('src', e.target.result);
+    }
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            reader.readAsDataURL(input.files[0]);
         }
+    }
 
-        function readURL(input) {
-            if (input.files && input.files[0]) {
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        $("#foto").change(function() {
-            readURL(this);
-        });
+    $("#foto").change(function() {
+        readURL(this);
+    });
 
 
-        // //  change color icon when clicked
-        // // then revert it when clicked outside
-        // $('.bi-three-dots-vertical').click(function() {
-        //     $(this).css('color', 'orange');
-        // });
-        // $(document).mouseup(function(e) {
-        //     var container = $(".dropstart");
-        //     if (!container.is(e.target) && container.has(e.target).length === 0) {
-        //         $('.bi-three-dots-vertical').css('color', 'black');
-        //     }
-        // });
+    // //  change color icon when clicked
+    // // then revert it when clicked outside
+    // $('.bi-three-dots-vertical').click(function() {
+    //     $(this).css('color', 'orange');
+    // });
+    // $(document).mouseup(function(e) {
+    //     var container = $(".dropstart");
+    //     if (!container.is(e.target) && container.has(e.target).length === 0) {
+    //         $('.bi-three-dots-vertical').css('color', 'black');
+    //     }
+    // });
 
-        // // Focus Input saat ngetik
-        // function inputFocus() {
-        //     document.getElementById("search").focus();
-        // }
-    </script>
+    // // Focus Input saat ngetik
+    // function inputFocus() {
+    //     document.getElementById("search").focus();
+    // }
+</script>
 
 
-    <?php
-    // d(round(microtime(true) * 1000) - $milliseconds);
-    ?>
+<?php
+// d(round(microtime(true) * 1000) - $milliseconds);
+?>
 
-    <?= $this->endSection() ?>
+<?= $this->endSection() ?>
