@@ -39,7 +39,7 @@ $session = \Config\Services::session();
     </div>
     <form action="" method="get">
         <div class="input-group mb-3">
-            <input id="search" name="keyword" type="search" class="form-control" placeholder="Masukan kata kunci..." value="<?= session()->getFlashdata('keyword') ?>" list="datalistOptions" aria-describedby="search-button" autofocus>
+            <input id="search" name="keyword" type="search" class="form-control" placeholder="Masukan kata kunci..." value="<?= $keyword ?? '' ?>" list="datalistOptions" aria-describedby="search-button" autofocus>
             <datalist id="datalistOptions">
                 <!-- <? //php foreach ($nama as $row) :
                         ?>
@@ -69,7 +69,7 @@ $session = \Config\Services::session();
                 <option value="Sejarah">
                 <option value="Sastra">
             </datalist>
-            <button id="search-button" class="btn btn-outline-primary" type="submit" name="submit"><i class="bi bi-search"></i> Cari</button>
+            <button id="search-button" class="btn btn-outline-primary" type="submit" name="submit"><i class="bi bi-search"></i> Cari</button>    
             <?php if (session()->getFlashdata('home')) : ?>
                 <a class="btn btn-success" href="<?= base_url("mahasiswa") ?>">Home</a>
             <?php endif; ?>
@@ -142,7 +142,7 @@ $session = \Config\Services::session();
     <?php if (empty($mahasiswa)) { ?>
         <div class="container">
             <div class="row">
-                <h3 class="text-center">Data <?= $keyword = (session()->getFlashdata('keyword')) ? '"' . session()->getFlashdata('keyword') . '"' : 'Mahasiswa'; ?> Kosong</h3>
+                <h3 class="text-center">Data <?= $keyword = (session()->getFlashdata('home') !== null) ? '"' . $keyword . '"' : 'mahasiswa'; ?> kosong</h3>
                 <a class="text-center" data-bs-toggle="modal" data-bs-target="#addNewDataModal" style="cursor: pointer;text-decoration: none; color:aqubluea"><i class="bi bi-cloud-arrow-up-fill"></i> Silahkan tambah data <i class="bi bi-cloud-arrow-up-fill"></i></a>
             </div>
         </div>
@@ -790,12 +790,12 @@ foreach ($mahasiswa as  $row) :
                         <?= $error = $validation->getError('excel'); ?>
                     </div>
                 <?php } ?>
-                <div class="modal-footer">
-                    <?= csrf_field(); ?>
-                    <button type="submit" class="btn btn-success"><i class="bi bi-box-arrow-in-up"></i> Import</button>
-                    <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
-                    <?= form_close() ?>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <?= csrf_field(); ?>
+                <button type="submit" class="btn btn-success"><i class="bi bi-box-arrow-in-up"></i> Import</button>
+                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Close</button>
+                <?= form_close() ?>
             </div>
         </div>
     </div>
