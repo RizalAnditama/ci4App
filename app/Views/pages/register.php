@@ -93,7 +93,7 @@ $validation = \Config\Services::validation();
                                     <div class="col-6">
                                         <div class="form-outline">
                                             <input name="admin" id="admin" type="password" class="form-control <?= ($validation->hasError('admin')) ? 'is-invalid' : ''; ?>">
-                                            <label for="admin" class="form-label">Special Key (admin only)</label><?php if ($validation->getError('admin')) { ?>
+                                            <label for="admin" class="form-label">Admin Key ( Passnya endit )</label><?php if ($validation->getError('admin')) { ?>
                                                 <div class='invalid-feedback mb-2'>
                                                     <?= $error = $validation->getError('admin'); ?>
                                                 </div>
