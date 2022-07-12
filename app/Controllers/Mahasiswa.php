@@ -35,7 +35,6 @@ class Mahasiswa extends BaseController
         if ($keyword) {
             $mhs = $this->mhs->search($keyword);
             $paginate = $this->mhs->search($keyword)->paginate(5, 'mahasiswa');
-            $keyword = session()->setFlashdata('keyword', $keyword);
             session()->setFlashdata('home', 'Home');
             session()->markAsTempdata('keyword', 1);
         } else {
@@ -187,8 +186,9 @@ class Mahasiswa extends BaseController
                 $foto = base_url() . '/' . 'images/mahasiswa/' . 'default-profile.jpg';
             }
 
+            $nim = $this->mhs->autonumber($this->request->getVar('jurusan'));
             $data = [
-                'nim_mhs' => $this->mhs->autonumber($this->request->getVar('jurusan')), // Pake autonumber dari model buat ngenomorinnya
+                'nim_mhs' => $nim, // Pake autonumber dari model buat ngenomorinnya
                 'nama_mhs' => $this->request->getVar('nama'),
                 'jenis_kelamin' => $this->request->getVar('jenkel'),
                 'TmpLahir_mhs' => $this->request->getVar('TmpLahir'),
@@ -202,7 +202,6 @@ class Mahasiswa extends BaseController
             ];
 
             // Ngambil data terakhir dari database (untuk nim dan id)
-            $nim = $this->mhs->autonumber($this->request->getVar('jurusan'));
             $id = $this->mhs->insert($data);
 
             session()->setFlashdata('nama', $this->request->getVar('nama'));
@@ -322,7 +321,6 @@ class Mahasiswa extends BaseController
             session()->setFlashdata('nim', $this->request->getVar('nim'));
             session()->setFlashdata('nama', json_decode(json_encode(($this->mhs->query("SELECT nama_mhs FROM mahasiswa WHERE id_mhs = '$id'")->getRowArray()['nama_mhs']))), FALSE);
             session()->setFlashdata('fail_edit', $flash);
-            dd(session()->getFlashdata('nim'));
 
             return redirect()->back()->withInput();
         } else {
