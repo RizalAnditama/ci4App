@@ -50,11 +50,9 @@ class Users extends Migration
                 'constraint'     => '255',
                 'default'        => 'images/profile/default-profile.jpg',
             ],
-            'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
-            'updated_at' => [
-                'type'           => 'TIMESTAMP',
-                'null'            => true,
-            ],
+
+            'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL',
+            'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
             'token' => [
                 'type'           => 'CHAR',
                 'constraint'     => '16',

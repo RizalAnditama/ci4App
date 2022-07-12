@@ -54,7 +54,7 @@ class Mahasiswa extends Migration
             ],
             'pendidikan'       => [
                 'type'          => 'ENUM',
-                'constraint'    => ['sd', 'smp', 'sma', 'smk', 's1'],
+                'constraint'    => ['SD', 'SMP', 'SMA', 'SMK', 'S1'],
                 'NULL'          => true,
                 'DEFAULT'       => null,
             ],
@@ -62,12 +62,8 @@ class Mahasiswa extends Migration
                 'type'          => 'VARCHAR',
                 'constraint'    => 255,
             ],
-            'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
-            'updated_at'        => [
-                'type'          => 'TIMESTAMP',
-                'default'       => 'CURRENT_TIMESTAMP',
-                'null'          => true,
-            ],
+            'created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL',
+            'updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP',
         ]);
 
         // Membuat primary key
