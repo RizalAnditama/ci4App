@@ -17,8 +17,8 @@ class Mahasiswa extends Migration
                 'auto_increment' => true,
             ],
             'nim_mhs'          => [
-                'type'           => 'INT',
-                'constraint'     => 11,
+                'type'           => 'CHAR',
+                'constraint'     => 15,
             ],
             'nama_mhs'          => [
                 'type'          => 'VARCHAR',
