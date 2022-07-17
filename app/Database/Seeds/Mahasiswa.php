@@ -23,7 +23,7 @@ class Mahasiswa extends Seeder
             $agama = ($faker->randomElements(['islam', 'kristen', 'konghucu', 'hindu', 'buddha']));
 
             $hp = str_replace('+', '0', $faker->e164PhoneNumber);
-            $pend = ($faker->randomElements(['SD', 'SMP', 'SMA', 'SMK', 'sS1']));
+            $pend = ($faker->randomElements(['SD', 'SMP', 'SMA', 'SMK', 'S1']));
             $foto = $faker->imageUrl(200, 300, 'animals', true, 'cats');
 
             $data = [
